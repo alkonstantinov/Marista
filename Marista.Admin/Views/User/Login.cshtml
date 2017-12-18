@@ -1,0 +1,41 @@
+﻿@model LoginVM
+@{
+    ViewBag.Title = "Login";
+}
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="login-box col-sm-6 col-sm-offset-3">
+            <form action="@Url.Action("Login", "User")" method="post">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title">Login</div>
+                    </div>
+                    <div class="panel-body">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, string.Empty, new { @class = "alert alert-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Username)
+                            @Html.TextBoxFor(x => x.Username, new { @class = "form-control", placeholder = "Username" })
+                            @Html.ValidationMessageFor(x => x.Username)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Password)
+                            @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = "Password" })
+                            @Html.ValidationMessageFor(x => x.Password)
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-lock"></i> Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
