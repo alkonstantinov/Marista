@@ -8,6 +8,21 @@
         <EntityTypeShape EntityType="MaristaModel.Level" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MaristaModel.SiteUser" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="MaristaModel.fk_SiteUser_LevelId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MaristaModel.Constant" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MaristaModel.HCategory" Width="1.5" PointX="8.375" PointY="3.875" />
+        <EntityTypeShape EntityType="MaristaModel.Product" Width="2" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="MaristaModel.SOBonusSize" Width="1.5" PointX="8.125" PointY="0.75" />
+        <EntityTypeShape EntityType="MaristaModel.VCategory" Width="1.5" PointX="8.375" PointY="5.875" />
+        <AssociationConnector Association="MaristaModel.fk_Product_HCategoryId" />
+        <AssociationConnector Association="MaristaModel.fk_Product_VCategoryId" />
+        <AssociationConnector Association="MaristaModel.RelatedProduct" ManuallyRouted="true" >
+          <ConnectorPoint PointX="5.9592307692307696" PointY="7.076396484375" />
+          <ConnectorPoint PointX="5.9592307692307696" PointY="7.227646484375" />
+          <ConnectorPoint PointX="5.6988141025641035" PointY="7.227646484375" />
+          <ConnectorPoint PointX="5.6988141025641035" PointY="7.5347298177083335" />
+          <ConnectorPoint PointX="6.554615384615385" PointY="7.5347298177083335" />
+          <ConnectorPoint PointX="6.554615384615385" PointY="7.076396484375" />
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

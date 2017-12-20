@@ -27,5 +27,10 @@ namespace Marista.DL
     
         public virtual DbSet<Level> Levels { get; set; }
         public virtual DbSet<SiteUser> SiteUsers { get; set; }
+        public virtual DbSet<Constant> Constants { get; set; }
+        public virtual DbSet<HCategory> HCategories { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<SOBonusSize> SOBonusSizes { get; set; }
+        public virtual DbSet<VCategory> VCategories { get; set; }
     }
 }
