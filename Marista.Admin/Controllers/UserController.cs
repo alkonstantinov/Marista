@@ -1,6 +1,6 @@
-﻿using Marista.Admin.ViewModels;
-using Marista.Common.Models;
+﻿using Marista.Common.Models;
 using Marista.Common.Tools;
+using Marista.Common.ViewModels;
 using Marista.DL;
 using System;
 using System.Collections.Generic;
@@ -14,8 +14,6 @@ namespace Marista.Admin.Controllers
 {
     public class UserController : BaseController
     {
-        private readonly MaristaEntities db = new MaristaEntities();
-
         public UserController()
         {
         }
@@ -34,8 +32,12 @@ namespace Marista.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginVM login)
         {
-            string hashedPassword = MD5.ConvertToMD5(login.Password);
-            var user = await db.SiteUsers.SingleOrDefaultAsync(u => u.Username == login.Username && u.Password == hashedPassword);
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var user = await this.UserService.Login(login);
             if(user == null)
             {
                 ModelState.AddModelError(string.Empty, "Incorrect username and/or password");

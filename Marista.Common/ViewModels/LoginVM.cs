@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Marista.Admin.ViewModels
+namespace Marista.Common.ViewModels
 {
     public class LoginVM
     {

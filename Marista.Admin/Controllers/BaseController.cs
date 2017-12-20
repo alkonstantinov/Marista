@@ -1,4 +1,5 @@
 ﻿using Marista.Common.Models;
+using Marista.DL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,16 @@ namespace Marista.Admin.Controllers
             set
             {
                 Session["UserData"] = value;
+            }
+        }
+
+        private UserService _us;
+        public UserService UserService
+        {
+            get
+            {
+                if (_us == null) _us = new UserService();
+                return _us;
             }
         }
     }
