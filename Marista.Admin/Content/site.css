@@ -10,3 +10,26 @@
     margin: 0;
     list-style: none; }
 
+.filters-panel {
+  background-color: #fafafa; }
+  .filters-panel > div {
+    padding: 15px; }
+  .filters-panel .search-bar {
+    background-color: #f6f6f6; }
+
+.table thead th {
+  background-color: #999;
+  color: #fff;
+  font-size: 1.2em; }
+
+.table th:first-child {
+  width: 140px; }
+
+/*** Product specific ***/
+.product-picture {
+  width: 64px;
+  height: 64px; }
+
+td.accent {
+  font-weight: bold; }
+

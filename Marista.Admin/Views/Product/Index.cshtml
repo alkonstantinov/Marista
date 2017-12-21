@@ -1,0 +1,54 @@
+﻿@model PagedList.IPagedList<Marista.DL.Product>
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<h2><a href="@Url.Action("Index")">@ViewBag.Title</a></h2>
+
+<div class="row filters-panel">
+    <div class="col-sm-3">
+        <a href="@Url.Action("Create")" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Create new product</a>
+    </div>
+    <div class="search-bar col-sm-4 col-sm-offset-5">
+        <form action="@Url.Action("Index")" method="get" class="form-inline">
+            <div class="form-group">
+                <input type="search" name="q" value="@ViewBag.SearchQuery" class="form-control" placeholder="Search Products" />
+                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-filter"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th width="64">Picture</th>
+                <th width="">Name</th>
+                <th width="100">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="@Url.Action("Details", new { id = p.ProductId })" class="btn btn-default" title="View"><i class="glyphicon glyphicon-search"></i></a>
+                            <a href="@Url.Action("Edit", new { id = p.ProductId })" class="btn btn-info" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
+                        </div>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details", new { id = p.ProductId })">
+                            <img src="@Url.Action("Picture", new { id = p.ProductId })" alt="@p.Name" class="product-picture" />
+                        </a>
+                    </td>
+                    <td class="accent"><a href="@Url.Action("Details", new { id = p.ProductId })">@p.Name</a></td>
+                    <td>@p.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))

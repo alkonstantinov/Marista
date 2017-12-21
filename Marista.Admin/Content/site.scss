@@ -19,3 +19,40 @@
         }
     }
 }
+
+
+.filters-panel {
+    background-color: #fafafa;
+
+    > div {
+        padding: 15px;
+    }
+
+    .search-bar {
+        background-color: #f6f6f6;
+    }
+}
+
+.table {
+    thead th {
+        background-color: #999;
+        color: #fff;
+        font-size: 1.2em;
+    }
+
+    th:first-child {
+        width: 140px;
+    }
+}
+
+
+/*** Product specific ***/
+
+.product-picture {
+    width: 64px;
+    height: 64px;
+}
+
+td.accent {
+    font-weight: bold;
+}
