@@ -21,6 +21,7 @@ namespace Marista.Admin.Controllers
             if (this.UserData == null || (this.UserData != null && this.UserData.LevelId != 1))
             {
                 filterContext.HttpContext.Response.Redirect(Url.Action("Login", "User"), true);
+                return;
             }
             base.OnActionExecuting(filterContext);
         }
@@ -57,6 +58,47 @@ namespace Marista.Admin.Controllers
                 return RedirectToAction("Index", new { createdId = p.ProductId });
             }
             await PopulateSelectLists();
+            return View(p);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
+        {
+            var p = await _ps.Get(id);
+            await PopulateSelectLists();
+            return View(p);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(Product p)
+        {
+            if(ModelState.IsValid)
+            {
+                var original = await _ps.Get(p.ProductId);
+                TryUpdateModel(original);
+
+                // update the picture only if a new one is provided
+                p.Picture = await GetUploadedFile("filePicture");
+                if(p.Picture != null)
+                {
+                    original.Picture = p.Picture;
+                }
+
+                p = await _ps.Update(original);
+                return RedirectToAction("Details", new { id = p.ProductId });
+            }
+            await PopulateSelectLists();
+            return View(p);
+        }
+
+        public async Task<ActionResult> Details(int id)
+        {
+            var p = await _ps.Get(id);
+            if(p == null)
+            {
+                return RedirectToAction("Index");
+            }
             return View(p);
         }
 

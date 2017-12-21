@@ -30,6 +30,9 @@
   width: 64px;
   height: 64px; }
 
+.product-picture-lg {
+  width: 100%; }
+
 td.accent {
   font-weight: bold; }
 

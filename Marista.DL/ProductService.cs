@@ -37,6 +37,12 @@ namespace Marista.DL
             return p;
         }
 
+        public async Task<Product> Update(Product p)
+        {
+            await db.SaveChangesAsync();
+            return p;
+        }
+
         public async Task<IList<HCategory>> GetHCategories()
         {
             return await db.HCategories.ToListAsync();

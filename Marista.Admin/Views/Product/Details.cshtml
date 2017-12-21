@@ -1,0 +1,45 @@
+﻿@model Marista.DL.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <img src="@Url.Action("Picture", new { id = Model.ProductId })" alt="@Model.Name" class="product-picture-lg" />
+    </div>
+    <div class="col-sm-9">
+        <h1>@Model.Name</h1>
+        <p>@Model.Description</p>
+        <p>@Model.Price</p>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">HCategory</div>
+            </div>
+            <div class="panel-body">
+                @Model.HCategory.CategoryName
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">VCategory</div>
+            </div>
+            <div class="panel-body">
+                @Model.VCategory.CategoryName
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
