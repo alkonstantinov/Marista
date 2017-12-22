@@ -1,6 +1,9 @@
-﻿using System;
+﻿using AutoMapper;
+using Marista.Common.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +13,20 @@ namespace Marista.DL
     public class ProductService
     {
         private readonly MaristaEntities db = new MaristaEntities();
+        private readonly IMapper _map;
 
-        public async Task<IList<Product>> Get(string search = null)
+        public ProductService()
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductVM>().ReverseMap().PreserveReferences()
+                .ForMember(dest => dest.Picture, 
+                    y => y.Condition(src => src.Picture != null && src.Picture.Length > 0))
+                .ForMember(dest => dest.HCategory, y => y.Ignore())
+                .ForMember(dest => dest.VCategory, y => y.Ignore())
+            );
+            _map = config.CreateMapper();
+        }
+
+        public async Task<IList<ProductVM>> Get(string search = null)
         {
             var query = db.Products
                 .Include(x => x.HCategory)
@@ -22,25 +37,39 @@ namespace Marista.DL
                 query = query.Where(x => x.Name.Contains(search));
             }
                 
-            return await query.ToListAsync();
+            return await query.ProjectToListAsync<ProductVM>(_map.ConfigurationProvider);
         }
 
-        public async Task<Product> Get(int id)
+        public async Task<ProductVM> Get(int id)
         {
-            return await db.Products.SingleOrDefaultAsync(x => x.ProductId == id);
+            var p = await db.Products
+                .Include(x => x.HCategory)
+                .Include(x => x.VCategory)
+                .SingleOrDefaultAsync(x => x.ProductId == id);
+            return _map.Map<ProductVM>(p);
         }
 
-        public async Task<Product> Create(Product p)
+        public async Task<ProductVM> Create(ProductVM pvm)
         {
+            var p = _map.Map<Product>(pvm);
             p = db.Products.Add(p);
             await db.SaveChangesAsync();
-            return p;
+            return _map.Map<ProductVM>(p);
         }
 
-        public async Task<Product> Update(Product p)
+        public async Task<ProductVM> Update(ProductVM pvm)
         {
-            await db.SaveChangesAsync();
-            return p;
+            var p = await db.Products.SingleOrDefaultAsync(x => x.ProductId == pvm.ProductId);
+            _map.Map<ProductVM, Product>(pvm, p);
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                Trace.WriteLine(ex.Message);
+            }
+            return pvm;
         }
 
         public async Task<IList<HCategory>> GetHCategories()

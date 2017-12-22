@@ -1,4 +1,5 @@
 ﻿using Marista.Admin.Filters;
+using Marista.Common.ViewModels;
 using Marista.DL;
 using PagedList;
 using System;
@@ -42,14 +43,14 @@ namespace Marista.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Create()
         {
-            var p = new Product();
+            var p = new ProductVM();
             await PopulateSelectLists();
             return View(p);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Product p)
+        public async Task<ActionResult> Create(ProductVM p)
         {
             if(ModelState.IsValid)
             {
@@ -71,21 +72,18 @@ namespace Marista.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Product p)
+        public async Task<ActionResult> Edit(ProductVM p)
         {
             if(ModelState.IsValid)
             {
-                var original = await _ps.Get(p.ProductId);
-                TryUpdateModel(original);
-
                 // update the picture only if a new one is provided
-                p.Picture = await GetUploadedFile("filePicture");
-                if(p.Picture != null)
+                var picture = await GetUploadedFile("filePicture");
+                if(picture != null)
                 {
-                    original.Picture = p.Picture;
+                    p.Picture = picture;
                 }
 
-                p = await _ps.Update(original);
+                p = await _ps.Update(p);
                 return RedirectToAction("Details", new { id = p.ProductId });
             }
             await PopulateSelectLists();

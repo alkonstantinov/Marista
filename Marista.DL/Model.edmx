@@ -197,7 +197,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MaristaEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MaristaEntities" annotation:LazyLoadingEnabled="false">
           <EntitySet Name="Levels" EntityType="Self.Level" />
           <EntitySet Name="SiteUsers" EntityType="Self.SiteUser" />
           <AssociationSet Name="fk_SiteUser_LevelId" Association="Self.fk_SiteUser_LevelId">

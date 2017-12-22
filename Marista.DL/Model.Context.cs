@@ -18,6 +18,7 @@ namespace Marista.DL
         public MaristaEntities()
             : base("name=MaristaEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

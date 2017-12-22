@@ -1,4 +1,4 @@
-﻿@model Marista.DL.Product
+﻿@model Marista.Common.ViewModels.ProductVM
 
 @{
     ViewBag.Title = "Details";
@@ -25,7 +25,7 @@
                 <div class="panel-title">HCategory</div>
             </div>
             <div class="panel-body">
-                @Model.HCategory.CategoryName
+                @Model.HCategoryCategoryName
             </div>
         </div>
 
@@ -34,7 +34,7 @@
                 <div class="panel-title">VCategory</div>
             </div>
             <div class="panel-body">
-                @Model.VCategory.CategoryName
+                @Model.VCategoryCategoryName
             </div>
         </div>
     </div>
