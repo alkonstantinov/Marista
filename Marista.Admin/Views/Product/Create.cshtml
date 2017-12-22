@@ -14,18 +14,19 @@
     
     <div class="form-horizontal">
         <h4>Create new product</h4>
-        <hr />
         
         @Html.Partial("_Edit")
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-success btn-lg" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="sub-footer row">
+    <div class="col-sm-12">
+        <a href="@Url.Action("Index")" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-backward"></i> Back to the list of products</a>
+    </div>
 </div>

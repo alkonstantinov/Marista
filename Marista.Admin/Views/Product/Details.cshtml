@@ -4,12 +4,9 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Product</h4>
-    <hr />
-    
+    <h4>Product #@Model.ProductId</h4>
+
 </div>
 <div class="row">
     <div class="col-sm-3">
@@ -39,7 +36,9 @@
         </div>
     </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="sub-footer row">
+    <div class="col-sm-12">
+        <a href="@Url.Action("Edit", new { id = Model.ProductId })" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-edit"></i> Edit this product</a>
+        <a href="@Url.Action("Index")" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-backward"></i> Back to the list of products</a>
+    </div>
+</div>

@@ -55,8 +55,15 @@ namespace Marista.Admin.Controllers
             if(ModelState.IsValid)
             {
                 p.Picture = await GetUploadedFile("filePicture");
-                p = await _ps.Create(p);
-                return RedirectToAction("Index", new { createdId = p.ProductId });
+                if (p.Picture == null)
+                {
+                    ModelState.AddModelError("Picture", "Picture is required");
+                }
+                else
+                {
+                    p = await _ps.Create(p);
+                    return RedirectToAction("Index", new { createdId = p.ProductId });
+                }
             }
             await PopulateSelectLists();
             return View(p);
@@ -100,6 +107,14 @@ namespace Marista.Admin.Controllers
             return View(p);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int productId)
+        {
+            await _ps.Delete(productId);
+            return RedirectToAction("Index");
+        }
+
         private async Task PopulateSelectLists()
         {
             ViewBag.HCategories = new SelectList(await _ps.GetHCategories(), "HCategoryId", "CategoryName");
@@ -112,7 +127,7 @@ namespace Marista.Admin.Controllers
             if(files.Count > 0)
             {
                 var file = files[name];
-                if(file != null)
+                if(file != null && file.ContentLength > 0)
                 {
                     using(var m = new MemoryStream())
                     {

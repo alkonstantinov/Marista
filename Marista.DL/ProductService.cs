@@ -72,6 +72,14 @@ namespace Marista.DL
             return pvm;
         }
 
+        public async Task Delete(int id)
+        {
+            var p = await db.Products.SingleOrDefaultAsync(x => x.ProductId == id);
+            if (p == null) return;
+            db.Products.Remove(p);
+            await db.SaveChangesAsync();
+        }
+
         public async Task<IList<HCategory>> GetHCategories()
         {
             return await db.HCategories.ToListAsync();

@@ -17,6 +17,11 @@
   .filters-panel .search-bar {
     background-color: #f6f6f6; }
 
+.sub-footer {
+  background-color: #f6f6f6;
+  margin-top: 100px;
+  padding: 16px; }
+
 .table thead th {
   background-color: #999;
   color: #fff;

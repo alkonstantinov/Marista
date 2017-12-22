@@ -36,7 +36,7 @@
 <div class="form-group">
     @Html.LabelFor(model => model.VCategoryId, "VCategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownList("VCategoryId", (SelectList)ViewBag.VCategories, htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownList("VCategoryId", (SelectList)ViewBag.VCategories, optionLabel: "Select Vertical Category...", htmlAttributes: new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.VCategoryId, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -44,7 +44,7 @@
 <div class="form-group">
     @Html.LabelFor(model => model.HCategoryId, "HCategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownList("HCategoryId", (SelectList)ViewBag.HCategories, htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownList("HCategoryId", (SelectList)ViewBag.HCategories, optionLabel: "Select Horizontal Category...", htmlAttributes: new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.HCategoryId, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -53,5 +53,6 @@
     @Html.LabelFor(model => model.Picture, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         <input type="file" name="filePicture" />
+        @Html.ValidationMessageFor(model => model.Picture, "", new { @class = "text-danger" })
     </div>
 </div>
