@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace Marista.Admin.Controllers
 {
-    //[AdminAuthorize]
+    [AdminAuthorize]
     public class ProductController : BaseController
     {
         private readonly ProductService _ps = new ProductService();

@@ -23,6 +23,7 @@ namespace Marista.Common.ViewModels
         [Required]
         public int HCategoryId { get; set; }
         public string HCategoryCategoryName { get; set; }
+        //required, enforced by the controller
         public byte[] Picture { get; set; }
     }
 }

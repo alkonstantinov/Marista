@@ -13,17 +13,11 @@ namespace Marista.DL
     public class ProductService
     {
         private readonly MaristaEntities db = new MaristaEntities();
-        private readonly IMapper _map;
+        private IMapper _map;
 
         public ProductService()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductVM>().ReverseMap().PreserveReferences()
-                .ForMember(dest => dest.Picture, 
-                    y => y.Condition(src => src.Picture != null && src.Picture.Length > 0))
-                .ForMember(dest => dest.HCategory, y => y.Ignore())
-                .ForMember(dest => dest.VCategory, y => y.Ignore())
-            );
-            _map = config.CreateMapper();
+            _map = VMMapper.Instance.Mapper;
         }
 
         public async Task<IList<ProductVM>> Get(string search = null)
@@ -34,7 +28,7 @@ namespace Marista.DL
 
             if (!string.IsNullOrEmpty(search))
             {
-                query = query.Where(x => x.Name.Contains(search));
+                query = query.Where(x => x.Name.Contains(search) || x.Description.Contains(search));
             }
                 
             return await query.ProjectToListAsync<ProductVM>(_map.ConfigurationProvider);
@@ -46,6 +40,7 @@ namespace Marista.DL
                 .Include(x => x.HCategory)
                 .Include(x => x.VCategory)
                 .SingleOrDefaultAsync(x => x.ProductId == id);
+
             return _map.Map<ProductVM>(p);
         }
 

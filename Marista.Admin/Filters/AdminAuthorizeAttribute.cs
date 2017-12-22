@@ -10,7 +10,7 @@ namespace Marista.Admin.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-
+            //TODO: move request authorization here
             base.OnActionExecuting(filterContext);
         }
     }
