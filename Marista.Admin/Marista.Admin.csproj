@@ -151,6 +151,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\RelatedProductController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\AdminAuthorizeAttribute.cs" />
@@ -171,6 +172,9 @@
     <Content Include="Views\Product\_Edit.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\RelatedProduct\Index.cshtml" />
+    <Content Include="Views\RelatedProduct\Create.cshtml" />
+    <Content Include="Views\RelatedProduct\_Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

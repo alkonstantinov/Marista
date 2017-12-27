@@ -252,7 +252,7 @@
           <Property Name="Picture" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="HCategory" Relationship="MaristaModel.fk_Product_HCategoryId" FromRole="Product" ToRole="HCategory" />
           <NavigationProperty Name="VCategory" Relationship="MaristaModel.fk_Product_VCategoryId" FromRole="Product" ToRole="VCategory" />
-          <NavigationProperty Name="RelatedFromProduct" Relationship="MaristaModel.RelatedProduct" FromRole="Product" ToRole="Product1" />
+          <NavigationProperty Name="RelatedFromProducts" Relationship="MaristaModel.RelatedProduct" FromRole="Product" ToRole="Product1" />
           <NavigationProperty Name="RelatedToProducts" Relationship="MaristaModel.RelatedProduct" FromRole="Product1" ToRole="Product" />
         </EntityType>
         <EntityType Name="SOBonusSize">

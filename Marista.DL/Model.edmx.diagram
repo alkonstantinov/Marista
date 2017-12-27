@@ -17,10 +17,8 @@
         <AssociationConnector Association="MaristaModel.fk_Product_VCategoryId" />
         <AssociationConnector Association="MaristaModel.RelatedProduct" ManuallyRouted="true" >
           <ConnectorPoint PointX="5.9592307692307696" PointY="7.076396484375" />
-          <ConnectorPoint PointX="5.9592307692307696" PointY="7.227646484375" />
-          <ConnectorPoint PointX="5.6988141025641035" PointY="7.227646484375" />
-          <ConnectorPoint PointX="5.6988141025641035" PointY="7.5347298177083335" />
-          <ConnectorPoint PointX="6.554615384615385" PointY="7.5347298177083335" />
+          <ConnectorPoint PointX="5.9592307692307696" PointY="7.6547252367655343" />
+          <ConnectorPoint PointX="6.554615384615385" PointY="7.6547252367655343" />
           <ConnectorPoint PointX="6.554615384615385" PointY="7.076396484375" />
         </AssociationConnector>
       </Diagram>

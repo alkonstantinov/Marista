@@ -6,6 +6,8 @@
 
 <h3>Hello, @ViewBag.Username</h3>
 
-@Html.ActionLink("Products", "Index", "Product", null, null)
-
+<ul>
+    <li>@Html.ActionLink("Products", "Index", "Product", null, null)</li>
+    <li>@Html.ActionLink("Related Products", "Index", "RelatedProduct", null, null)</li>
+</ul>
 <a href="@Url.Action("Logout", "User")" class="btn btn-default">Logout</a>

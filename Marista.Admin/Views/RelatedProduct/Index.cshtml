@@ -1,0 +1,47 @@
+﻿@model PagedList.IPagedList<Marista.Common.ViewModels.RelatedProductVM>
+
+@{
+    ViewBag.Title = "Related Products";
+}
+
+<h2><a href="@Url.Action("Index")">@ViewBag.Title</a></h2>
+
+<div class="row filters-panel">
+    <div class="col-sm-3">
+        <a href="@Url.Action("Create")" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Create a new relationship</a>
+    </div>
+    <div class="search-bar col-sm-4 col-sm-offset-5">
+        <form action="@Url.Action("Index")" method="get" class="form-inline">
+            <div class="form-group">
+                <input type="search" name="q" value="@ViewBag.SearchQuery" class="form-control" placeholder="Search Related Products" />
+                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-filter"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th width="50%">Related Product</th>
+                <th width="50%">Related To</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="@Url.Action("Delete", new { fromProductId = p.FromProductId, toProductId = p.ToProductId })" class="btn btn-danger btn-delete" title="Delete"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </td>
+                    <td class="accent"><a href="@Url.Action("Details", "Product", new { id = p.FromProductId })">@p.FromProductName</a></td>
+                    <td class="accent"><a href="@Url.Action("Details", "Product", new { id = p.ToProductId })">@p.ToProductName</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))

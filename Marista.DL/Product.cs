@@ -17,7 +17,7 @@ namespace Marista.DL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.RelatedFromProduct = new HashSet<Product>();
+            this.RelatedFromProducts = new HashSet<Product>();
             this.RelatedToProducts = new HashSet<Product>();
         }
     
@@ -33,7 +33,7 @@ namespace Marista.DL
         public virtual HCategory HCategory { get; set; }
         public virtual VCategory VCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> RelatedFromProduct { get; set; }
+        public virtual ICollection<Product> RelatedFromProducts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> RelatedToProducts { get; set; }
     }

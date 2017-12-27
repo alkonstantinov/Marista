@@ -31,7 +31,7 @@ namespace Marista.Admin.Controllers
         {
             var products = await _ps.Get(q);
             ViewBag.SearchQuery = q ?? string.Empty;
-            return View(products.ToPagedList(page ?? 1, 5));
+            return View(products.ToPagedList(page ?? 1, 20));
         }
 
         public async Task<ActionResult> Picture(int id)
@@ -111,7 +111,14 @@ namespace Marista.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int productId)
         {
-            await _ps.Delete(productId);
+            try
+            {
+                await _ps.Delete(productId);
+            }
+            catch(Exception)
+            {
+                return RedirectToAction("Index", new {  });
+            }
             return RedirectToAction("Index");
         }
 

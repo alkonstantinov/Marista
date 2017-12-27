@@ -75,6 +75,63 @@ namespace Marista.DL
             await db.SaveChangesAsync();
         }
 
+        public async Task<IList<ProductVM>> GetRelatedTo(int productId)
+        {
+            var p = await db.Products.Include(x => x.RelatedToProducts).SingleOrDefaultAsync(x => x.ProductId == productId);
+            if (p == null) return new List<ProductVM>();
+            return _map.Map<IList<ProductVM>>(p.RelatedToProducts);
+        }
+
+        public async Task<IList<ProductVM>> GetRelatedFrom(int productId)
+        {
+            var p = await db.Products.Include(x => x.RelatedFromProducts).SingleOrDefaultAsync(x => x.ProductId == productId);
+            if (p == null) return new List<ProductVM>();
+            return _map.Map<IList<ProductVM>>(p.RelatedFromProducts);
+        }
+
+        public async Task<IList<RelatedProductVM>> GetAllRelationships(string search = null)
+        {
+            var products = await db.Products.Include(x => x.RelatedToProducts).Where(x => x.RelatedToProducts.Any()).ToListAsync();
+            var list = new List<RelatedProductVM>();
+            foreach(var p in products)
+            {
+                foreach(var rp in p.RelatedToProducts)
+                {
+                    list.Add(new RelatedProductVM(_map.Map<ProductVM>(p), _map.Map<ProductVM>(rp)));
+                }
+            }
+            if(!string.IsNullOrEmpty(search))
+            {
+                search = search.ToUpper();
+                list = list.Where(x => x.FromProductName.ToUpper().Contains(search) || x.ToProductName.ToUpper().Contains(search)).ToList();
+            }
+            return list;
+        }
+
+        public async Task CreateRelated(RelatedProductVM rp)
+        {
+            var fromProduct = await db.Products.SingleOrDefaultAsync(x => x.ProductId == rp.FromProductId);
+            var toProduct = await db.Products.SingleOrDefaultAsync(x => x.ProductId == rp.ToProductId);
+            if(fromProduct == null || toProduct == null)
+            {
+                throw new ArgumentException("Both products are required");
+            }
+            if(fromProduct.ProductId == toProduct.ProductId)
+            {
+                throw new ArgumentException("Cannot create a relationship between the same product");
+            }
+            fromProduct.RelatedToProducts.Add(toProduct);
+            await db.SaveChangesAsync();
+        }
+
+        public async Task DeleteRelated(int fromProductId, int toProductId)
+        {
+            var fromProduct = await db.Products.Include(x => x.RelatedToProducts).SingleOrDefaultAsync(x => x.ProductId == fromProductId);
+            if (fromProduct == null) return;
+            fromProduct.RelatedToProducts.Remove(fromProduct.RelatedToProducts.Single(x => x.ProductId == toProductId));
+            await db.SaveChangesAsync();
+        }
+
         public async Task<IList<HCategory>> GetHCategories()
         {
             return await db.HCategories.ToListAsync();
