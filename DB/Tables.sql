@@ -203,3 +203,47 @@ go
 
 exec p_ak_create_fk_indeces 'Constant'
 go
+
+
+if OBJECT_ID('Chat') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Chat'
+  drop table Chat
+end
+go
+
+create table Chat 
+(
+  ChatId int not null identity(1,1), --идентификатор на чат
+  SiteUserId int not null, -- собственик на чата
+  constraint pk_ChatId primary key (ChatId),
+  constraint fk_Chat_SiteUserId foreign key (SiteUserId) references SiteUser(SiteUserId)
+)
+go
+
+exec p_ak_create_fk_indeces 'Chat'
+go
+
+if OBJECT_ID('ChatItem') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'ChatItem'
+  drop table ChatItem
+end
+go
+
+
+insert into Chat(SiteUserId) values (1)
+go
+create table ChatItem 
+(
+  ChatItemId int not null identity(1,1), -- Идентификатор на реплика
+  ChatId int not null, -- Идентификатор на чат 
+  SiteUserId int not null, -- Кой е казал репликата
+  OnDate datetime2 not null, -- в колко часа
+  Said nvarchar(max), -- реплика
+  Attachment varbinary(max), -- файл
+  constraint pk_ChatItemId primary key (ChatItemId),  
+  constraint fk_ChatItem_ChatId foreign key (ChatId) references Chat(ChatId),
+  constraint fk_ChatItem_SiteUserId foreign key (SiteUserId) references SiteUser(SiteUserId)
+)
+go
