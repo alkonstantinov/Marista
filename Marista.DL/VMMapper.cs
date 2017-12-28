@@ -19,17 +19,26 @@ namespace Marista.DL
 
         private VMMapper()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductVM>()
-                .ReverseMap()
-                .PreserveReferences()
-                .ForMember(dest => dest.Picture,
-                    y => y.Condition(src => src.Picture != null && src.Picture.Length > 0))
-                .ForMember(dest => dest.HCategory, y => y.Ignore())
-                .ForMember(dest => dest.VCategory, y => y.Ignore())
+            var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<Product, ProductVM>()
+                        .ReverseMap()
+                        .PreserveReferences()
+                        .ForMember(dest => dest.Picture,
+                            y => y.Condition(src => src.Picture != null && src.Picture.Length > 0))
+                        .ForMember(dest => dest.HCategory, y => y.Ignore())
+                        .ForMember(dest => dest.VCategory, y => y.Ignore());
+
+                    cfg.CreateMap<BonusSize, BonusSizeVM>()
+                        .ReverseMap()
+                        .PreserveReferences();
+                }
             );
+
+
             _map = config.CreateMapper();
         }
 
-        
+
     }
 }

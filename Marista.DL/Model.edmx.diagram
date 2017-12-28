@@ -21,6 +21,7 @@
           <ConnectorPoint PointX="6.554615384615385" PointY="7.6547252367655343" />
           <ConnectorPoint PointX="6.554615384615385" PointY="7.076396484375" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="MaristaModel.BonusSize" Width="1.5" PointX="10.625" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

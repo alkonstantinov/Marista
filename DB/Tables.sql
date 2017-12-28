@@ -144,6 +144,26 @@ exec p_ak_create_fk_indeces 'RelatedProduct'
 go
 
 
+if OBJECT_ID('BonusSize') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'BonusSize'
+  drop table BonusSize
+end
+go
+
+create table BonusSize 
+(
+  BonusSizeId int not null identity(1,1),
+  FromBonus decimal (10,2) not null, -- От цена
+  ToBonus decimal (10,2) not null, -- До цена
+  BonusPercent decimal (10,2) not null, -- процент
+  constraint pk_BonusSizeId primary key (BonusSizeId)
+)
+go
+
+exec p_ak_create_fk_indeces 'BonusSize'
+
+
 if OBJECT_ID('SOBonusSize') is not null
 begin
   exec p_ak_drop_all_foreign_keys 'SOBonusSize'

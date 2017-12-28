@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MaristaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BonusSize">
+          <Key>
+            <PropertyRef Name="BonusSizeId" />
+          </Key>
+          <Property Name="BonusSizeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FromBonus" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="ToBonus" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="BonusPercent" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="Constant">
           <Key>
             <PropertyRef Name="ConstantId" />
@@ -134,6 +143,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MaristaModelStoreContainer">
+          <EntitySet Name="BonusSize" EntityType="Self.BonusSize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Constant" EntityType="Self.Constant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HCategory" EntityType="Self.HCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
@@ -221,6 +231,7 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Product1" EntitySet="Products" />
           </AssociationSet>
+          <EntitySet Name="BonusSizes" EntityType="MaristaModel.BonusSize" />
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -300,6 +311,15 @@
           <End Type="MaristaModel.Product" Role="Product" Multiplicity="*" />
           <End Type="MaristaModel.Product" Role="Product1" Multiplicity="*" />
         </Association>
+        <EntityType Name="BonusSize">
+          <Key>
+            <PropertyRef Name="BonusSizeId" />
+          </Key>
+          <Property Name="BonusSizeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromBonus" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="ToBonus" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="BonusPercent" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -381,6 +401,16 @@
               <ScalarProperty Name="ProductId" ColumnName="FromProductId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="BonusSizes">
+            <EntityTypeMapping TypeName="MaristaModel.BonusSize">
+              <MappingFragment StoreEntitySet="BonusSize">
+                <ScalarProperty Name="BonusPercent" ColumnName="BonusPercent" />
+                <ScalarProperty Name="ToBonus" ColumnName="ToBonus" />
+                <ScalarProperty Name="FromBonus" ColumnName="FromBonus" />
+                <ScalarProperty Name="BonusSizeId" ColumnName="BonusSizeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

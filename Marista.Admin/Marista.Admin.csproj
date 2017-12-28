@@ -150,6 +150,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\BonusSizeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RelatedProductController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -175,6 +176,11 @@
     <Content Include="Views\RelatedProduct\Index.cshtml" />
     <Content Include="Views\RelatedProduct\Create.cshtml" />
     <Content Include="Views\RelatedProduct\_Edit.cshtml" />
+    <Content Include="Views\BonusSize\_Edit.cshtml" />
+    <Content Include="Views\BonusSize\Create.cshtml" />
+    <Content Include="Views\BonusSize\Details.cshtml" />
+    <Content Include="Views\BonusSize\Edit.cshtml" />
+    <Content Include="Views\BonusSize\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

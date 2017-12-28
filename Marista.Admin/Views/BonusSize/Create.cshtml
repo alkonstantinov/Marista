@@ -1,0 +1,32 @@
+﻿@model Marista.Common.ViewModels.BonusSizeVM
+
+@{
+    ViewBag.Title = "Create";
+}
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
+@using (Html.BeginForm("Create", "BonusSize", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Create new bonus size</h4>
+        
+        @Html.Partial("_Edit")
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success btn-lg" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class="sub-footer row">
+    <div class="col-sm-12">
+        <a href="@Url.Action("Index")" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-backward"></i> Back to the list of bonus sizes</a>
+    </div>
+</div>

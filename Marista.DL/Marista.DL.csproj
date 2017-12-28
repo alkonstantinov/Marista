@@ -64,6 +64,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BonusSize.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BonusSizeService.cs" />
     <Compile Include="Constant.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

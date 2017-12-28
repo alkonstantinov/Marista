@@ -33,5 +33,6 @@ namespace Marista.DL
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<SOBonusSize> SOBonusSizes { get; set; }
         public virtual DbSet<VCategory> VCategories { get; set; }
+        public virtual DbSet<BonusSize> BonusSizes { get; set; }
     }
 }
