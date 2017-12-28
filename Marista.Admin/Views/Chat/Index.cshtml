@@ -1,0 +1,50 @@
+﻿@model ChatVM
+@{
+    ViewBag.Title = "Chat";
+}
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script type="text/javascript" src="/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+            var chatHub = $.connection.chatHub;
+
+            chatHub.client.SendMessage = function (from, message) {
+                var newMsg = $('<div></div>');
+                newMsg.html(from + ': ' + message);
+                $('#chat-window').append(newMsg);
+            };
+
+            $.connection.hub.start().done(function () {
+                $('#chat-form').on('submit', function (e) {
+                    e.preventDefault();
+                    chatHub.server.sendMessage('venko', $('#chat-msg').val());
+                    $('#chat-msg').val('');
+                    return false;
+                });
+            })
+        });
+    </script>
+}
+
+<h2>@ViewBag.Title #@Model.ChatId</h2>
+
+<div class="row">
+    <form id="chat-form" method="post">
+        <div class="col-sm-2">
+            @Model.SiteUserUsername:
+        </div>
+        <div class="col-sm-6">
+            <textarea id="chat-msg" class="form-control" placeholder="Type your message here"></textarea>
+        </div>
+        <div class="col-sm-2">
+            <button type="submit" class="btn btn-default">Send</button>
+        </div>
+    </form>
+</div>
+<div id="chat-window">
+    @foreach(var ci in Model.Items)
+    {
+        <div>@ci.OnDate: @ci.SiteUserUsername: @ci.Said</div>
+    }
+</div>

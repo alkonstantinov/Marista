@@ -12,23 +12,18 @@ namespace Marista.DL
     using System;
     using System.Collections.Generic;
     
-    public partial class SiteUser
+    public partial class Chat
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SiteUser()
+        public Chat()
         {
-            this.Chats = new HashSet<Chat>();
             this.ChatItems = new HashSet<ChatItem>();
         }
     
+        public int ChatId { get; set; }
         public int SiteUserId { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public int LevelId { get; set; }
     
-        public virtual Level Level { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Chat> Chats { get; set; }
+        public virtual SiteUser SiteUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChatItem> ChatItems { get; set; }
     }

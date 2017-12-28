@@ -14,6 +14,24 @@
           <Property Name="ToBonus" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="BonusPercent" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="Chat">
+          <Key>
+            <PropertyRef Name="ChatId" />
+          </Key>
+          <Property Name="ChatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SiteUserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChatItem">
+          <Key>
+            <PropertyRef Name="ChatItemId" />
+          </Key>
+          <Property Name="ChatItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChatId" Type="int" Nullable="false" />
+          <Property Name="SiteUserId" Type="int" Nullable="false" />
+          <Property Name="OnDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Said" Type="nvarchar(max)" />
+          <Property Name="Attachment" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Constant">
           <Key>
             <PropertyRef Name="ConstantId" />
@@ -82,6 +100,42 @@
           <Property Name="VCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
+        <Association Name="fk_Chat_SiteUserId">
+          <End Role="SiteUser" Type="Self.SiteUser" Multiplicity="1" />
+          <End Role="Chat" Type="Self.Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="SiteUserId" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="SiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ChatItem_ChatId">
+          <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
+          <End Role="ChatItem" Type="Self.ChatItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chat">
+              <PropertyRef Name="ChatId" />
+            </Principal>
+            <Dependent Role="ChatItem">
+              <PropertyRef Name="ChatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ChatItem_SiteUserId">
+          <End Role="SiteUser" Type="Self.SiteUser" Multiplicity="1" />
+          <End Role="ChatItem" Type="Self.ChatItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="SiteUserId" />
+            </Principal>
+            <Dependent Role="ChatItem">
+              <PropertyRef Name="SiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Product_FromProductId">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="RelatedProduct" Type="Self.RelatedProduct" Multiplicity="*" />
@@ -144,6 +198,8 @@
         </Association>
         <EntityContainer Name="MaristaModelStoreContainer">
           <EntitySet Name="BonusSize" EntityType="Self.BonusSize" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Chat" EntityType="Self.Chat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChatItem" EntityType="Self.ChatItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Constant" EntityType="Self.Constant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HCategory" EntityType="Self.HCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
@@ -152,6 +208,18 @@
           <EntitySet Name="SiteUser" EntityType="Self.SiteUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SOBonusSize" EntityType="Self.SOBonusSize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VCategory" EntityType="Self.VCategory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_Chat_SiteUserId" Association="Self.fk_Chat_SiteUserId">
+            <End Role="SiteUser" EntitySet="SiteUser" />
+            <End Role="Chat" EntitySet="Chat" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ChatItem_ChatId" Association="Self.fk_ChatItem_ChatId">
+            <End Role="Chat" EntitySet="Chat" />
+            <End Role="ChatItem" EntitySet="ChatItem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ChatItem_SiteUserId" Association="Self.fk_ChatItem_SiteUserId">
+            <End Role="SiteUser" EntitySet="SiteUser" />
+            <End Role="ChatItem" EntitySet="ChatItem" />
+          </AssociationSet>
           <AssociationSet Name="fk_Product_FromProductId" Association="Self.fk_Product_FromProductId">
             <End Role="Product" EntitySet="Product" />
             <End Role="RelatedProduct" EntitySet="RelatedProduct" />
@@ -194,6 +262,8 @@
           <Property Name="Password" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LevelId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Level" Relationship="Self.fk_SiteUser_LevelId" FromRole="SiteUser" ToRole="Level" />
+          <NavigationProperty Name="Chats" Relationship="MaristaModel.fk_Chat_SiteUserId" FromRole="SiteUser" ToRole="Chat" />
+          <NavigationProperty Name="ChatItems" Relationship="MaristaModel.fk_ChatItem_SiteUserId" FromRole="SiteUser" ToRole="ChatItem" />
         </EntityType>
         <Association Name="fk_SiteUser_LevelId">
           <End Role="Level" Type="Self.Level" Multiplicity="1" />
@@ -232,6 +302,20 @@
             <End Role="Product1" EntitySet="Products" />
           </AssociationSet>
           <EntitySet Name="BonusSizes" EntityType="MaristaModel.BonusSize" />
+          <EntitySet Name="Chats" EntityType="MaristaModel.Chat" />
+          <EntitySet Name="ChatItems" EntityType="MaristaModel.ChatItem" />
+          <AssociationSet Name="fk_Chat_SiteUserId" Association="MaristaModel.fk_Chat_SiteUserId">
+            <End Role="SiteUser" EntitySet="SiteUsers" />
+            <End Role="Chat" EntitySet="Chats" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ChatItem_ChatId" Association="MaristaModel.fk_ChatItem_ChatId">
+            <End Role="Chat" EntitySet="Chats" />
+            <End Role="ChatItem" EntitySet="ChatItems" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ChatItem_SiteUserId" Association="MaristaModel.fk_ChatItem_SiteUserId">
+            <End Role="SiteUser" EntitySet="SiteUsers" />
+            <End Role="ChatItem" EntitySet="ChatItems" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -320,6 +404,64 @@
           <Property Name="ToBonus" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="BonusPercent" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
         </EntityType>
+        <EntityType Name="Chat">
+          <Key>
+            <PropertyRef Name="ChatId" />
+          </Key>
+          <Property Name="ChatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteUserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SiteUser" Relationship="MaristaModel.fk_Chat_SiteUserId" FromRole="Chat" ToRole="SiteUser" />
+          <NavigationProperty Name="ChatItems" Relationship="MaristaModel.fk_ChatItem_ChatId" FromRole="Chat" ToRole="ChatItem" />
+        </EntityType>
+        <EntityType Name="ChatItem">
+          <Key>
+            <PropertyRef Name="ChatItemId" />
+          </Key>
+          <Property Name="ChatItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChatId" Type="Int32" Nullable="false" />
+          <Property Name="SiteUserId" Type="Int32" Nullable="false" />
+          <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Said" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Attachment" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Chat" Relationship="MaristaModel.fk_ChatItem_ChatId" FromRole="ChatItem" ToRole="Chat" />
+          <NavigationProperty Name="SiteUser" Relationship="MaristaModel.fk_ChatItem_SiteUserId" FromRole="ChatItem" ToRole="SiteUser" />
+        </EntityType>
+        <Association Name="fk_Chat_SiteUserId">
+          <End Type="MaristaModel.SiteUser" Role="SiteUser" Multiplicity="1" />
+          <End Type="MaristaModel.Chat" Role="Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="SiteUserId" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="SiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ChatItem_ChatId">
+          <End Type="MaristaModel.Chat" Role="Chat" Multiplicity="1" />
+          <End Type="MaristaModel.ChatItem" Role="ChatItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chat">
+              <PropertyRef Name="ChatId" />
+            </Principal>
+            <Dependent Role="ChatItem">
+              <PropertyRef Name="ChatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ChatItem_SiteUserId">
+          <End Type="MaristaModel.SiteUser" Role="SiteUser" Multiplicity="1" />
+          <End Type="MaristaModel.ChatItem" Role="ChatItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="SiteUserId" />
+            </Principal>
+            <Dependent Role="ChatItem">
+              <PropertyRef Name="SiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -408,6 +550,26 @@
                 <ScalarProperty Name="ToBonus" ColumnName="ToBonus" />
                 <ScalarProperty Name="FromBonus" ColumnName="FromBonus" />
                 <ScalarProperty Name="BonusSizeId" ColumnName="BonusSizeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chats">
+            <EntityTypeMapping TypeName="MaristaModel.Chat">
+              <MappingFragment StoreEntitySet="Chat">
+                <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
+                <ScalarProperty Name="ChatId" ColumnName="ChatId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChatItems">
+            <EntityTypeMapping TypeName="MaristaModel.ChatItem">
+              <MappingFragment StoreEntitySet="ChatItem">
+                <ScalarProperty Name="Attachment" ColumnName="Attachment" />
+                <ScalarProperty Name="Said" ColumnName="Said" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
+                <ScalarProperty Name="ChatId" ColumnName="ChatId" />
+                <ScalarProperty Name="ChatItemId" ColumnName="ChatItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

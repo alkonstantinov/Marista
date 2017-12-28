@@ -37,6 +37,14 @@ namespace Marista.DL
 
                     cfg.CreateMap<Constant, ConstantVM>()
                         .ReverseMap();
+
+                    cfg.CreateMap<Chat, ChatVM>()
+                        .ReverseMap();
+
+                    cfg.CreateMap<ChatItem, ChatItemVM>()
+                        .ReverseMap()
+                        .ForMember(dest => dest.Chat, y => y.Ignore())
+                        .ForMember(dest => dest.SiteUser, y => y.Ignore());
                 }
             );
 

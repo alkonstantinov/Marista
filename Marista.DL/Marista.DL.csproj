@@ -67,6 +67,13 @@
     <Compile Include="BonusSize.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Chat.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ChatItem.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ChatService.cs" />
     <Compile Include="ConstantService.cs" />
     <Compile Include="SOBonusSIzeService.cs" />
     <Compile Include="BonusSizeService.cs" />

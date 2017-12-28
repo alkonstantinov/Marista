@@ -17,11 +17,16 @@
         <AssociationConnector Association="MaristaModel.fk_Product_VCategoryId" />
         <AssociationConnector Association="MaristaModel.RelatedProduct" ManuallyRouted="true" >
           <ConnectorPoint PointX="5.9592307692307696" PointY="7.076396484375" />
-          <ConnectorPoint PointX="5.9592307692307696" PointY="7.6547252367655343" />
-          <ConnectorPoint PointX="6.554615384615385" PointY="7.6547252367655343" />
+          <ConnectorPoint PointX="5.9592307692307696" PointY="92.84763732248939" />
+          <ConnectorPoint PointX="6.554615384615385" PointY="92.84763732248939" />
           <ConnectorPoint PointX="6.554615384615385" PointY="7.076396484375" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MaristaModel.BonusSize" Width="1.5" PointX="10.625" PointY="0.75" />
+        <EntityTypeShape EntityType="MaristaModel.Chat" Width="1.5" PointX="1.125" PointY="7.25" />
+        <EntityTypeShape EntityType="MaristaModel.ChatItem" Width="1.5" PointX="1.125" PointY="3.75" />
+        <AssociationConnector Association="MaristaModel.fk_Chat_SiteUserId" />
+        <AssociationConnector Association="MaristaModel.fk_ChatItem_ChatId" />
+        <AssociationConnector Association="MaristaModel.fk_ChatItem_SiteUserId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
