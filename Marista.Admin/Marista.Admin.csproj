@@ -149,6 +149,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ConstantController.cs" />
     <Compile Include="Controllers\SOBonusSizeController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\BonusSizeController.cs" />
@@ -187,6 +188,9 @@
     <Content Include="Views\SOBonusSize\Details.cshtml" />
     <Content Include="Views\SOBonusSize\Edit.cshtml" />
     <Content Include="Views\SOBonusSize\Index.cshtml" />
+    <Content Include="Views\Constant\Index.cshtml" />
+    <Content Include="Views\Constant\Edit.cshtml" />
+    <Content Include="Views\Constant\_Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

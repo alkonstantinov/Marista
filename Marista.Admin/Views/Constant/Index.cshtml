@@ -1,0 +1,38 @@
+﻿@model PagedList.IPagedList<Marista.Common.ViewModels.ConstantVM>
+
+@{
+    ViewBag.Title = "Constants";
+}
+
+<h2><a href="@Url.Action("Index")">@ViewBag.Title</a></h2>
+
+<div class="row filters-panel">
+    
+    
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th width="40%">Constant Name</th>
+                <th width="60%">Constant Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="@Url.Action("Edit", new { id = c.ConstantId })" class="btn btn-info" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
+                        </div>
+                    </td>
+                    <td>@c.Name</td>
+                    <td>@c.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))

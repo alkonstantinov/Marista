@@ -67,6 +67,7 @@
     <Compile Include="BonusSize.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ConstantService.cs" />
     <Compile Include="SOBonusSIzeService.cs" />
     <Compile Include="BonusSizeService.cs" />
     <Compile Include="Constant.cs">

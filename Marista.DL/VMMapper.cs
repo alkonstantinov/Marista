@@ -30,12 +30,13 @@ namespace Marista.DL
                         .ForMember(dest => dest.VCategory, y => y.Ignore());
 
                     cfg.CreateMap<BonusSize, BonusSizeVM>()
-                        .ReverseMap()
-                        .PreserveReferences();
+                        .ReverseMap();
 
                     cfg.CreateMap<SOBonusSize, SOBonusSizeVM>()
-                        .ReverseMap()
-                        .PreserveReferences();
+                        .ReverseMap();
+
+                    cfg.CreateMap<Constant, ConstantVM>()
+                        .ReverseMap();
                 }
             );
 
