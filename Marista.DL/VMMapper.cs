@@ -32,6 +32,10 @@ namespace Marista.DL
                     cfg.CreateMap<BonusSize, BonusSizeVM>()
                         .ReverseMap()
                         .PreserveReferences();
+
+                    cfg.CreateMap<SOBonusSize, SOBonusSizeVM>()
+                        .ReverseMap()
+                        .PreserveReferences();
                 }
             );
 

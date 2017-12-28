@@ -49,6 +49,7 @@
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\ProductVM.cs" />
     <Compile Include="ViewModels\RelatedProductVM.cs" />
+    <Compile Include="ViewModels\SOBonusSizeVM.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

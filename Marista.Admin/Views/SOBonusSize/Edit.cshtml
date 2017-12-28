@@ -1,0 +1,41 @@
+﻿@model Marista.Common.ViewModels.SOBonusSizeVM
+
+@{
+    ViewBag.Title = "Edit";
+}
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
+@using (Html.BeginForm("Edit", "SOBonusSize", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Edit spinoff bonus size #@Model.SOBonusSizeId</h4>
+
+        @Html.HiddenFor(x => x.SOBonusSizeId)
+
+        @Html.Partial("_Edit")
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success btn-lg" />
+            </div>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("Delete", "SOBonusSize", FormMethod.Post, new { @class = "delete-form" } ))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.SOBonusSizeId)
+    <button type="submit" class="btn btn-danger btn-sm pull-right"><i class="glyphicon glyphicon-remove-sign"></i> delete</button>
+}
+
+<div class="sub-footer row">
+    <div class="col-sm-12">
+        <a href="@Url.Action("Index")" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-backward"></i> Back to the list of spinoff bonus sizes</a>
+    </div>
+</div>

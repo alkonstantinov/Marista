@@ -1,0 +1,43 @@
+﻿@model PagedList.IPagedList<Marista.Common.ViewModels.SOBonusSizeVM>
+
+@{
+    ViewBag.Title = "Spin Off Bonus Sizes";
+}
+
+<h2><a href="@Url.Action("Index")">@ViewBag.Title</a></h2>
+
+<div class="row filters-panel">
+    <div class="col-sm-3">
+        <a href="@Url.Action("Create")" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Create new spin off bonus size</a>
+    </div>
+    
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th width="200">From spinoffs</th>
+                <th width="200">To spinoffs</th>
+                <th width="">Bonus percent</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var b in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="@Url.Action("Details", new { id = b.SOBonusSizeId })" class="btn btn-default" title="View"><i class="glyphicon glyphicon-search"></i></a>
+                            <a href="@Url.Action("Edit", new { id = b.SOBonusSizeId })" class="btn btn-info" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
+                        </div>
+                    </td>
+                    <td>@b.FromSO</td>
+                    <td>@b.ToSO</td>
+                    <td>@b.BonusPercent</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
