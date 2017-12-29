@@ -9,42 +9,80 @@
         $(function () {
             var chatHub = $.connection.chatHub;
 
-            chatHub.client.SendMessage = function (from, message) {
-                var newMsg = $('<div></div>');
-                newMsg.html(from + ': ' + message);
-                $('#chat-window').append(newMsg);
+            // called from the server on each new message:
+            chatHub.client.SendMessage = function (fromUserId, fromUsername, date, message) {
+                var newMsg = $('<div class="message"></div>');
+                if (fromUserId == @ViewBag.UserId) {
+                    newMsg.addClass('self');
+                }
+                var msgFrom = $('<div class="from"></div>').html(fromUsername + ': <span class="stamp">' + date + '</span>')
+                var msgText = $('<div class="text"></div>').html(message);
+                newMsg.append(msgFrom).append(msgText);
+                $('#chat-window').append($('<div class="row"></div>').append(newMsg));
+
+                scrollBottom();
             };
 
+            // start the hub:
             $.connection.hub.start().done(function () {
                 $('#chat-form').on('submit', function (e) {
                     e.preventDefault();
-                    chatHub.server.sendMessage('venko', $('#chat-msg').val());
+
+                    var text = $('#chat-msg').val();
+                    if (text.length < 2) {
+                        $('#chat-msg').val('');
+                        return;
+                    }
+
+                    chatHub.server.sendMessage(text);
+
                     $('#chat-msg').val('');
                     return false;
                 });
-            })
+
+                $('#chat-msg').on('keyup', function (e) {
+                    if (e.keyCode == 13 && !e.shiftKey) {
+                        $('#chat-form').trigger('submit');
+                    }
+                });
+            });
+
+            var scrollBottom = function () {
+                $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
+            };
+            scrollBottom();
         });
     </script>
 }
 
 <h2>@ViewBag.Title #@Model.ChatId</h2>
 
-<div class="row">
-    <form id="chat-form" method="post">
-        <div class="col-sm-2">
-            @Model.SiteUserUsername:
-        </div>
-        <div class="col-sm-6">
-            <textarea id="chat-msg" class="form-control" placeholder="Type your message here"></textarea>
-        </div>
-        <div class="col-sm-2">
-            <button type="submit" class="btn btn-default">Send</button>
-        </div>
-    </form>
-</div>
-<div id="chat-window">
-    @foreach(var ci in Model.Items)
-    {
-        <div>@ci.OnDate: @ci.SiteUserUsername: @ci.Said</div>
-    }
+<div class="container chat-container">
+    <div id="chat-form-box" class="row">
+        <form id="chat-form" method="post">
+            <div class="col-sm-2 my-username">
+                @ViewBag.Username:
+            </div>
+            <div class="col-sm-6">
+                <textarea id="chat-msg" class="form-control" placeholder="Type your message here"></textarea>
+            </div>
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-send"></i> Send<small>press Enter</small></button>
+            </div>
+            <div class="col-sm-4 col-sm-offset-2">
+                <input type="file" name="Attachment"/>
+            </div>
+        </form>
+    </div>
+    <div id="chat-window" class="clearfix">
+        @foreach (var ci in Model.Items)
+        {
+            <div class="row">
+                <div class="message @(ci.SiteUserId == ViewBag.UserId ? "self" : "")">
+                    <div class="from">@ci.SiteUserUsername: <span class="stamp">@ci.OnDate</span> </div>
+                    <div class="text">@ci.Said</div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

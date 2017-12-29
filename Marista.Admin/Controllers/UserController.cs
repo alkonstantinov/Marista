@@ -44,12 +44,9 @@ namespace Marista.Admin.Controllers
                 return View();
             }
 
-            this.UserData = new UserData()
-            {
-                UserId = user.SiteUserId,
-                Username = user.Username,
-                LevelId = user.LevelId
-            };
+            this.UserData = user;
+            await this.UserService.StoreSessionId(user.UserId, Session.SessionID);
+
             return RedirectToAction("Index", "Dashboard");
         }
 

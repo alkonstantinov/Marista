@@ -1,4 +1,5 @@
-﻿using Marista.Common.Tools;
+﻿using Marista.Common.Models;
+using Marista.Common.Tools;
 using Marista.Common.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,42 @@ namespace Marista.DL
         {
         }
 
-        public async Task<SiteUser> Login(LoginVM login)
+        public async Task<UserData> Login(LoginVM login)
         {
             string hashedPassword = MD5.ConvertToMD5(login.Password);
-            return await db.SiteUsers.SingleOrDefaultAsync(u => u.Username == login.Username && u.Password == hashedPassword);
+            var user = await db.SiteUsers.SingleOrDefaultAsync(u => u.Username == login.Username && u.Password == hashedPassword);
+            if (user != null)
+            {
+                return new UserData()
+                {
+                    UserId = user.SiteUserId,
+                    Username = user.Username,
+                    LevelId = user.LevelId
+                };
+            }
+            else return null;
+        }
+
+        public async Task StoreSessionId(int userId, string sessionId)
+        {
+            var user = await db.SiteUsers.SingleOrDefaultAsync(x => x.SiteUserId == userId);
+            user.CurrentSessionId = sessionId;
+            await db.SaveChangesAsync();
+        }
+
+        public async Task<UserData> GetBySessionId(string sessionId)
+        {
+            var user = await db.SiteUsers.SingleOrDefaultAsync(x => x.CurrentSessionId == sessionId);
+            if (user != null)
+            {
+                return new UserData()
+                {
+                    UserId = user.SiteUserId,
+                    Username = user.Username,
+                    LevelId = user.LevelId
+                };
+            }
+            else return null;
         }
     }
 }

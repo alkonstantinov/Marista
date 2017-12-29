@@ -23,12 +23,17 @@ namespace Marista.DL
         public async Task<ChatVM> Get(int siteUserId)
         {
             // TODO: modify the condition to fetch a specific chat
+            /*var c = await db.Chats
+                .Include(x => x.SiteUser)
+                .Include(x => x.ChatItems)
+                .Include(x => x.ChatItems.Select(y => y.SiteUser))
+                .SingleOrDefaultAsync(x => x.SiteUserId == siteUserId);*/
             var c = await db.Chats
                 .Include(x => x.SiteUser)
                 .Include(x => x.ChatItems)
                 .Include(x => x.ChatItems.Select(y => y.SiteUser))
-                .SingleOrDefaultAsync(x => x.SiteUserId == siteUserId);
-            if(c == null)
+                .SingleOrDefaultAsync(x => x.ChatId == 1);
+            if (c == null)
             {
                 return null;
             }

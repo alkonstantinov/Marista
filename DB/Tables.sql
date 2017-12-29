@@ -37,6 +37,7 @@ create table SiteUser
   Username nvarchar(50) not null,
   Password nvarchar(32) not null,
   LevelId int not null,
+  CurrentSessionId nvarchar(50) null,
   constraint pk_SiteUserId primary key (SiteUserId),
   constraint fk_SiteUser_LevelId foreign key (LevelId) references Level(LevelId)
 )
@@ -45,8 +46,11 @@ go
 exec p_ak_create_fk_indeces 'SiteUser'
 go
 
+create index ix_SessionId on SiteUser (CurrentSessionId asc)
+go
+
 insert into SiteUser(Username, Password, LevelId)
-values ('admin', '202cb962ac59075b964b07152d234b70', 1)
+values ('admin', '202cb962ac59075b964b07152d234b70', 1), ('testOne', '202cb962ac59075b964b07152d234b70', 1)
 go
 
 

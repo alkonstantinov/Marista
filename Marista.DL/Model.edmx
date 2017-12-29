@@ -83,6 +83,7 @@
           <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="LevelId" Type="int" Nullable="false" />
+          <Property Name="CurrentSessionId" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SOBonusSize">
           <Key>
@@ -264,6 +265,7 @@
           <NavigationProperty Name="Level" Relationship="Self.fk_SiteUser_LevelId" FromRole="SiteUser" ToRole="Level" />
           <NavigationProperty Name="Chats" Relationship="MaristaModel.fk_Chat_SiteUserId" FromRole="SiteUser" ToRole="Chat" />
           <NavigationProperty Name="ChatItems" Relationship="MaristaModel.fk_ChatItem_SiteUserId" FromRole="SiteUser" ToRole="ChatItem" />
+          <Property Name="CurrentSessionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="fk_SiteUser_LevelId">
           <End Role="Level" Type="Self.Level" Multiplicity="1" />
@@ -479,6 +481,7 @@
           <EntitySetMapping Name="SiteUsers">
             <EntityTypeMapping TypeName="MaristaModel.SiteUser">
               <MappingFragment StoreEntitySet="SiteUser">
+                <ScalarProperty Name="CurrentSessionId" ColumnName="CurrentSessionId" />
                 <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

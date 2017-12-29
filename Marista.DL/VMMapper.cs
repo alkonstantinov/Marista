@@ -44,7 +44,8 @@ namespace Marista.DL
                     cfg.CreateMap<ChatItem, ChatItemVM>()
                         .ReverseMap()
                         .ForMember(dest => dest.Chat, y => y.Ignore())
-                        .ForMember(dest => dest.SiteUser, y => y.Ignore());
+                        .ForMember(dest => dest.SiteUser, y => y.Ignore())
+                        .ForMember(dest => dest.Attachment, y => y.Condition(src => src.Attachment != null && src.Attachment.Length > 0));
                 }
             );
 
