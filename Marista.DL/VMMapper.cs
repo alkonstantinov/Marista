@@ -48,7 +48,10 @@ namespace Marista.DL
                         .ForMember(dest => dest.Attachment, y => y.Condition(src => src.Attachment != null && src.Attachment.Length > 0));
 
                     cfg.CreateMap<Coupon, CouponVM>()
-                        .ReverseMap();
+                        .ReverseMap()
+                        .ForMember(dest => dest.Product, y => y.Ignore())
+                        .ForMember(dest => dest.HCategory, y => y.Ignore())
+                        .ForMember(dest => dest.VCategory, y => y.Ignore());
                 }
             );
 

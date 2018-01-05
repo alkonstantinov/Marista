@@ -28,7 +28,8 @@ namespace Marista.DL
 
             if (!string.IsNullOrEmpty(search))
             {
-                query = query.Where(x => x.UniqueId.Contains(search));
+                query = query.Where(x => x.UniqueId.Contains(search) || x.Product.Name.Contains(search) 
+                    || x.HCategory.CategoryName.Contains(search) || x.VCategory.CategoryName.Contains(search));
             }
 
             return await query.ProjectToListAsync<CouponVM>(_map.ConfigurationProvider);
@@ -61,24 +62,18 @@ namespace Marista.DL
             await db.SaveChangesAsync();
         }
 
+        public async Task SwitchUsed(int id)
+        {
+            var c = await db.Coupons.SingleOrDefaultAsync(x => x.CouponId == id);
+            if (c == null) return;
+            c.Used = !c.Used;
+            await db.SaveChangesAsync();
+        }
+
         public async Task<bool> UniqueIdExisting(string id)
         {
             return await db.Coupons.AnyAsync(c => c.UniqueId == id);
         }
 
-        public async Task<IList<HCategory>> GetHCategories()
-        {
-            return await db.HCategories.ToListAsync();
-        }
-
-        public async Task<IList<VCategory>> GetVCategories()
-        {
-            return await db.VCategories.ToListAsync();
-        }
-
-        public async Task<IList<Product>> GetProducts()
-        {
-            return await db.Products.ToListAsync();
-        }
     }
 }

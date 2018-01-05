@@ -16,6 +16,7 @@ namespace Marista.Admin.Controllers
     public class CouponController : BaseController
     {
         private readonly CouponService _cs = new CouponService();
+        private readonly ProductService _ps = new ProductService();
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -27,10 +28,11 @@ namespace Marista.Admin.Controllers
             base.OnActionExecuting(filterContext);
         }
 
-        public async Task<ActionResult> Index(string q, int? page)
+        public async Task<ActionResult> Index(string q, int? page, int? createdId)
         {
             var coupons = await _cs.Get(q);
             ViewBag.SearchQuery = q ?? string.Empty;
+            ViewBag.CreatedId = createdId;
             return View(coupons.ToPagedList(page ?? 1, 20));
         }
 
@@ -38,6 +40,8 @@ namespace Marista.Admin.Controllers
         public async Task<ActionResult> Create()
         {
             var c = new CouponVM();
+            c.Expires = DateTime.Now.AddDays(30); // default expiration date
+            c.ForAll = true; //select for all products by default
             await PopulateSelectLists();
             return View(c);
         }
@@ -48,21 +52,30 @@ namespace Marista.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var uniqueId = await GenerateUniqueId();
+                // check if only one of the possible options has been selected
+                if (!c.IsOnlyOneOptionSelected)
+                {
+                    ModelState.AddModelError(string.Empty, "Only one of the options should be selected");
+                    await PopulateSelectLists();
+                    return View(c);
+                }
+
+                var uniqueId = GenerateUniqueId();
 
                 while (await _cs.UniqueIdExisting(uniqueId))
                 {
-                    uniqueId = await GenerateUniqueId();
+                    uniqueId = GenerateUniqueId();
                 }
 
                 c.UniqueId = uniqueId;
                 c.SiteUserId = UserData.UserId;
-                c.Img = await  GenerateImage(uniqueId, c.Expires, c.Discount);
+                c.Img = await GenerateImage(uniqueId, c.Expires, c.Discount);
                 c = await _cs.Create(c);
 
                 return RedirectToAction("Index", new { createdId = c.CouponId });
             }
 
+            await PopulateSelectLists();
             return View(c);
         }
 
@@ -74,11 +87,17 @@ namespace Marista.Admin.Controllers
             return File(img, "image/jpg", "coupon-number-" + coupon.UniqueId + ".jpg");
         }
 
+        public async Task<ActionResult> SwitchUsed(int id)
+        {
+            await _cs.SwitchUsed(id);
+            return RedirectToAction("Index");
+        }
+
         //Helpers
         private async Task<byte[]> GenerateImage(string uniqueId, DateTime expirationDate, int discount)
         {
             var templateImagePath = "~/Content/Images/coupon-template.jpg";
-            var generatedImagePath = "~/Content/Images/generated-coupon.jpg";
+            var generatedImagePath = $"~/Content/Images/generated-coupon-{uniqueId}.jpg";
 
             CompositionBuilder builder = new CompositionBuilder() // generating the image
                            .WithLayer(LayerBuilder.Image
@@ -88,19 +107,17 @@ namespace Marista.Admin.Controllers
                                            .ForeColor(SoundInTheory.DynamicImage.Color.FromArgb(160, 10, 10, 10))
                                            .FontSize(30)
                                            .FontBold())
-                                           .ImageFormat(SoundInTheory.DynamicImage.DynamicImageFormat.Jpeg)
                            .WithLayer(LayerBuilder.Text.Text("Expires: " + expirationDate.ToString())
                                            .Anchor(SoundInTheory.DynamicImage.AnchorStyles.BottomLeft)
                                            .ForeColor(SoundInTheory.DynamicImage.Color.FromArgb(160, 10, 10, 10))
                                            .FontSize(20)
                                            .FontBold())
-                                           .ImageFormat(SoundInTheory.DynamicImage.DynamicImageFormat.Jpeg)
                            .WithLayer(LayerBuilder.Text.Text("Discount: " + discount)
                                            .Anchor(SoundInTheory.DynamicImage.AnchorStyles.TopRight)
                                            .ForeColor(SoundInTheory.DynamicImage.Color.FromArgb(160, 10, 10, 10))
                                            .FontSize(20)
                                            .FontBold())
-                                           .ImageFormat(SoundInTheory.DynamicImage.DynamicImageFormat.Jpeg);
+                            .ImageFormat(SoundInTheory.DynamicImage.DynamicImageFormat.Jpeg);
 
             builder.SaveTo(Server.MapPath(generatedImagePath)); // Saving the generated image with the unique id on it.
 
@@ -120,22 +137,16 @@ namespace Marista.Admin.Controllers
 
         private async Task PopulateSelectLists()
         {
-            ViewBag.HCategories = new SelectList(await _cs.GetHCategories(), "HCategoryId", "CategoryName");
-            ViewBag.VCategories = new SelectList(await _cs.GetVCategories(), "VCategoryId", "CategoryName");
-            ViewBag.Products = new SelectList(await _cs.GetProducts(), "ProductId", "Name");
+            ViewBag.HCategories = new SelectList(await _ps.GetHCategories(), "HCategoryId", "CategoryName");
+            ViewBag.VCategories = new SelectList(await _ps.GetVCategories(), "VCategoryId", "CategoryName");
+            ViewBag.Products = new SelectList(await _ps.Get(), "ProductId", "Name");
         }
 
-        private async Task<string> GenerateUniqueId()
+        private string GenerateUniqueId()
         {
-            var random = new Random();
-            var numberAsString = string.Empty;
-
-            for (int i = 0; i < 10; i++)
-            {
-                 numberAsString = String.Concat(numberAsString, random.Next(10).ToString());
-            }
-                
-            return numberAsString;
+            var random = new Random(Guid.NewGuid().GetHashCode());
+            int randomNumber = random.Next(1, 999999999);
+            return randomNumber.ToString().PadLeft(10, '0');
         }
     }
 }

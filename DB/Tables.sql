@@ -251,3 +251,35 @@ create table ChatItem
   constraint fk_ChatItem_SiteUserId foreign key (SiteUserId) references SiteUser(SiteUserId)
 )
 go
+
+
+if OBJECT_ID('Coupon') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Coupon'
+  drop table Coupon
+end
+go
+
+create table Coupon
+(
+  CouponId int not null identity(1,1),
+  UniqueId nvarchar (10) not null, -- уникален код на купона
+  SiteUserId int not null, --кой генерира купона
+  Expires datetime2 not null, -- на коя дата изтича валидността на купона
+  HCategoryId int null,  --ИЛИ всички продукти от тази категория са с намаление
+  VCategoryId int null,  -- ИЛИ всички продукти от тази категория  са с намаление
+  ProductId int null, --ИЛИ  само този продукт е с намаление
+  ForAll bit not null default 0, -- ИЛИ абсолютно всички продукти са с намаление
+  Discount int not null default 0, -- размер на намалението в проценти от 1 до 23
+  Used bit not null default 0, -- Дали е използван купонът
+  Img varbinary (max), -- Изображение на купона
+  constraint pk_CouponId primary key (CouponId),  
+  constraint fk_Coupon_SiteUserId foreign key (SiteUserId) references SiteUser(SiteUserId),
+  constraint fk_Coupon_HCategoryId foreign key (HCategoryId) references HCategory(HCategoryId),
+  constraint fk_Coupon_VCategoryId foreign key (VCategoryId) references VCategory(VCategoryId),
+  constraint fk_Coupon_ProductId foreign key (ProductId) references Product(ProductId)
+)
+go
+
+exec p_ak_create_fk_indeces 'Coupon'
+go

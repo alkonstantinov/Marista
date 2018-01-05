@@ -1,9 +1,44 @@
 ﻿@model Marista.Common.ViewModels.CouponVM
 @{
-    ViewBag.Title = "CreateCoupon";
+    ViewBag.Title = "Create a Coupon";
+}
+@section styles {
+<link href="~/Content/bootstrap-datetimepicker-build.min.css" rel="stylesheet" />
+}
+@section scripts {
+    <script src="~/Scripts/moment.min.js"></script>
+
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('input[type=datetime]').datetimepicker();
+        });
+    </script>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        $(function () {
+            var $checkBox = $('.checkbox');
+
+            $checkBox.on('change', function (e) {
+
+                // enable a corresponding select list:
+                var $select = $('#' + $(this).attr('id') + '-list');
+
+                if ($(this).is(':checked')) {
+                    $select.removeAttr('disabled');
+                    $('.checkbox').not(this).prop('checked', false).trigger('change');
+                } else {
+                    $select.attr('disabled', 'disabled');
+                }
+            });
+        });
+    </script>
 }
 
-@using (Html.BeginForm("Create", "Coupon", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Coupon", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -14,7 +49,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Expires, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Expires, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.Expires, htmlAttributes: new { @class = "form-control", type = "datetime" })
                 @Html.ValidationMessageFor(model => model.Expires, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -22,9 +57,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.HCategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-1">
-                <input class="checkbox" type="checkbox" id="horizontal"/>
+                <input class="checkbox" type="checkbox" id="horizontal" />
             </div>
-            <div class="col-md-9">               
+            <div class="col-md-9">
                 @Html.DropDownList("HCategoryId", (SelectList)ViewBag.HCategories, optionLabel: "Select Horizontal Category...", htmlAttributes: new { @class = "form-control", id = "horizontal-list", disabled = "disabled" })
                 @Html.ValidationMessageFor(model => model.HCategoryId, "", new { @class = "text-danger" })
             </div>
@@ -39,23 +74,23 @@
                 @Html.DropDownList("VCategoryId", (SelectList)ViewBag.VCategories, optionLabel: "Select Vertical Category...", htmlAttributes: new { @class = "form-control", id = "vertical-list", disabled = "disabled" })
                 @Html.ValidationMessageFor(model => model.VCategoryId, "", new { @class = "text-danger" })
             </div>
-        </div>    
-        
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-1">
-                <input class="checkbox" type="checkbox" id="product"/>
+                <input class="checkbox" type="checkbox" id="product" />
             </div>
             <div class="col-md-9">
                 @Html.DropDownList("ProductId", (SelectList)ViewBag.Products, optionLabel: "Select a Product...", htmlAttributes: new { @class = "form-control", id = "product-list", disabled = "disabled" })
                 @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.ForAll, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.CheckBoxFor(model => model.ForAll, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.CheckBoxFor(model => model.ForAll, htmlAttributes: new { @class = "checkbox" })
                 @Html.ValidationMessageFor(model => model.ForAll, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -63,7 +98,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.Discount, htmlAttributes: new { @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -81,34 +116,3 @@
         <a href="@Url.Action("Index")" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-backward"></i> Back to the list of products</a>
     </div>
 </div>
-
-@section scripts {
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-
-    <script>
-        $('input:checkbox').click(function () {
-            var $inputs = $('input:checkbox')
-            if ($(this).is(':checked')) {
-                $inputs.not(this).prop('disabled', true); // <-- disable all but checked one
-            } else {
-                $inputs.prop('disabled', false); // <--
-            }
-        })
-
-        var $checkBox = $('.checkbox');
-
-        $checkBox.on('change', function (e) {
-
-            var $select = $('#' + $(this).attr('id') + '-list')
-
-            if ($(this).is(':checked')) {
-                $select.removeAttr('disabled');
-            } else {
-                $select.attr('disabled', 'disabled');
-            }
-        });
-    </script>
-}
-
-

@@ -31,7 +31,8 @@ namespace Marista.Common.ViewModels
         public bool ForAll { get; set; }
 
         [Required]
-        [DefaultValue(0)]
+        [Range(1, 23)]
+        [DefaultValue(1)]
         public int Discount { get; set; }
 
         [Required]
@@ -39,5 +40,20 @@ namespace Marista.Common.ViewModels
         public bool Used { get; set; }
 
         public byte[] Img { get; set; }
+
+        public string ProductName { get; set; }
+        public string HCategoryCategoryName { get; set; }
+        public string VCategoryCategoryName { get; set; }
+
+        /// <summary>
+        /// Returns true only if EXACTLY one of the options is true
+        /// </summary>
+        public bool IsOnlyOneOptionSelected
+        {
+            get
+            {
+                return ForAll ^ ProductId.HasValue ^ VCategoryId.HasValue ^ HCategoryId.HasValue;
+            }
+        }
     }
 }

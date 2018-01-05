@@ -25,6 +25,7 @@
             <tr>
                 @*<th></th>*@
                 <th width="64">UniqueId</th>
+                <th>For</th>
                 <th width="50">Expiration date</th>
                 <th width="50">Discount</th>
                 <th width="40">Used</th>
@@ -34,7 +35,7 @@
         <tbody>
             @foreach (var c in Model)
             {
-                <tr>
+                <tr id="coupon-@c.CouponId" class="@(c.CouponId == ViewBag.CreatedId ? "success" : "")">
                     @*<td>
                         <div class="btn-group btn-group-sm">
                             <a href="@Url.Action("Details", new { id = c.CouponId })" class="btn btn-default" title="View"><i class="glyphicon glyphicon-search"></i></a>
@@ -45,15 +46,33 @@
                         @c.UniqueId
                     </td>
                     <td>
+                        @if(c.ForAll)
+                        {
+                            <span>For all products</span>
+                        }
+                        else if(c.ProductId != null)
+                        {
+                            <span>For product: @c.ProductName</span>
+                        }
+                        else if(c.VCategoryId != null)
+                        {
+                            <span>For V Category: @c.VCategoryCategoryName</span>
+                        }
+                        else if(c.HCategoryId != null)
+                        {
+                            <span>For H Category: @c.HCategoryCategoryName</span>
+                        }
+                    </td>
+                    <td>
                         @c.Expires
                     </td>
                     <td>
                         @c.Discount %
                     </td>
                     <td>
-                        @(c.Used ? "Yes" : "No") 
+                        @(c.Used ? "Yes" : "No") <a href="@Url.Action("SwitchUsed", new { id = c.CouponId })" class="btn btn-sm btn-default">switch</a>
                     </td>                    
-                    <td>@Html.ActionLink("Download", "Download", "Coupon", new { id = c.CouponId}, null)</td>
+                    <td>@Html.ActionLink("Download", "Download", "Coupon", new { id = c.CouponId}, new { @class = "btn btn-default" })</td>
                 </tr>
             }
         </tbody>
