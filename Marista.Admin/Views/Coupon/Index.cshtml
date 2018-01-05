@@ -1,0 +1,62 @@
+﻿@model PagedList.IPagedList<Marista.Common.ViewModels.CouponVM>
+
+@{
+    ViewBag.Title = "Coupons";
+}
+
+<h2><a href="@Url.Action("Index")">@ViewBag.Title</a></h2>
+
+<div class="row filters-panel">
+    <div class="col-sm-3">
+        <a href="@Url.Action("Create")" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Create new coupon</a>
+    </div>
+    <div class="search-bar col-sm-4 col-sm-offset-5">
+        <form action="@Url.Action("Index")" method="get" class="form-inline">
+            <div class="form-group">
+                <input type="search" name="q" value="@ViewBag.SearchQuery" class="form-control" placeholder="Search Coupons" />
+                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-filter"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                @*<th></th>*@
+                <th width="64">UniqueId</th>
+                <th width="50">Expiration date</th>
+                <th width="50">Discount</th>
+                <th width="40">Used</th>
+                <th width="60">Download Coupon</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    @*<td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="@Url.Action("Details", new { id = c.CouponId })" class="btn btn-default" title="View"><i class="glyphicon glyphicon-search"></i></a>
+                            <a href="@Url.Action("Edit", new { id = c.CouponId })" class="btn btn-info" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
+                        </div>
+                    </td>*@
+                    <td>
+                        @c.UniqueId
+                    </td>
+                    <td>
+                        @c.Expires
+                    </td>
+                    <td>
+                        @c.Discount %
+                    </td>
+                    <td>
+                        @(c.Used ? "Yes" : "No") 
+                    </td>                    
+                    <td>@Html.ActionLink("Download", "Download", "Coupon", new { id = c.CouponId}, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))

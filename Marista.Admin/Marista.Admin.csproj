@@ -82,6 +82,12 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="SoundInTheory.DynamicImage, Version=3.1.1.0, Culture=neutral, PublicKeyToken=fa44558110383067, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicImage.3.1.1\lib\net40\SoundInTheory.DynamicImage.dll</HintPath>
+    </Reference>
+    <Reference Include="SoundInTheory.DynamicImage.Mvc4, Version=3.1.1.0, Culture=neutral, PublicKeyToken=fa44558110383067, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicImage.Mvc4.3.1.1\lib\net40\SoundInTheory.DynamicImage.Mvc4.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -99,6 +105,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.2\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -128,6 +137,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\coupon-template.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\site.css">
       <DependentUpon>site.scss</DependentUpon>
@@ -171,10 +181,12 @@
     <Content Include="Views\Test\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\DynamicImage.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\ConstantController.cs" />
+    <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\SOBonusSizeController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\BonusSizeController.cs" />
@@ -219,6 +231,8 @@
     <Content Include="Views\Constant\Edit.cshtml" />
     <Content Include="Views\Constant\_Edit.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Coupon\Create.cshtml" />
+    <Content Include="Views\Coupon\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

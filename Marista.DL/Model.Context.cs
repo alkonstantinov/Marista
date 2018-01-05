@@ -36,5 +36,6 @@ namespace Marista.DL
         public virtual DbSet<BonusSize> BonusSizes { get; set; }
         public virtual DbSet<Chat> Chats { get; set; }
         public virtual DbSet<ChatItem> ChatItems { get; set; }
+        public virtual DbSet<Coupon> Coupons { get; set; }
     }
 }

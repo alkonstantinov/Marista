@@ -75,6 +75,10 @@
     </Compile>
     <Compile Include="ChatService.cs" />
     <Compile Include="ConstantService.cs" />
+    <Compile Include="Coupon.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CouponService.cs" />
     <Compile Include="SOBonusSIzeService.cs" />
     <Compile Include="BonusSizeService.cs" />
     <Compile Include="Constant.cs">

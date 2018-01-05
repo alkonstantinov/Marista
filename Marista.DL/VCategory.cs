@@ -18,6 +18,7 @@ namespace Marista.DL
         public VCategory()
         {
             this.Products = new HashSet<Product>();
+            this.Coupons = new HashSet<Coupon>();
         }
     
         public int VCategoryId { get; set; }
@@ -25,5 +26,7 @@ namespace Marista.DL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Coupon> Coupons { get; set; }
     }
 }

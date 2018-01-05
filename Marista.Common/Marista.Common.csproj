@@ -49,6 +49,7 @@
     <Compile Include="ViewModels\ChatItemVM.cs" />
     <Compile Include="ViewModels\ChatVM.cs" />
     <Compile Include="ViewModels\ConstantVM.cs" />
+    <Compile Include="ViewModels\CouponVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\ProductVM.cs" />
     <Compile Include="ViewModels\RelatedProductVM.cs" />

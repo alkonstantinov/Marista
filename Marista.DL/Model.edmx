@@ -40,6 +40,22 @@
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Value" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="Coupon">
+          <Key>
+            <PropertyRef Name="CouponId" />
+          </Key>
+          <Property Name="CouponId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UniqueId" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="SiteUserId" Type="int" Nullable="false" />
+          <Property Name="Expires" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="HCategoryId" Type="int" />
+          <Property Name="VCategoryId" Type="int" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="ForAll" Type="bit" Nullable="false" />
+          <Property Name="Discount" Type="int" Nullable="false" />
+          <Property Name="Used" Type="bit" Nullable="false" />
+          <Property Name="Img" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="HCategory">
           <Key>
             <PropertyRef Name="HCategoryId" />
@@ -137,6 +153,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Coupon_HCategoryId">
+          <End Role="HCategory" Type="Self.HCategory" Multiplicity="0..1" />
+          <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HCategory">
+              <PropertyRef Name="HCategoryId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="HCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Coupon_ProductId">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Coupon_SiteUserId">
+          <End Role="SiteUser" Type="Self.SiteUser" Multiplicity="1" />
+          <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="SiteUserId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="SiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Coupon_VCategoryId">
+          <End Role="VCategory" Type="Self.VCategory" Multiplicity="0..1" />
+          <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VCategory">
+              <PropertyRef Name="VCategoryId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="VCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Product_FromProductId">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="RelatedProduct" Type="Self.RelatedProduct" Multiplicity="*" />
@@ -202,6 +266,7 @@
           <EntitySet Name="Chat" EntityType="Self.Chat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChatItem" EntityType="Self.ChatItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Constant" EntityType="Self.Constant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HCategory" EntityType="Self.HCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -220,6 +285,22 @@
           <AssociationSet Name="fk_ChatItem_SiteUserId" Association="Self.fk_ChatItem_SiteUserId">
             <End Role="SiteUser" EntitySet="SiteUser" />
             <End Role="ChatItem" EntitySet="ChatItem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Coupon_HCategoryId" Association="Self.fk_Coupon_HCategoryId">
+            <End Role="HCategory" EntitySet="HCategory" />
+            <End Role="Coupon" EntitySet="Coupon" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Coupon_ProductId" Association="Self.fk_Coupon_ProductId">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Coupon" EntitySet="Coupon" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Coupon_SiteUserId" Association="Self.fk_Coupon_SiteUserId">
+            <End Role="SiteUser" EntitySet="SiteUser" />
+            <End Role="Coupon" EntitySet="Coupon" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Coupon_VCategoryId" Association="Self.fk_Coupon_VCategoryId">
+            <End Role="VCategory" EntitySet="VCategory" />
+            <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
           <AssociationSet Name="fk_Product_FromProductId" Association="Self.fk_Product_FromProductId">
             <End Role="Product" EntitySet="Product" />
@@ -266,6 +347,7 @@
           <NavigationProperty Name="Chats" Relationship="MaristaModel.fk_Chat_SiteUserId" FromRole="SiteUser" ToRole="Chat" />
           <NavigationProperty Name="ChatItems" Relationship="MaristaModel.fk_ChatItem_SiteUserId" FromRole="SiteUser" ToRole="ChatItem" />
           <Property Name="CurrentSessionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Coupons" Relationship="MaristaModel.fk_Coupon_SiteUserId" FromRole="SiteUser" ToRole="Coupon" />
         </EntityType>
         <Association Name="fk_SiteUser_LevelId">
           <End Role="Level" Type="Self.Level" Multiplicity="1" />
@@ -318,6 +400,23 @@
             <End Role="SiteUser" EntitySet="SiteUsers" />
             <End Role="ChatItem" EntitySet="ChatItems" />
           </AssociationSet>
+          <EntitySet Name="Coupons" EntityType="MaristaModel.Coupon" />
+          <AssociationSet Name="fk_Coupon_HCategoryId" Association="MaristaModel.fk_Coupon_HCategoryId">
+            <End Role="HCategory" EntitySet="HCategories" />
+            <End Role="Coupon" EntitySet="Coupons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Coupon_ProductId" Association="MaristaModel.fk_Coupon_ProductId">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Coupon" EntitySet="Coupons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Coupon_SiteUserId" Association="MaristaModel.fk_Coupon_SiteUserId">
+            <End Role="SiteUser" EntitySet="SiteUsers" />
+            <End Role="Coupon" EntitySet="Coupons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Coupon_VCategoryId" Association="MaristaModel.fk_Coupon_VCategoryId">
+            <End Role="VCategory" EntitySet="VCategories" />
+            <End Role="Coupon" EntitySet="Coupons" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -334,6 +433,7 @@
           <Property Name="HCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="MaristaModel.fk_Product_HCategoryId" FromRole="HCategory" ToRole="Product" />
+          <NavigationProperty Name="Coupons" Relationship="MaristaModel.fk_Coupon_HCategoryId" FromRole="HCategory" ToRole="Coupon" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -351,6 +451,7 @@
           <NavigationProperty Name="VCategory" Relationship="MaristaModel.fk_Product_VCategoryId" FromRole="Product" ToRole="VCategory" />
           <NavigationProperty Name="RelatedFromProducts" Relationship="MaristaModel.RelatedProduct" FromRole="Product" ToRole="Product1" />
           <NavigationProperty Name="RelatedToProducts" Relationship="MaristaModel.RelatedProduct" FromRole="Product1" ToRole="Product" />
+          <NavigationProperty Name="Coupons" Relationship="MaristaModel.fk_Coupon_ProductId" FromRole="Product" ToRole="Coupon" />
         </EntityType>
         <EntityType Name="SOBonusSize">
           <Key>
@@ -368,6 +469,7 @@
           <Property Name="VCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="MaristaModel.fk_Product_VCategoryId" FromRole="VCategory" ToRole="Product" />
+          <NavigationProperty Name="Coupons" Relationship="MaristaModel.fk_Coupon_VCategoryId" FromRole="VCategory" ToRole="Coupon" />
         </EntityType>
         <Association Name="fk_Product_HCategoryId">
           <End Type="MaristaModel.HCategory" Role="HCategory" Multiplicity="1" />
@@ -461,6 +563,74 @@
             </Principal>
             <Dependent Role="ChatItem">
               <PropertyRef Name="SiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Coupon">
+          <Key>
+            <PropertyRef Name="CouponId" />
+          </Key>
+          <Property Name="CouponId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SiteUserId" Type="Int32" Nullable="false" />
+          <Property Name="Expires" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="HCategoryId" Type="Int32" />
+          <Property Name="VCategoryId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="ForAll" Type="Boolean" Nullable="false" />
+          <Property Name="Discount" Type="Int32" Nullable="false" />
+          <Property Name="Used" Type="Boolean" Nullable="false" />
+          <Property Name="Img" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="HCategory" Relationship="MaristaModel.fk_Coupon_HCategoryId" FromRole="Coupon" ToRole="HCategory" />
+          <NavigationProperty Name="Product" Relationship="MaristaModel.fk_Coupon_ProductId" FromRole="Coupon" ToRole="Product" />
+          <NavigationProperty Name="SiteUser" Relationship="MaristaModel.fk_Coupon_SiteUserId" FromRole="Coupon" ToRole="SiteUser" />
+          <NavigationProperty Name="VCategory" Relationship="MaristaModel.fk_Coupon_VCategoryId" FromRole="Coupon" ToRole="VCategory" />
+        </EntityType>
+        <Association Name="fk_Coupon_HCategoryId">
+          <End Type="MaristaModel.HCategory" Role="HCategory" Multiplicity="0..1" />
+          <End Type="MaristaModel.Coupon" Role="Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HCategory">
+              <PropertyRef Name="HCategoryId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="HCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Coupon_ProductId">
+          <End Type="MaristaModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="MaristaModel.Coupon" Role="Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Coupon_SiteUserId">
+          <End Type="MaristaModel.SiteUser" Role="SiteUser" Multiplicity="1" />
+          <End Type="MaristaModel.Coupon" Role="Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="SiteUserId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="SiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Coupon_VCategoryId">
+          <End Type="MaristaModel.VCategory" Role="VCategory" Multiplicity="0..1" />
+          <End Type="MaristaModel.Coupon" Role="Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VCategory">
+              <PropertyRef Name="VCategoryId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="VCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -573,6 +743,23 @@
                 <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
                 <ScalarProperty Name="ChatId" ColumnName="ChatId" />
                 <ScalarProperty Name="ChatItemId" ColumnName="ChatItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Coupons">
+            <EntityTypeMapping TypeName="MaristaModel.Coupon">
+              <MappingFragment StoreEntitySet="Coupon">
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="Used" ColumnName="Used" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="ForAll" ColumnName="ForAll" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="VCategoryId" ColumnName="VCategoryId" />
+                <ScalarProperty Name="HCategoryId" ColumnName="HCategoryId" />
+                <ScalarProperty Name="Expires" ColumnName="Expires" />
+                <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+                <ScalarProperty Name="CouponId" ColumnName="CouponId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
