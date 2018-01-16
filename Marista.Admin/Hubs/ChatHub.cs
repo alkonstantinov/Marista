@@ -8,6 +8,7 @@ using Marista.Common.Models;
 using Marista.Common.ViewModels;
 using Marista.DL;
 using Microsoft.AspNet.SignalR;
+using System.Web.SessionState;
 
 namespace Marista.Admin.Hubs
 {
@@ -20,6 +21,8 @@ namespace Marista.Admin.Hubs
 
         public async override Task OnConnected()
         {
+            
+
             var userData = await GetUserData();
             if (userData != null)
             {
@@ -56,6 +59,7 @@ namespace Marista.Admin.Hubs
         {
             var cookie = Context.RequestCookies["ASP.NET_SessionId"];
             if (cookie == null) return null;
+            
             return await _us.GetBySessionId(cookie.Value);
         }
     }

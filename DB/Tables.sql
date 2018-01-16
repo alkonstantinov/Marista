@@ -283,3 +283,29 @@ go
 
 exec p_ak_create_fk_indeces 'Coupon'
 go
+
+
+
+if OBJECT_ID('Pyramid') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Pyramid'
+  drop table Pyramid
+end
+go
+
+create table Pyramid 
+(
+  PyramidId int not null identity(1,1),
+  PyramidParentId int null,
+  SiteUserId int not null,
+  PBV decimal (10,2) not null default 0,  
+  constraint pk_PyramidId primary key (PyramidId),
+  constraint fk_Pyramid_PyramidParentId foreign key (PyramidParentId) references Pyramid(PyramidId),
+  constraint fk_Pyramid_SiteUserId foreign key (SiteUserId) references SiteUser(SiteUserId)
+  
+
+)
+go
+
+exec p_ak_create_fk_indeces 'Pyramid'
+go
