@@ -19,6 +19,8 @@ insert into SiteUser(Username, Password, LevelId)
 values ('A3.3', '202cb962ac59075b964b07152d234b70', 2)
 insert into SiteUser(Username, Password, LevelId)
 values ('A4.1', '202cb962ac59075b964b07152d234b70', 2)
+insert into SiteUser(Username, Password, LevelId)
+values ('B1.1', '202cb962ac59075b964b07152d234b70', 2)
 
 
 
@@ -70,6 +72,14 @@ join Pyramid p on p.SiteUserId = psu.SiteUserId
 where su.Username = 'A4.1'
 
 
+insert into Pyramid (PyramidParentId, PyramidSpinoffParentId, SiteUserId, PBV)
+select null, p.PyramidId, su.SiteUserId, 100
+from SiteUser su
+join SiteUser psu on psu.Username = 'A1.1'
+join Pyramid p on p.SiteUserId = psu.SiteUserId
+where su.Username = 'B1.1'
+
+
 --;with tbl as
 --(
 --  select p.PyramidId, p.PyramidParentId, p.SiteUserId
@@ -95,7 +105,7 @@ if object_id('pCalcMyProfit') is not null
   drop procedure pCalcMyProfit
 go
 
-create procedure pCalcMyProfit @su int as
+create procedure pCalcMyProfit @pu int as
 begin
 
   declare @mp table
@@ -105,6 +115,9 @@ begin
     SiteUserId int not null,
     PBV decimal (10,2) not null default 0,
     Prcnt decimal(10,2) not null default 0,
+    ParentPrcnt decimal(10,2) not null default 0,
+    SoPrcnt decimal(10,2) not null default 0,
+    SoParentPrcnt decimal(10,2) not null default 0,
     FromOthers decimal(10,2) not null default 0,
     ToReceive decimal(10,2) not null default 0
   )
@@ -114,151 +127,232 @@ begin
     PyramidId int not null primary key
   )
 
-  print 1
   declare @restart bit = 0
-  while 1>0
+  
+  ;with tbl as
+  (
+    select p.PyramidId, p.PyramidParentId, p.SiteUserId
+    from Pyramid p
+    where p.PyramidId = @pu
+    union all
+    select p.PyramidId, p.PyramidParentId, p.SiteUserId
+    from Pyramid p
+    join tbl on tbl.PyramidId = p.PyramidParentId
+  )
+  insert into @mp (PyramidId, PyramidParentId, PBV, SiteUserId)
+  select tbl.PyramidId, tbl.PyramidParentId, p.PBV, tbl.SiteUserId
+  from tbl
+  join Pyramid p on p.PyramidId = tbl.PyramidId
+  join SiteUser su on su.SiteUserId = tbl.SiteUserId
+
+  
+  ;with tbl as
+  (
+    select p.PyramidId, 1 level
+    from @mp p
+    where p.PyramidId = @pu
+    union all
+    select p.PyramidId, tbl.level + 1 level
+    from Pyramid p
+    join tbl on tbl.PyramidId = p.PyramidParentId
+  )
+  insert into @process
+  select tbl.PyramidId 
+  from tbl
+  join @mp mp on mp.PyramidId = tbl.PyramidId
+  join SiteUser su on su.SiteUserId = mp.SiteUserId
+  order by level desc
+    
+  
+
+  while exists (select top 1 1 from @process)
   begin
-    select @restart = 0
-    delete from @mp
-
-    ;with tbl as
-    (
-      select p.PyramidId, p.PyramidParentId, p.SiteUserId
-      from Pyramid p
-      where p.SiteUserId = @su
-      union all
-      select p.PyramidId, p.PyramidParentId, p.SiteUserId
-      from Pyramid p
-      join tbl on tbl.PyramidId = p.PyramidParentId
-    )
-    insert into @mp (PyramidId, PyramidParentId, PBV, SiteUserId)
-    select tbl.PyramidId, tbl.PyramidParentId, p.PBV, tbl.SiteUserId
-    from tbl
-    join Pyramid p on p.PyramidId = tbl.PyramidId
-    join SiteUser su on su.SiteUserId = tbl.SiteUserId
-
-    print 2
-    delete from @process
-
-    ;with tbl as
-    (
-      select p.PyramidId, 1 level
-      from @mp p
-      where p.SiteUserId = @su
-      union all
-      select p.PyramidId, tbl.level + 1 level
-      from Pyramid p
-      join tbl on tbl.PyramidId = p.PyramidParentId
-    )
-    insert into @process
-    select tbl.PyramidId 
-    from tbl
-    join @mp mp on mp.PyramidId = tbl.PyramidId
-    join SiteUser su on su.SiteUserId = mp.SiteUserId
-    order by level desc
-    
-    print 3
-    while exists (select top 1 1 from @process)
-    begin
-      --взимаме каквото се вдига отдолу
-      update mp
-      set FromOthers = PBV + 
-        isnull((
-          select
-          sum( 
-            case
-              when children.PBV>=100 then children.PBV
-              else 0
-            end
-            ) 
-          from @mp children
-          where children.PyramidParentId = mp.PyramidId
-        ),0)
-      from @mp mp
-      join @process p on p.PyramidId = mp.PyramidId 
+    --взимаме каквото се вдига отдолу
+    update mp
+    set FromOthers = PBV + 
+      isnull((
+        select
+        sum( 
+          case
+            when children.PBV>=100 then children.PBV
+            else 0
+          end
+          ) 
+        from @mp children
+        where children.PyramidParentId = mp.PyramidId
+      ),0)
+    from @mp mp
+    join @process p on p.PyramidId = mp.PyramidId 
        
-      --оправяме процента
-      update mp
-      set Prcnt = bs.BonusPercent
-      from @mp mp
-      join @process p on p.PyramidId = mp.PyramidId 
-      join BonusSize bs on bs.FromBonus<=mp.FromOthers and bs.ToBonus>=mp.FromOthers
+    --оправяме процента
+    update mp
+    set Prcnt = bs.BonusPercent
+    from @mp mp
+    join @process p on p.PyramidId = mp.PyramidId 
+    join BonusSize bs on bs.FromBonus<=mp.FromOthers and bs.ToBonus>=mp.FromOthers
 
-      --намаляваме процента на децата за да сметнем печалбите
-      update mp
-      set Prcnt = (select top 1 parent.Prcnt from @mp parent where parent.PyramidId = p.PyramidId) - Prcnt
-      from @mp mp
-      join @process p on p.PyramidId = mp.PyramidParentId
-      
-      --изчисляваме печалбите    
-      
-      update mp
-      set ToReceive = PBV*(select top 1 c.Value from constant c where c.ConstantId = 4)/100.00
-       + 
-        isnull((
-          select sum ( 
-            case
-              when children.PBV>=100 then children.FromOthers*children.Prcnt/100.0
-              else 0.0
-            end 
-            )
-          from @mp children
-          where children.PyramidParentId = mp.PyramidId
-        ),0)
-      from @mp mp
-      join @process p on p.PyramidId = mp.PyramidId 
 
-      --проверяваме дали има спиноф
+    --оправяме спиноф процента
+    update mp
+    set SoPrcnt = bs.BonusPercent
+    from @mp mp
+    join @process p on p.PyramidId = mp.PyramidId 
+    join SoBonusSize bs on 
+      (
+        select count (1) from Pyramid sop where sop.PyramidSpinoffParentId = mp.PyramidId
+      ) between bs.FromSO and bs.ToSO
+
+
+    --Сетваме процентите от родителите
+    update mp
+    set 
+      ParentPrcnt = (select top 1 parent.Prcnt from @mp parent where parent.PyramidId = p.PyramidId),
+      SoParentPrcnt = (select top 1 parent.SoPrcnt from @mp parent where parent.PyramidId = p.PyramidId)
+    from @mp mp
+    join @process p on p.PyramidId = mp.PyramidParentId
+      
+    --изчисляваме печалбите    
+      
+    update mp
+    set ToReceive = PBV*(select top 1 c.Value from constant c where c.ConstantId = 4)/100.00
+      + 
+      isnull((
+        select sum ( 
+          case
+            when children.PBV>=100 then children.FromOthers*(children.ParentPrcnt - children.Prcnt)/100.0
+            else 0.0
+          end 
+          )
+        from @mp children
+        where children.PyramidParentId = mp.PyramidId
+      ),0)+
+      isnull((
+        select sum (         
+          case
+            when children.PBV>=100 then children.FromOthers*children.SoParentPrcnt/100.0
+            else 0.0
+          end 
+          )
+        from Pyramid children
+        where children.PyramidSpinoffParentId = mp.PyramidId
+      ),0)
+    from @mp mp
+    join @process p on p.PyramidId = mp.PyramidId 
+
+    --проверяваме дали има спиноф
     
-      if exists (
-        select top 1 1 
-        from @mp mp
-        join @process p on p.PyramidId = mp.PyramidId        
-        where mp.Prcnt = (select max(bs.BonusPercent) from BonusSize bs)
-      ) 
-      begin
-        -- ако да - спиноф и повтаряме
-        update Pyramid
-        set 
-          PyramidSpinoffParentId = p.PyramidParentId,
-          PyramidParentId = null
-        from Pyramid p
-        join  @mp mp on mp.PyramidId = p.PyramidId
-        join @process prc on prc.PyramidId = mp.PyramidId        
-        where mp.Prcnt = (select max(bs.BonusPercent) from BonusSize bs)
+    if exists (
+      select top 1 1 
+      from @mp mp
+      join @process p on p.PyramidId = mp.PyramidId        
+      where mp.Prcnt = (select max(bs.BonusPercent) from BonusSize bs)
+    ) 
+    begin
+      -- ако да - спиноф и повтаряме
+      update Pyramid
+      set 
+        PyramidSpinoffParentId = p.PyramidParentId,
+        PyramidParentId = null
+      from Pyramid p
+      join  @mp mp on mp.PyramidId = p.PyramidId
+      join @process prc on prc.PyramidId = mp.PyramidId        
+      where mp.Prcnt = (select max(bs.BonusPercent) from BonusSize bs)
 
-        select @restart = 1
-        break;
-      end
-      else
-      begin
-        delete from @process
-        insert into @process
-        select mp.PyramidParentId
-        from @mp mp 
-        join @process prc on prc.PyramidId = mp.PyramidId
-        where mp.SiteUserId <> @su
-
-        select * from @process
-      end
-
-      if @restart=1 
-        break;
+      return 1;
     end
-    if @restart =0
-      break;
-  end
+    else
+    begin
+      delete from @process
+      insert into @process
+      select mp.PyramidParentId
+      from @mp mp 
+      join @process prc on prc.PyramidId = mp.PyramidId
+      where mp.PyramidId <> @pu
+    end
 
-  select * from @mp
+      
+  end
+    
+  update p
+  set
+    p.FromOthers = mp.FromOthers,
+    p.Prcnt = mp.Prcnt,
+    p.SoPrcnt = mp.SoPrcnt,
+    p.ToReceive = mp.ToReceive
+  from Pyramid p
+  join @mp mp on mp.PyramidId = p.PyramidId
+
+  
 end
 go
 
+declare @process table
+(
+  id int not null identity (1,1) primary key,
+  PyramidId int not null 
+)
+
 declare @su int 
+declare @repeat bit = 0
+declare @calcResult int = 0
+while 1 > 0
+begin
+  delete from @process
+  select @repeat = 0
+
+  ;with roots as
+  (
+    select p.pyramidid id
+    from Pyramid p
+    where p.PyramidParentId is null
+  ), id2root as
+  (
+    select r.id id, r.id root
+    from roots r
+    union all
+    select p.PyramidId id, i2r.root
+    from Pyramid p
+    join id2root i2r on i2r.id = p.PyramidParentId
+  ), so as
+  (
+    select r.id, 1 level
+    from roots r
+    join Pyramid p on p.PyramidId = r.id
+    where p.PyramidSpinoffParentId is null
+    union all
+    select r.id, so.level + 1 level
+    from roots r
+    join Pyramid p on p.PyramidId = r.id
+    join id2root i2r on p.PyramidSpinoffParentId = i2r.id
+    join so on so.id = i2r.root
+  
+
+  )
+  insert into @process (PyramidId)
+  select id from so order by level desc
 
 
-select @su = su.SiteUserId
-from SiteUser su 
-where su.Username = 'A2.1'
+  declare crs cursor for select Pyramidid from @process order by id
+  open crs
+  fetch next from crs into @su
 
-exec pCalcMyProfit @su
+  while @@FETCH_STATUS=0 
+  begin
+    exec @calcResult = pCalcMyProfit @su
+    
+    if @calcResult = 1
+    begin
+      select @repeat = 1;
+      break;
+    end
+
+    fetch next from crs into @su
+  end
+  close crs
+  deallocate crs
+  if @repeat = 0 break
+end
+
+select * from Pyramid
+--exec pCalcMyProfit @su
 set nocount off

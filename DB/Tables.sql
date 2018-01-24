@@ -297,10 +297,18 @@ create table Pyramid
 (
   PyramidId int not null identity(1,1),
   PyramidParentId int null,
+  PyramidSpinoffParentId int null,
   SiteUserId int not null,
   PBV decimal (10,2) not null default 0,  
+  Prcnt decimal(10,2) not null default 0,
+  ParentPrcnt decimal(10,2) not null default 0,
+  SoParentPrcnt decimal(10,2) not null default 0,
+  SoPrcnt decimal(10,2) not null default 0,
+  FromOthers decimal(10,2) not null default 0,
+  ToReceive decimal(10,2) not null default 0
   constraint pk_PyramidId primary key (PyramidId),
   constraint fk_Pyramid_PyramidParentId foreign key (PyramidParentId) references Pyramid(PyramidId),
+  constraint fk_Pyramid_PyramidSpinoffParentId foreign key (PyramidSpinoffParentId) references Pyramid(PyramidId),
   constraint fk_Pyramid_SiteUserId foreign key (SiteUserId) references SiteUser(SiteUserId)
   
 
