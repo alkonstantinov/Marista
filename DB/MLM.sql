@@ -127,6 +127,14 @@ begin
     PyramidId int not null primary key
   )
 
+  declare @allLevels table
+  (
+    PyramidId int not null primary key,
+    Level int
+  )
+
+
+
   declare @restart bit = 0
   
   ;with tbl as
@@ -144,7 +152,10 @@ begin
   from tbl
   join Pyramid p on p.PyramidId = tbl.PyramidId
   join SiteUser su on su.SiteUserId = tbl.SiteUserId
+  
 
+  declare @level int 
+  
   
   ;with tbl as
   (
@@ -156,25 +167,30 @@ begin
     from Pyramid p
     join tbl on tbl.PyramidId = p.PyramidParentId
   )
-  insert into @process
-  select tbl.PyramidId 
+  insert into @allLevels(PyramidId, Level)
+  select tbl.PyramidId, tbl.level 
   from tbl
   join @mp mp on mp.PyramidId = tbl.PyramidId
-  join SiteUser su on su.SiteUserId = mp.SiteUserId
-  order by level desc
-    
   
-
-  while exists (select top 1 1 from @process)
+  
+  select @level = max (level) from @allLevels
+  
+  while @level>=1
   begin
+    delete from @process
+
+    insert into @process
+    select PyramidId from @allLevels where level = @level
+
+    
     --взимаме каквото се вдига отдолу
     update mp
-    set FromOthers = PBV + 
+    set FromOthers =  
       isnull((
         select
         sum( 
           case
-            when children.PBV>=100 then children.PBV
+            when children.PBV>=100 then children.PBV+children.FromOthers
             else 0
           end
           ) 
@@ -262,15 +278,11 @@ begin
     end
     else
     begin
-      delete from @process
-      insert into @process
-      select mp.PyramidParentId
-      from @mp mp 
-      join @process prc on prc.PyramidId = mp.PyramidId
-      where mp.PyramidId <> @pu
+      select @level = @level - 1
+      
     end
 
-      
+    --select * from @mp    
   end
     
   update p
