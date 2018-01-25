@@ -70,6 +70,15 @@
           <Property Name="LevelId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="MarketingMaterial">
+          <Key>
+            <PropertyRef Name="MarketingMaterialId" />
+          </Key>
+          <Property Name="MarketingMaterialId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -82,6 +91,22 @@
           <Property Name="VCategoryId" Type="int" Nullable="false" />
           <Property Name="HCategoryId" Type="int" Nullable="false" />
           <Property Name="Picture" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pyramid">
+          <Key>
+            <PropertyRef Name="PyramidId" />
+          </Key>
+          <Property Name="PyramidId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PyramidParentId" Type="int" />
+          <Property Name="PyramidSpinoffParentId" Type="int" />
+          <Property Name="SiteUserId" Type="int" Nullable="false" />
+          <Property Name="PBV" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Prcnt" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="ParentPrcnt" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SoParentPrcnt" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SoPrcnt" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FromOthers" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="ToReceive" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="RelatedProduct">
           <Key>
@@ -249,6 +274,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Pyramid_PyramidParentId">
+          <End Role="Pyramid" Type="Self.Pyramid" Multiplicity="0..1" />
+          <End Role="Pyramid1" Type="Self.Pyramid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pyramid">
+              <PropertyRef Name="PyramidId" />
+            </Principal>
+            <Dependent Role="Pyramid1">
+              <PropertyRef Name="PyramidParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Pyramid_PyramidSpinoffParentId">
+          <End Role="Pyramid" Type="Self.Pyramid" Multiplicity="0..1" />
+          <End Role="Pyramid1" Type="Self.Pyramid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pyramid">
+              <PropertyRef Name="PyramidId" />
+            </Principal>
+            <Dependent Role="Pyramid1">
+              <PropertyRef Name="PyramidSpinoffParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Pyramid_SiteUserId">
+          <End Role="SiteUser" Type="Self.SiteUser" Multiplicity="1" />
+          <End Role="Pyramid" Type="Self.Pyramid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="SiteUserId" />
+            </Principal>
+            <Dependent Role="Pyramid">
+              <PropertyRef Name="SiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_SiteUser_LevelId">
           <End Role="Level" Type="Self.Level" Multiplicity="1" />
           <End Role="SiteUser" Type="Self.SiteUser" Multiplicity="*" />
@@ -269,7 +330,9 @@
           <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HCategory" EntityType="Self.HCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MarketingMaterial" EntityType="Self.MarketingMaterial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pyramid" EntityType="Self.Pyramid" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RelatedProduct" EntityType="Self.RelatedProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteUser" EntityType="Self.SiteUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SOBonusSize" EntityType="Self.SOBonusSize" Schema="dbo" store:Type="Tables" />
@@ -318,6 +381,18 @@
             <End Role="VCategory" EntitySet="VCategory" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
+          <AssociationSet Name="fk_Pyramid_PyramidParentId" Association="Self.fk_Pyramid_PyramidParentId">
+            <End Role="Pyramid" EntitySet="Pyramid" />
+            <End Role="Pyramid1" EntitySet="Pyramid" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Pyramid_PyramidSpinoffParentId" Association="Self.fk_Pyramid_PyramidSpinoffParentId">
+            <End Role="Pyramid" EntitySet="Pyramid" />
+            <End Role="Pyramid1" EntitySet="Pyramid" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Pyramid_SiteUserId" Association="Self.fk_Pyramid_SiteUserId">
+            <End Role="SiteUser" EntitySet="SiteUser" />
+            <End Role="Pyramid" EntitySet="Pyramid" />
+          </AssociationSet>
           <AssociationSet Name="fk_SiteUser_LevelId" Association="Self.fk_SiteUser_LevelId">
             <End Role="Level" EntitySet="Level" />
             <End Role="SiteUser" EntitySet="SiteUser" />
@@ -348,6 +423,7 @@
           <NavigationProperty Name="ChatItems" Relationship="MaristaModel.fk_ChatItem_SiteUserId" FromRole="SiteUser" ToRole="ChatItem" />
           <Property Name="CurrentSessionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Coupons" Relationship="MaristaModel.fk_Coupon_SiteUserId" FromRole="SiteUser" ToRole="Coupon" />
+          <NavigationProperty Name="Pyramids" Relationship="MaristaModel.fk_Pyramid_SiteUserId" FromRole="SiteUser" ToRole="Pyramid" />
         </EntityType>
         <Association Name="fk_SiteUser_LevelId">
           <End Role="Level" Type="Self.Level" Multiplicity="1" />
@@ -417,6 +493,20 @@
             <End Role="VCategory" EntitySet="VCategories" />
             <End Role="Coupon" EntitySet="Coupons" />
           </AssociationSet>
+          <EntitySet Name="Pyramids" EntityType="MaristaModel.Pyramid" />
+          <AssociationSet Name="fk_Pyramid_PyramidParentId" Association="MaristaModel.fk_Pyramid_PyramidParentId">
+            <End Role="Pyramid" EntitySet="Pyramids" />
+            <End Role="Pyramid1" EntitySet="Pyramids" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Pyramid_PyramidSpinoffParentId" Association="MaristaModel.fk_Pyramid_PyramidSpinoffParentId">
+            <End Role="Pyramid" EntitySet="Pyramids" />
+            <End Role="Pyramid1" EntitySet="Pyramids" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Pyramid_SiteUserId" Association="MaristaModel.fk_Pyramid_SiteUserId">
+            <End Role="SiteUser" EntitySet="SiteUsers" />
+            <End Role="Pyramid" EntitySet="Pyramids" />
+          </AssociationSet>
+          <EntitySet Name="MarketingMaterials" EntityType="MaristaModel.MarketingMaterial" />
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -634,6 +724,72 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Pyramid">
+          <Key>
+            <PropertyRef Name="PyramidId" />
+          </Key>
+          <Property Name="PyramidId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PyramidParentId" Type="Int32" />
+          <Property Name="PyramidSpinoffParentId" Type="Int32" />
+          <Property Name="SiteUserId" Type="Int32" Nullable="false" />
+          <Property Name="PBV" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Prcnt" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="ParentPrcnt" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="SoParentPrcnt" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="SoPrcnt" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="FromOthers" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="ToReceive" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="Pyramid1" Relationship="MaristaModel.fk_Pyramid_PyramidParentId" FromRole="Pyramid" ToRole="Pyramid1" />
+          <NavigationProperty Name="Pyramid2" Relationship="MaristaModel.fk_Pyramid_PyramidParentId" FromRole="Pyramid1" ToRole="Pyramid" />
+          <NavigationProperty Name="Pyramid11" Relationship="MaristaModel.fk_Pyramid_PyramidSpinoffParentId" FromRole="Pyramid" ToRole="Pyramid1" />
+          <NavigationProperty Name="Pyramid3" Relationship="MaristaModel.fk_Pyramid_PyramidSpinoffParentId" FromRole="Pyramid1" ToRole="Pyramid" />
+          <NavigationProperty Name="SiteUser" Relationship="MaristaModel.fk_Pyramid_SiteUserId" FromRole="Pyramid" ToRole="SiteUser" />
+        </EntityType>
+        <Association Name="fk_Pyramid_PyramidParentId">
+          <End Type="MaristaModel.Pyramid" Role="Pyramid" Multiplicity="0..1" />
+          <End Type="MaristaModel.Pyramid" Role="Pyramid1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pyramid">
+              <PropertyRef Name="PyramidId" />
+            </Principal>
+            <Dependent Role="Pyramid1">
+              <PropertyRef Name="PyramidParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Pyramid_PyramidSpinoffParentId">
+          <End Type="MaristaModel.Pyramid" Role="Pyramid" Multiplicity="0..1" />
+          <End Type="MaristaModel.Pyramid" Role="Pyramid1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pyramid">
+              <PropertyRef Name="PyramidId" />
+            </Principal>
+            <Dependent Role="Pyramid1">
+              <PropertyRef Name="PyramidSpinoffParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Pyramid_SiteUserId">
+          <End Type="MaristaModel.SiteUser" Role="SiteUser" Multiplicity="1" />
+          <End Type="MaristaModel.Pyramid" Role="Pyramid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="SiteUserId" />
+            </Principal>
+            <Dependent Role="Pyramid">
+              <PropertyRef Name="SiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MarketingMaterial">
+          <Key>
+            <PropertyRef Name="MarketingMaterialId" />
+          </Key>
+          <Property Name="MarketingMaterialId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -760,6 +916,33 @@
                 <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
                 <ScalarProperty Name="CouponId" ColumnName="CouponId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pyramids">
+            <EntityTypeMapping TypeName="MaristaModel.Pyramid">
+              <MappingFragment StoreEntitySet="Pyramid">
+                <ScalarProperty Name="ToReceive" ColumnName="ToReceive" />
+                <ScalarProperty Name="FromOthers" ColumnName="FromOthers" />
+                <ScalarProperty Name="SoPrcnt" ColumnName="SoPrcnt" />
+                <ScalarProperty Name="SoParentPrcnt" ColumnName="SoParentPrcnt" />
+                <ScalarProperty Name="ParentPrcnt" ColumnName="ParentPrcnt" />
+                <ScalarProperty Name="Prcnt" ColumnName="Prcnt" />
+                <ScalarProperty Name="PBV" ColumnName="PBV" />
+                <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
+                <ScalarProperty Name="PyramidSpinoffParentId" ColumnName="PyramidSpinoffParentId" />
+                <ScalarProperty Name="PyramidParentId" ColumnName="PyramidParentId" />
+                <ScalarProperty Name="PyramidId" ColumnName="PyramidId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MarketingMaterials">
+            <EntityTypeMapping TypeName="MaristaModel.MarketingMaterial">
+              <MappingFragment StoreEntitySet="MarketingMaterial">
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MarketingMaterialId" ColumnName="MarketingMaterialId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

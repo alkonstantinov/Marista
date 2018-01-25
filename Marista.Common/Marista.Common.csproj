@@ -51,6 +51,7 @@
     <Compile Include="ViewModels\ConstantVM.cs" />
     <Compile Include="ViewModels\CouponVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
+    <Compile Include="ViewModels\MarketingMaterialVM.cs" />
     <Compile Include="ViewModels\ProductVM.cs" />
     <Compile Include="ViewModels\RelatedProductVM.cs" />
     <Compile Include="ViewModels\SOBonusSizeVM.cs" />

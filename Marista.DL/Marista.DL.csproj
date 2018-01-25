@@ -67,6 +67,7 @@
     <Compile Include="BonusSize.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="MarketingMaterialService.cs" />
     <Compile Include="Chat.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -79,6 +80,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="CouponService.cs" />
+    <Compile Include="MarketingMaterial.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pyramid.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="SOBonusSIzeService.cs" />
     <Compile Include="BonusSizeService.cs" />
     <Compile Include="Constant.cs">

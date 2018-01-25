@@ -41,6 +41,8 @@ namespace Marista.DL
                     cfg.CreateMap<Chat, ChatVM>()
                         .ReverseMap();
 
+
+
                     cfg.CreateMap<ChatItem, ChatItemVM>()
                         .ReverseMap()
                         .ForMember(dest => dest.Chat, y => y.Ignore())
@@ -52,6 +54,9 @@ namespace Marista.DL
                         .ForMember(dest => dest.Product, y => y.Ignore())
                         .ForMember(dest => dest.HCategory, y => y.Ignore())
                         .ForMember(dest => dest.VCategory, y => y.Ignore());
+
+                    cfg.CreateMap<MarketingMaterial, MarketingMaterialVM>()
+                        .ReverseMap();
                 }
             );
 

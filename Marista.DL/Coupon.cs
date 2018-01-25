@@ -10,6 +10,7 @@
 namespace Marista.DL
 {
     using System;
+    using System.Collections.Generic;
     
     public partial class Coupon
     {

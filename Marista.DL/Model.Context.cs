@@ -37,5 +37,7 @@ namespace Marista.DL
         public virtual DbSet<Chat> Chats { get; set; }
         public virtual DbSet<ChatItem> ChatItems { get; set; }
         public virtual DbSet<Coupon> Coupons { get; set; }
+        public virtual DbSet<Pyramid> Pyramids { get; set; }
+        public virtual DbSet<MarketingMaterial> MarketingMaterials { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace Marista.DL
             this.Chats = new HashSet<Chat>();
             this.ChatItems = new HashSet<ChatItem>();
             this.Coupons = new HashSet<Coupon>();
+            this.Pyramids = new HashSet<Pyramid>();
         }
     
         public int SiteUserId { get; set; }
@@ -35,5 +36,7 @@ namespace Marista.DL
         public virtual ICollection<ChatItem> ChatItems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Coupon> Coupons { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pyramid> Pyramids { get; set; }
     }
 }

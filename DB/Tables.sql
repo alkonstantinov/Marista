@@ -251,7 +251,8 @@ create table ChatItem
   constraint fk_ChatItem_SiteUserId foreign key (SiteUserId) references SiteUser(SiteUserId)
 )
 go
-
+exec p_ak_create_fk_indeces 'ChatItem'
+go
 
 if OBJECT_ID('Coupon') is not null
 begin
@@ -316,4 +317,24 @@ create table Pyramid
 go
 
 exec p_ak_create_fk_indeces 'Pyramid'
+go
+
+if OBJECT_ID('MarketingMaterial') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'MarketingMaterial'
+  drop table MarketingMaterial
+end
+go
+
+create table MarketingMaterial 
+(
+  MarketingMaterialId int not null identity(1,1),
+  Title nvarchar(200) not null,
+  FileName nvarchar(500) not null,
+  Content varbinary(max) not null,
+  constraint pk_MarketingMaterialId primary key (MarketingMaterialId)
+)
+go
+
+exec p_ak_create_fk_indeces 'MarketingMaterial'
 go

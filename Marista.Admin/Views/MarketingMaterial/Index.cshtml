@@ -1,0 +1,90 @@
+﻿@model IList<Marista.Common.ViewModels.MarketingMaterialVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Marketing material</h2>
+@if (ViewBag.Level == 1)
+{
+
+    using (Html.BeginForm("Create", "MarketingMaterial", FormMethod.Post,
+                                                            new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Title:</label>
+                <div class="col-md-10">
+                    <input type="text" name="Title" class="form-control" id="tbTitle" />
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">File:</label>
+                <div class="col-md-10">
+                    <input type="file" name="file" class="form-control" id="fuFile" />
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-success btn-lg" onclick="return validate()" />
+                </div>
+            </div>
+        </div>
+
+
+    }
+
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th width="400">File</th>
+                <th width="100"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var b in Model)
+            {
+                <tr>
+                    <td>@b.Title</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="@Url.Action("Get", new { id = b.MarketingMaterialId})" class="btn btn-default" title="View"><i class="glyphicon glyphicon-search"></i></a>
+                            @b.FileName
+                        </div>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Delete", new { id = b.MarketingMaterialId})" class="btn btn-default" title="View"><i class="glyphicon glyphicon-remove-sign"></i></a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function validate() {
+        if ($("#tbTitle").val() === "") {
+            alert("Please, enter title");
+            return false;
+        }
+        if ($("#fuFile").val() === "") {
+            alert("Please, select file");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
