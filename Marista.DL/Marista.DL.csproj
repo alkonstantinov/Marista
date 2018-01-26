@@ -71,10 +71,14 @@
     <Compile Include="BP.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReportService.cs" />
     <Compile Include="Country.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="BPService.cs" />
+    <Compile Include="Customer.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="MarketingMaterialService.cs" />
     <Compile Include="Chat.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -92,6 +96,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Pyramid.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sale.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SaleDetail.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="SOBonusSIzeService.cs" />
@@ -136,6 +146,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="VMMapper.cs" />
+    <Compile Include="vMonthSalesPerUser.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vSalesTotal.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

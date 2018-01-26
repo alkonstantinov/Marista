@@ -56,9 +56,14 @@
     <Compile Include="ViewModels\CouponVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\MarketingMaterialVM.cs" />
+    <Compile Include="ViewModels\MyTeamReportVM.cs" />
     <Compile Include="ViewModels\ProductVM.cs" />
+    <Compile Include="ViewModels\PyramidResultVM.cs" />
     <Compile Include="ViewModels\RelatedProductVM.cs" />
+    <Compile Include="ViewModels\SaleDetailVM.cs" />
+    <Compile Include="ViewModels\SaleVM.cs" />
     <Compile Include="ViewModels\SOBonusSizeVM.cs" />
+    <Compile Include="ViewModels\TeamReportVM.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

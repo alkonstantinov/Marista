@@ -78,6 +78,17 @@
           <Property Name="Used" Type="bit" Nullable="false" />
           <Property Name="Img" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="HCategory">
           <Key>
             <PropertyRef Name="HCategoryId" />
@@ -138,6 +149,25 @@
           <Property Name="FromProductId" Type="int" Nullable="false" />
           <Property Name="ToProductId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="SaleId" />
+          </Key>
+          <Property Name="SaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="OnDate" Type="datetime" Nullable="false" />
+          <Property Name="CouponId" Type="int" />
+        </EntityType>
+        <EntityType Name="SaleDetail">
+          <Key>
+            <PropertyRef Name="SaleDetailId" />
+          </Key>
+          <Property Name="SaleDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SaleId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="SiteUser">
           <Key>
             <PropertyRef Name="SiteUserId" />
@@ -163,6 +193,29 @@
           </Key>
           <Property Name="VCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Marista.dbo.vMonthSalesPerUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vMonthSalesPerUser">
+          <Key>
+            <PropertyRef Name="SiteUserId" />
+          </Key>
+          <Property Name="SiteUserId" Type="int" Nullable="false" />
+          <Property Name="total" Type="decimal" Precision="38" Scale="4" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vSalesTotal">
+          <Key>
+            <PropertyRef Name="SaleId" />
+            <PropertyRef Name="OnDate" />
+            <PropertyRef Name="CustomerName" />
+          </Key>
+          <Property Name="SaleId" Type="int" Nullable="false" />
+          <Property Name="OnDate" Type="datetime" Nullable="false" />
+          <Property Name="SiteUserId" Type="int" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="38" Scale="4" />
         </EntityType>
         <Association Name="fk_BP_CountryId">
           <End Role="Country" Type="Self.Country" Multiplicity="1" />
@@ -272,6 +325,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Customer_CountryId">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Product_FromProductId">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="RelatedProduct" Type="Self.RelatedProduct" Multiplicity="*" />
@@ -356,6 +421,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Sale_CouponId">
+          <End Role="Coupon" Type="Self.Coupon" Multiplicity="0..1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coupon">
+              <PropertyRef Name="CouponId" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="CouponId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Sale_CustomerId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SaleDetail_ProductId">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="SaleDetail" Type="Self.SaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="SaleDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SaleDetail_SaleId">
+          <End Role="Sale" Type="Self.Sale" Multiplicity="1" />
+          <End Role="SaleDetail" Type="Self.SaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sale">
+              <PropertyRef Name="SaleId" />
+            </Principal>
+            <Dependent Role="SaleDetail">
+              <PropertyRef Name="SaleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_SiteUser_LevelId">
           <End Role="Level" Type="Self.Level" Multiplicity="1" />
           <End Role="SiteUser" Type="Self.SiteUser" Multiplicity="*" />
@@ -376,15 +489,33 @@
           <EntitySet Name="Constant" EntityType="Self.Constant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HCategory" EntityType="Self.HCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MarketingMaterial" EntityType="Self.MarketingMaterial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pyramid" EntityType="Self.Pyramid" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RelatedProduct" EntityType="Self.RelatedProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaleDetail" EntityType="Self.SaleDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteUser" EntityType="Self.SiteUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SOBonusSize" EntityType="Self.SOBonusSize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VCategory" EntityType="Self.VCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vMonthSalesPerUser" EntityType="Self.vMonthSalesPerUser" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vMonthSalesPerUser].[SiteUserId] AS [SiteUserId], 
+    [vMonthSalesPerUser].[total] AS [total]
+    FROM [dbo].[vMonthSalesPerUser] AS [vMonthSalesPerUser]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vSalesTotal" EntityType="Self.vSalesTotal" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vSalesTotal].[SaleId] AS [SaleId], 
+    [vSalesTotal].[OnDate] AS [OnDate], 
+    [vSalesTotal].[SiteUserId] AS [SiteUserId], 
+    [vSalesTotal].[CustomerName] AS [CustomerName], 
+    [vSalesTotal].[Total] AS [Total]
+    FROM [dbo].[vSalesTotal] AS [vSalesTotal]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="fk_BP_CountryId" Association="Self.fk_BP_CountryId">
             <End Role="Country" EntitySet="Country" />
             <End Role="BP" EntitySet="BP" />
@@ -421,6 +552,10 @@
             <End Role="VCategory" EntitySet="VCategory" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
+          <AssociationSet Name="fk_Customer_CountryId" Association="Self.fk_Customer_CountryId">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
           <AssociationSet Name="fk_Product_FromProductId" Association="Self.fk_Product_FromProductId">
             <End Role="Product" EntitySet="Product" />
             <End Role="RelatedProduct" EntitySet="RelatedProduct" />
@@ -448,6 +583,22 @@
           <AssociationSet Name="fk_Pyramid_SiteUserId" Association="Self.fk_Pyramid_SiteUserId">
             <End Role="SiteUser" EntitySet="SiteUser" />
             <End Role="Pyramid" EntitySet="Pyramid" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Sale_CouponId" Association="Self.fk_Sale_CouponId">
+            <End Role="Coupon" EntitySet="Coupon" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Sale_CustomerId" Association="Self.fk_Sale_CustomerId">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SaleDetail_ProductId" Association="Self.fk_SaleDetail_ProductId">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="SaleDetail" EntitySet="SaleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SaleDetail_SaleId" Association="Self.fk_SaleDetail_SaleId">
+            <End Role="Sale" EntitySet="Sale" />
+            <End Role="SaleDetail" EntitySet="SaleDetail" />
           </AssociationSet>
           <AssociationSet Name="fk_SiteUser_LevelId" Association="Self.fk_SiteUser_LevelId">
             <End Role="Level" EntitySet="Level" />
@@ -574,6 +725,31 @@
             <End Role="SiteUser" EntitySet="SiteUsers" />
             <End Role="BP" EntitySet="BPs" />
           </AssociationSet>
+          <EntitySet Name="Customers" EntityType="MaristaModel.Customer" />
+          <EntitySet Name="Sales" EntityType="MaristaModel.Sale" />
+          <EntitySet Name="SaleDetails" EntityType="MaristaModel.SaleDetail" />
+          <AssociationSet Name="fk_Customer_CountryId" Association="MaristaModel.fk_Customer_CountryId">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Sale_CouponId" Association="MaristaModel.fk_Sale_CouponId">
+            <End Role="Coupon" EntitySet="Coupons" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Sale_CustomerId" Association="MaristaModel.fk_Sale_CustomerId">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SaleDetail_ProductId" Association="MaristaModel.fk_SaleDetail_ProductId">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="SaleDetail" EntitySet="SaleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SaleDetail_SaleId" Association="MaristaModel.fk_SaleDetail_SaleId">
+            <End Role="Sale" EntitySet="Sales" />
+            <End Role="SaleDetail" EntitySet="SaleDetails" />
+          </AssociationSet>
+          <EntitySet Name="vSalesTotals" EntityType="MaristaModel.vSalesTotal" />
+          <EntitySet Name="vMonthSalesPerUsers" EntityType="MaristaModel.vMonthSalesPerUser" />
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -609,6 +785,7 @@
           <NavigationProperty Name="RelatedFromProducts" Relationship="MaristaModel.RelatedProduct" FromRole="Product" ToRole="Product1" />
           <NavigationProperty Name="RelatedToProducts" Relationship="MaristaModel.RelatedProduct" FromRole="Product1" ToRole="Product" />
           <NavigationProperty Name="Coupons" Relationship="MaristaModel.fk_Coupon_ProductId" FromRole="Product" ToRole="Coupon" />
+          <NavigationProperty Name="SaleDetails" Relationship="MaristaModel.fk_SaleDetail_ProductId" FromRole="Product" ToRole="SaleDetail" />
         </EntityType>
         <EntityType Name="SOBonusSize">
           <Key>
@@ -742,6 +919,7 @@
           <NavigationProperty Name="Product" Relationship="MaristaModel.fk_Coupon_ProductId" FromRole="Coupon" ToRole="Product" />
           <NavigationProperty Name="SiteUser" Relationship="MaristaModel.fk_Coupon_SiteUserId" FromRole="Coupon" ToRole="SiteUser" />
           <NavigationProperty Name="VCategory" Relationship="MaristaModel.fk_Coupon_VCategoryId" FromRole="Coupon" ToRole="VCategory" />
+          <NavigationProperty Name="Sales" Relationship="MaristaModel.fk_Sale_CouponId" FromRole="Coupon" ToRole="Sale" />
         </EntityType>
         <Association Name="fk_Coupon_HCategoryId">
           <End Type="MaristaModel.HCategory" Role="HCategory" Multiplicity="0..1" />
@@ -881,6 +1059,7 @@
           <Property Name="CountryId" Type="Int32" Nullable="false" />
           <Property Name="CountryName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BPs" Relationship="MaristaModel.fk_BP_CountryId" FromRole="Country" ToRole="BP" />
+          <NavigationProperty Name="Customers" Relationship="MaristaModel.fk_Customer_CountryId" FromRole="Country" ToRole="Customer" />
         </EntityType>
         <Association Name="fk_BP_CountryId">
           <End Type="MaristaModel.Country" Role="Country" Multiplicity="1" />
@@ -906,6 +1085,122 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="MaristaModel.fk_Customer_CountryId" FromRole="Customer" ToRole="Country" />
+          <NavigationProperty Name="Sales" Relationship="MaristaModel.fk_Sale_CustomerId" FromRole="Customer" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="SaleId" />
+          </Key>
+          <Property Name="SaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CouponId" Type="Int32" />
+          <NavigationProperty Name="Coupon" Relationship="MaristaModel.fk_Sale_CouponId" FromRole="Sale" ToRole="Coupon" />
+          <NavigationProperty Name="Customer" Relationship="MaristaModel.fk_Sale_CustomerId" FromRole="Sale" ToRole="Customer" />
+          <NavigationProperty Name="SaleDetails" Relationship="MaristaModel.fk_SaleDetail_SaleId" FromRole="Sale" ToRole="SaleDetail" />
+        </EntityType>
+        <EntityType Name="SaleDetail">
+          <Key>
+            <PropertyRef Name="SaleDetailId" />
+          </Key>
+          <Property Name="SaleDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SaleId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="MaristaModel.fk_SaleDetail_ProductId" FromRole="SaleDetail" ToRole="Product" />
+          <NavigationProperty Name="Sale" Relationship="MaristaModel.fk_SaleDetail_SaleId" FromRole="SaleDetail" ToRole="Sale" />
+        </EntityType>
+        <Association Name="fk_Customer_CountryId">
+          <End Type="MaristaModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="MaristaModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Sale_CouponId">
+          <End Type="MaristaModel.Coupon" Role="Coupon" Multiplicity="0..1" />
+          <End Type="MaristaModel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coupon">
+              <PropertyRef Name="CouponId" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="CouponId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Sale_CustomerId">
+          <End Type="MaristaModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="MaristaModel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SaleDetail_ProductId">
+          <End Type="MaristaModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="MaristaModel.SaleDetail" Role="SaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="SaleDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SaleDetail_SaleId">
+          <End Type="MaristaModel.Sale" Role="Sale" Multiplicity="1" />
+          <End Type="MaristaModel.SaleDetail" Role="SaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sale">
+              <PropertyRef Name="SaleId" />
+            </Principal>
+            <Dependent Role="SaleDetail">
+              <PropertyRef Name="SaleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vSalesTotal">
+          <Key>
+            <PropertyRef Name="SaleId" />
+            <PropertyRef Name="OnDate" />
+            <PropertyRef Name="CustomerName" />
+          </Key>
+          <Property Name="SaleId" Type="Int32" Nullable="false" />
+          <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SiteUserId" Type="Int32" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Total" Type="Decimal" Precision="38" Scale="4" />
+        </EntityType>
+        <EntityType Name="vMonthSalesPerUser">
+          <Key>
+            <PropertyRef Name="SiteUserId" />
+          </Key>
+          <Property Name="SiteUserId" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Decimal" Precision="38" Scale="4" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1083,6 +1378,58 @@
               <MappingFragment StoreEntitySet="Country">
                 <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="MaristaModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="MaristaModel.Sale">
+              <MappingFragment StoreEntitySet="Sale">
+                <ScalarProperty Name="CouponId" ColumnName="CouponId" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleDetails">
+            <EntityTypeMapping TypeName="MaristaModel.SaleDetail">
+              <MappingFragment StoreEntitySet="SaleDetail">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+                <ScalarProperty Name="SaleDetailId" ColumnName="SaleDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vSalesTotals">
+            <EntityTypeMapping TypeName="MaristaModel.vSalesTotal">
+              <MappingFragment StoreEntitySet="vSalesTotal">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vMonthSalesPerUsers">
+            <EntityTypeMapping TypeName="MaristaModel.vMonthSalesPerUser">
+              <MappingFragment StoreEntitySet="vMonthSalesPerUser">
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

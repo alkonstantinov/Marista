@@ -12,21 +12,22 @@ namespace Marista.DL
     using System;
     using System.Collections.Generic;
     
-    public partial class Country
+    public partial class Sale
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Country()
+        public Sale()
         {
-            this.BPs = new HashSet<BP>();
-            this.Customers = new HashSet<Customer>();
+            this.SaleDetails = new HashSet<SaleDetail>();
         }
     
-        public int CountryId { get; set; }
-        public string CountryName { get; set; }
+        public int SaleId { get; set; }
+        public int CustomerId { get; set; }
+        public System.DateTime OnDate { get; set; }
+        public Nullable<int> CouponId { get; set; }
     
+        public virtual Coupon Coupon { get; set; }
+        public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BP> BPs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Customer> Customers { get; set; }
+        public virtual ICollection<SaleDetail> SaleDetails { get; set; }
     }
 }

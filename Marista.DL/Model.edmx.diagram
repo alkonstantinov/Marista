@@ -16,10 +16,10 @@
         <AssociationConnector Association="MaristaModel.fk_Product_HCategoryId" />
         <AssociationConnector Association="MaristaModel.fk_Product_VCategoryId" />
         <AssociationConnector Association="MaristaModel.RelatedProduct" ManuallyRouted="true" >
-          <ConnectorPoint PointX="5.9592307692307696" PointY="7.2686979166666656" />
-          <ConnectorPoint PointX="5.9592307692307696" PointY="369.10291403494926" />
-          <ConnectorPoint PointX="6.554615384615385" PointY="369.10291403494926" />
-          <ConnectorPoint PointX="6.554615384615385" PointY="7.2686979166666656" />
+          <ConnectorPoint PointX="5.9592307692307696" PointY="7.4609993489583326" />
+          <ConnectorPoint PointX="5.9592307692307696" PointY="464.63409634831726" />
+          <ConnectorPoint PointX="6.554615384615385" PointY="464.63409634831726" />
+          <ConnectorPoint PointX="6.554615384615385" PointY="7.4609993489583326" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MaristaModel.BonusSize" Width="1.5" PointX="10.625" PointY="0.75" />
         <EntityTypeShape EntityType="MaristaModel.Chat" Width="1.5" PointX="1.125" PointY="7.25" />
@@ -41,6 +41,16 @@
         <EntityTypeShape EntityType="MaristaModel.Country" Width="1.5" PointX="10.25" PointY="14.25" />
         <AssociationConnector Association="MaristaModel.fk_BP_CountryId" />
         <AssociationConnector Association="MaristaModel.fk_BP_SiteUserId" />
+        <EntityTypeShape EntityType="MaristaModel.Customer" Width="1.5" PointX="10.625" PointY="9.125" />
+        <EntityTypeShape EntityType="MaristaModel.Sale" Width="1.5" PointX="12.875" PointY="5.25" />
+        <EntityTypeShape EntityType="MaristaModel.SaleDetail" Width="1.5" PointX="15.125" PointY="4.5" />
+        <AssociationConnector Association="MaristaModel.fk_Customer_CountryId" />
+        <AssociationConnector Association="MaristaModel.fk_Sale_CouponId" />
+        <AssociationConnector Association="MaristaModel.fk_Sale_CustomerId" />
+        <AssociationConnector Association="MaristaModel.fk_SaleDetail_ProductId" />
+        <AssociationConnector Association="MaristaModel.fk_SaleDetail_SaleId" />
+        <EntityTypeShape EntityType="MaristaModel.vSalesTotal" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="MaristaModel.vMonthSalesPerUser" Width="1.5" PointX="7.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

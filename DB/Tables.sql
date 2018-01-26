@@ -389,3 +389,73 @@ go
 
 exec p_ak_create_fk_indeces 'BP'
 go
+
+if OBJECT_ID('Customer') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Customer'
+  drop table Customer
+end
+go
+
+create table Customer 
+(
+  CustomerId int not null identity(1,1),
+  Username nvarchar(50) not null,
+  Password nvarchar(32) not null,
+  CustomerName nvarchar(200) not null,
+  Address nvarchar(max) not null,
+  CountryId int not null
+  constraint pk_CustomerId primary key (CustomerId),
+  constraint fk_Customer_CountryId foreign key (CountryId) references Country(CountryId)
+)
+go
+
+exec p_ak_create_fk_indeces 'Customer'
+go
+
+
+if OBJECT_ID('Sale') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Sale'
+  drop table Sale
+end
+go
+
+create table Sale
+(
+  SaleId int not null identity(1,1),
+  CustomerId int not null,
+  OnDate datetime not null default getdate(),
+  CouponId int null,
+  constraint pk_SaleId primary key (SaleId),
+  constraint fk_Sale_CustomerId foreign key (CustomerId) references Customer(CustomerId),
+  constraint fk_Sale_CouponId foreign key (CouponId) references Coupon(CouponId)
+)
+go
+
+exec p_ak_create_fk_indeces 'Sale'
+go
+
+
+if OBJECT_ID('SaleDetail') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'SaleDetail'
+  drop table SaleDetail
+end
+go
+
+create table SaleDetail
+(
+  SaleDetailId int not null identity(1,1),
+  SaleId int not null,
+  ProductId int not null,
+  Price decimal(10,2) not null,
+  Quantity int not null,
+  constraint pk_SaleDetailId primary key (SaleDetailId),
+  constraint fk_SaleDetail_SaleId foreign key (SaleId) references Sale(SaleId),
+  constraint fk_SaleDetail_ProductId foreign key (ProductId) references Product(ProductId)
+)
+go
+
+exec p_ak_create_fk_indeces 'SaleDetail'
+go

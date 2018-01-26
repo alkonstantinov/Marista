@@ -14,6 +14,12 @@ namespace Marista.DL
     
     public partial class Coupon
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Coupon()
+        {
+            this.Sales = new HashSet<Sale>();
+        }
+    
         public int CouponId { get; set; }
         public string UniqueId { get; set; }
         public int SiteUserId { get; set; }
@@ -30,5 +36,7 @@ namespace Marista.DL
         public virtual Product Product { get; set; }
         public virtual SiteUser SiteUser { get; set; }
         public virtual VCategory VCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }
