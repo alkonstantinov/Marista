@@ -17,8 +17,8 @@
         <AssociationConnector Association="MaristaModel.fk_Product_VCategoryId" />
         <AssociationConnector Association="MaristaModel.RelatedProduct" ManuallyRouted="true" >
           <ConnectorPoint PointX="5.9592307692307696" PointY="7.2686979166666656" />
-          <ConnectorPoint PointX="5.9592307692307696" PointY="273.57173172158127" />
-          <ConnectorPoint PointX="6.554615384615385" PointY="273.57173172158127" />
+          <ConnectorPoint PointX="5.9592307692307696" PointY="369.10291403494926" />
+          <ConnectorPoint PointX="6.554615384615385" PointY="369.10291403494926" />
           <ConnectorPoint PointX="6.554615384615385" PointY="7.2686979166666656" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MaristaModel.BonusSize" Width="1.5" PointX="10.625" PointY="0.75" />
@@ -37,6 +37,10 @@
         <AssociationConnector Association="MaristaModel.fk_Pyramid_PyramidSpinoffParentId" />
         <AssociationConnector Association="MaristaModel.fk_Pyramid_SiteUserId" />
         <EntityTypeShape EntityType="MaristaModel.MarketingMaterial" Width="1.5" PointX="7.375" PointY="8.75" />
+        <EntityTypeShape EntityType="MaristaModel.BP" Width="1.5" PointX="12.5" PointY="0.75" />
+        <EntityTypeShape EntityType="MaristaModel.Country" Width="1.5" PointX="10.25" PointY="14.25" />
+        <AssociationConnector Association="MaristaModel.fk_BP_CountryId" />
+        <AssociationConnector Association="MaristaModel.fk_BP_SiteUserId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -88,6 +88,7 @@
     <Reference Include="SoundInTheory.DynamicImage.Mvc4, Version=3.1.1.0, Culture=neutral, PublicKeyToken=fa44558110383067, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicImage.Mvc4.3.1.1\lib\net40\SoundInTheory.DynamicImage.Mvc4.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -162,6 +163,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Mails\approve.txt" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -274,6 +276,7 @@
     <Compile Include="App_Start\DynamicImage.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BPRegController.cs" />
     <Compile Include="Controllers\MarketingMaterialController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\ConstantController.cs" />
@@ -325,6 +328,9 @@
     <Content Include="Views\Coupon\Create.cshtml" />
     <Content Include="Views\Coupon\Index.cshtml" />
     <Content Include="Views\MarketingMaterial\Index.cshtml" />
+    <Content Include="Views\BPReg\Index.cshtml" />
+    <Content Include="Views\BPReg\Success.cshtml" />
+    <Content Include="Views\BPReg\NotApproved.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -344,6 +350,9 @@
       <Project>{b1630cce-658a-4cd0-bdf7-a6d78f5ebc0a}</Project>
       <Name>Marista.DL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

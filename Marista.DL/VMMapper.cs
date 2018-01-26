@@ -57,6 +57,9 @@ namespace Marista.DL
 
                     cfg.CreateMap<MarketingMaterial, MarketingMaterialVM>()
                         .ReverseMap();
+
+                    cfg.CreateMap<BP, BPRegVM>()
+                        .ReverseMap();
                 }
             );
 

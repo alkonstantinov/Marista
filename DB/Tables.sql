@@ -338,3 +338,54 @@ go
 
 exec p_ak_create_fk_indeces 'MarketingMaterial'
 go
+
+
+if OBJECT_ID('Country') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Country'
+  drop table Country
+end
+go
+
+create table Country
+(
+  CountryId int not null,
+  CountryName nvarchar(200) not null,
+  constraint pk_CountryId primary key (CountryId)
+)
+go
+
+exec p_ak_create_fk_indeces 'Country'
+go
+
+insert into Country(CountryId, CountryName) values (1, 'Bulgaria'), (2, 'Germany')
+go
+
+
+if OBJECT_ID('BP') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'BP'
+  drop table BP
+end
+go
+
+create table BP
+(
+  BPId int not null identity(1,1),
+  BPName nvarchar(200) not null,
+  EMail nvarchar(200) not null,
+  PayPal nvarchar(200) not null,
+  Address nvarchar(max) not null,
+  CountryId int not null,
+  SiteUserId int not null,
+  Files varbinary(max) not null,
+  FileName nvarchar(200) not null,
+  Active bit not null default 0,
+  constraint pk_BPId primary key (BPId),
+  constraint fk_BP_CountryId foreign key (CountryId) references Country(CountryId),
+  constraint fk_BP_SiteUserId foreign key (SiteUserId) references SiteUser(SiteUserId)
+)
+go
+
+exec p_ak_create_fk_indeces 'BP'
+go

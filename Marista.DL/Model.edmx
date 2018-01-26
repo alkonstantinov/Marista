@@ -14,6 +14,21 @@
           <Property Name="ToBonus" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="BonusPercent" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="BP">
+          <Key>
+            <PropertyRef Name="BPId" />
+          </Key>
+          <Property Name="BPId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BPName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="EMail" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PayPal" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+          <Property Name="SiteUserId" Type="int" Nullable="false" />
+          <Property Name="Files" Type="varbinary(max)" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Chat">
           <Key>
             <PropertyRef Name="ChatId" />
@@ -39,6 +54,13 @@
           <Property Name="ConstantId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Value" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="int" Nullable="false" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="Coupon">
           <Key>
@@ -142,6 +164,30 @@
           <Property Name="VCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
+        <Association Name="fk_BP_CountryId">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="BP" Type="Self.BP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="BP">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BP_SiteUserId">
+          <End Role="SiteUser" Type="Self.SiteUser" Multiplicity="1" />
+          <End Role="BP" Type="Self.BP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="SiteUserId" />
+            </Principal>
+            <Dependent Role="BP">
+              <PropertyRef Name="SiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Chat_SiteUserId">
           <End Role="SiteUser" Type="Self.SiteUser" Multiplicity="1" />
           <End Role="Chat" Type="Self.Chat" Multiplicity="*" />
@@ -324,9 +370,11 @@
         </Association>
         <EntityContainer Name="MaristaModelStoreContainer">
           <EntitySet Name="BonusSize" EntityType="Self.BonusSize" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BP" EntityType="Self.BP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Chat" EntityType="Self.Chat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChatItem" EntityType="Self.ChatItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Constant" EntityType="Self.Constant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HCategory" EntityType="Self.HCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
@@ -337,6 +385,14 @@
           <EntitySet Name="SiteUser" EntityType="Self.SiteUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SOBonusSize" EntityType="Self.SOBonusSize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VCategory" EntityType="Self.VCategory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_BP_CountryId" Association="Self.fk_BP_CountryId">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="BP" EntitySet="BP" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BP_SiteUserId" Association="Self.fk_BP_SiteUserId">
+            <End Role="SiteUser" EntitySet="SiteUser" />
+            <End Role="BP" EntitySet="BP" />
+          </AssociationSet>
           <AssociationSet Name="fk_Chat_SiteUserId" Association="Self.fk_Chat_SiteUserId">
             <End Role="SiteUser" EntitySet="SiteUser" />
             <End Role="Chat" EntitySet="Chat" />
@@ -424,6 +480,7 @@
           <Property Name="CurrentSessionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Coupons" Relationship="MaristaModel.fk_Coupon_SiteUserId" FromRole="SiteUser" ToRole="Coupon" />
           <NavigationProperty Name="Pyramids" Relationship="MaristaModel.fk_Pyramid_SiteUserId" FromRole="SiteUser" ToRole="Pyramid" />
+          <NavigationProperty Name="BPs" Relationship="MaristaModel.fk_BP_SiteUserId" FromRole="SiteUser" ToRole="BP" />
         </EntityType>
         <Association Name="fk_SiteUser_LevelId">
           <End Role="Level" Type="Self.Level" Multiplicity="1" />
@@ -507,6 +564,16 @@
             <End Role="Pyramid" EntitySet="Pyramids" />
           </AssociationSet>
           <EntitySet Name="MarketingMaterials" EntityType="MaristaModel.MarketingMaterial" />
+          <EntitySet Name="BPs" EntityType="MaristaModel.BP" />
+          <EntitySet Name="Countries" EntityType="MaristaModel.Country" />
+          <AssociationSet Name="fk_BP_CountryId" Association="MaristaModel.fk_BP_CountryId">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="BP" EntitySet="BPs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BP_SiteUserId" Association="MaristaModel.fk_BP_SiteUserId">
+            <End Role="SiteUser" EntitySet="SiteUsers" />
+            <End Role="BP" EntitySet="BPs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -790,6 +857,55 @@
           <Property Name="FileName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Content" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="BP">
+          <Key>
+            <PropertyRef Name="BPId" />
+          </Key>
+          <Property Name="BPId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BPName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EMail" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PayPal" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="SiteUserId" Type="Int32" Nullable="false" />
+          <Property Name="Files" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="MaristaModel.fk_BP_CountryId" FromRole="BP" ToRole="Country" />
+          <NavigationProperty Name="SiteUser" Relationship="MaristaModel.fk_BP_SiteUserId" FromRole="BP" ToRole="SiteUser" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BPs" Relationship="MaristaModel.fk_BP_CountryId" FromRole="Country" ToRole="BP" />
+        </EntityType>
+        <Association Name="fk_BP_CountryId">
+          <End Type="MaristaModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="MaristaModel.BP" Role="BP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="BP">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BP_SiteUserId">
+          <End Type="MaristaModel.SiteUser" Role="SiteUser" Multiplicity="1" />
+          <End Type="MaristaModel.BP" Role="BP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="SiteUserId" />
+            </Principal>
+            <Dependent Role="BP">
+              <PropertyRef Name="SiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -943,6 +1059,30 @@
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="MarketingMaterialId" ColumnName="MarketingMaterialId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BPs">
+            <EntityTypeMapping TypeName="MaristaModel.BP">
+              <MappingFragment StoreEntitySet="BP">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Files" ColumnName="Files" />
+                <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PayPal" ColumnName="PayPal" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="BPName" ColumnName="BPName" />
+                <ScalarProperty Name="BPId" ColumnName="BPId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="MaristaModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
