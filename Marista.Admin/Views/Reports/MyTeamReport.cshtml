@@ -1,0 +1,89 @@
+﻿@model Marista.Common.ViewModels.MyTeamReportVM
+
+@{
+    ViewBag.Title = "MyTeamReport";
+}
+
+<h2>My Team Report</h2>
+<h3>My Results</h3>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Sales</th>
+                <th>PBV</th>
+                <th>NBV</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.MyResult.Sales</td>
+                <td>@Model.MyResult.PBV</td>
+                <td>@Model.MyResult.NB</td>
+
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<h3>My Team Results</h3>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Member</th>
+                <th>eMail</th>
+                <th>Sales</th>
+                <th>PBV</th>
+                <th>NBV</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model.Team)
+            {
+                <tr>
+                    <td>@r.BPName</td>
+                    <td>@r.eMail</td>
+                    <td>@r.Result.Sales</td>
+                    <td>@r.Result.PBV</td>
+                    <td>@r.Result.NB</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<h3>My Sales</h3>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>On Date</th>
+                <th>Total</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model.Sales)
+            {
+                <tr>
+                    <td>@s.CustomerName</td>
+                    <td>@s.OnDate.ToShortDateString()</td>
+                    <td>@s.Total</td>
+                    <td>
+                        <ul>
+                            @foreach (var sd in s.SaleDetails)
+                            {
+                                <li>@sd.ProductName EUR@sd.Price pcs:@sd.Quantity</li>
+                            }
+                        </ul>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -277,6 +277,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BPRegController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\MarketingMaterialController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\ConstantController.cs" />
@@ -331,6 +332,7 @@
     <Content Include="Views\BPReg\Index.cshtml" />
     <Content Include="Views\BPReg\Success.cshtml" />
     <Content Include="Views\BPReg\NotApproved.cshtml" />
+    <Content Include="Views\Reports\MyTeamReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

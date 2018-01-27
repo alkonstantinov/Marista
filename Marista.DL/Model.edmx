@@ -204,6 +204,28 @@ warning 6002: The table/view 'Marista.dbo.vMonthSalesPerUser' does not have a pr
           <Property Name="total" Type="decimal" Precision="38" Scale="4" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'Marista.dbo.vMyTeamReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vMyTeamReport">
+          <Key>
+            <PropertyRef Name="PyramidId" />
+            <PropertyRef Name="SiteUserId" />
+            <PropertyRef Name="ToReceive" />
+            <PropertyRef Name="FromOthers" />
+            <PropertyRef Name="PBV" />
+            <PropertyRef Name="BPName" />
+            <PropertyRef Name="EMail" />
+          </Key>
+          <Property Name="PyramidId" Type="int" Nullable="false" />
+          <Property Name="PyramidParentId" Type="int" />
+          <Property Name="SiteUserId" Type="int" Nullable="false" />
+          <Property Name="total" Type="decimal" Precision="38" Scale="4" />
+          <Property Name="ToReceive" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FromOthers" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="PBV" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="BPName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="EMail" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vSalesTotal">
           <Key>
@@ -507,6 +529,19 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
     [vMonthSalesPerUser].[total] AS [total]
     FROM [dbo].[vMonthSalesPerUser] AS [vMonthSalesPerUser]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vMyTeamReport" EntityType="Self.vMyTeamReport" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vMyTeamReport].[PyramidId] AS [PyramidId], 
+    [vMyTeamReport].[PyramidParentId] AS [PyramidParentId], 
+    [vMyTeamReport].[SiteUserId] AS [SiteUserId], 
+    [vMyTeamReport].[total] AS [total], 
+    [vMyTeamReport].[ToReceive] AS [ToReceive], 
+    [vMyTeamReport].[FromOthers] AS [FromOthers], 
+    [vMyTeamReport].[PBV] AS [PBV], 
+    [vMyTeamReport].[BPName] AS [BPName], 
+    [vMyTeamReport].[EMail] AS [EMail]
+    FROM [dbo].[vMyTeamReport] AS [vMyTeamReport]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vSalesTotal" EntityType="Self.vSalesTotal" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vSalesTotal].[SaleId] AS [SaleId], 
@@ -750,6 +785,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           </AssociationSet>
           <EntitySet Name="vSalesTotals" EntityType="MaristaModel.vSalesTotal" />
           <EntitySet Name="vMonthSalesPerUsers" EntityType="MaristaModel.vMonthSalesPerUser" />
+          <EntitySet Name="vMyTeamReports" EntityType="MaristaModel.vMyTeamReport" />
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -1201,6 +1237,26 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="SiteUserId" Type="Int32" Nullable="false" />
           <Property Name="total" Type="Decimal" Precision="38" Scale="4" />
         </EntityType>
+        <EntityType Name="vMyTeamReport">
+          <Key>
+            <PropertyRef Name="PyramidId" />
+            <PropertyRef Name="SiteUserId" />
+            <PropertyRef Name="ToReceive" />
+            <PropertyRef Name="FromOthers" />
+            <PropertyRef Name="PBV" />
+            <PropertyRef Name="BPName" />
+            <PropertyRef Name="EMail" />
+          </Key>
+          <Property Name="PyramidId" Type="Int32" Nullable="false" />
+          <Property Name="PyramidParentId" Type="Int32" />
+          <Property Name="SiteUserId" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="ToReceive" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="FromOthers" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="PBV" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="BPName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EMail" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1430,6 +1486,21 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
               <MappingFragment StoreEntitySet="vMonthSalesPerUser">
                 <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vMyTeamReports">
+            <EntityTypeMapping TypeName="MaristaModel.vMyTeamReport">
+              <MappingFragment StoreEntitySet="vMyTeamReport">
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="BPName" ColumnName="BPName" />
+                <ScalarProperty Name="PBV" ColumnName="PBV" />
+                <ScalarProperty Name="FromOthers" ColumnName="FromOthers" />
+                <ScalarProperty Name="ToReceive" ColumnName="ToReceive" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
+                <ScalarProperty Name="PyramidParentId" ColumnName="PyramidParentId" />
+                <ScalarProperty Name="PyramidId" ColumnName="PyramidId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

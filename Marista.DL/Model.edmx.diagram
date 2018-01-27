@@ -51,6 +51,7 @@
         <AssociationConnector Association="MaristaModel.fk_SaleDetail_SaleId" />
         <EntityTypeShape EntityType="MaristaModel.vSalesTotal" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="MaristaModel.vMonthSalesPerUser" Width="1.5" PointX="7.375" PointY="11.75" />
+        <EntityTypeShape EntityType="MaristaModel.vMyTeamReport" Width="1.5" PointX="12.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

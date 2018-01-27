@@ -12,6 +12,6 @@ namespace Marista.Common.ViewModels
 
         public string eMail { get; set; }
 
-        public PyramidResultVM MyProperty { get; set; }
+        public PyramidResultVM Result { get; set; }
     }
 }

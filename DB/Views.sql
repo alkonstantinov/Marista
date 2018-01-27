@@ -31,3 +31,25 @@ create view vMonthSalesPerUser as
   where Month(v.OnDate)=month(getdate()) and Year(v.OnDate)=Year(getdate())
   group by s.SiteUserId
 go
+
+if OBJECT_ID('vMyTeamReport') is not null
+  drop view vMyTeamReport
+go
+
+create view vMyTeamReport as
+  select 
+    p.PyramidId,
+    p.PyramidParentId,
+    p.SiteUserId,
+    v.total,
+    p.ToReceive,
+    p.FromOthers,
+    p.PBV,
+    bp.BPName,
+    bp.EMail
+  from Pyramid p
+  left join vMonthSalesPerUser v on p.SiteUserId = v.SiteUserId
+  join BP on bp.SiteUserId = p.SiteUserId
+go
+
+  

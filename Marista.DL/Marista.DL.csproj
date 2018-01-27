@@ -149,6 +149,9 @@
     <Compile Include="vMonthSalesPerUser.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="vMyTeamReport.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="vSalesTotal.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
