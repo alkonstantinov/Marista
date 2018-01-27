@@ -1,0 +1,112 @@
+﻿@model ProductVM
+<div id="main" class="column1">
+    <!-- main -->
+    <div class="container">
+        <div class="row">
+            <div class="main-content col-sm-12 col-md-12">
+                <!-- main content -->
+                <div class="woocommerce-message alert alert-add-to-cart">
+                    <a href="cart.html" class="button view-cart">View Cart</a> <span>“Day Face Cream” has been added to your cart.</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                </div>
+                <div id="container">
+                    <div id="content" role="main">
+                        <div class="product type-product">
+                            <div class="product-essential">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-7 col-sm-12">
+                                        <div class="images product-images clearfix">
+                                            <div class="product-image">
+                                                <div class="img-wrapper">
+                                                    <img src="@Url.Action("Picture","Product" ,new { id=Model.ProductId})" alt="@Model.Name" title="@Model.Name">
+                                                </div>
+                                                <div class="price-box bottom-right">
+                                                    <div>
+                                                        <div class="price">
+                                                            <span class="amount">$@Model.Price</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-5 col-sm-12 summary entry-summary">
+                                        <h1 itemprop="name" class="product_title">@Model.Name</h1>
+                                        <div itemprop="description" class="description">
+                                            <p>@Model.Description</p>
+                                        </div>
+                                        <form class="cart" method="post" enctype="multipart/form-data">
+                                            <div class="quantity buttons_added">
+                                                <input type="button" value="-" class="minus">
+                                                <input type="number" step="1" min="1" max="10" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="[0-9]*" inputmode="numeric">
+                                                <input type="button" value="+" class="plus">
+                                            </div>
+                                            <button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
+                                        </form>
+                                        <div class="add-links show-all">
+                                            <div class="addthis-icons clearfix">
+                                                <span class="share">Share: </span>
+                                                <!-- AddThis Custom -->
+                                                <div class="social-links" addthis:url="#" addthis:title="Day Face Cream">
+                                                    <a target="_blank" class="social-link facebook" href="#" title="" data-toggle="tooltip" data-original-title="Facebook">
+                                                        <span class="fa fa-facebook"></span>
+                                                    </a>
+                                                    <a target="_blank" class="social-link twitter" href="#" title="" data-toggle="tooltip" data-original-title="Twitter">
+                                                        <span class="fa fa-twitter"></span>
+                                                    </a>
+                                                    <div class="atclear"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product_meta">
+                                            <span class="sku_wrapper"><span class="meta-label">SKU: </span><span class="sku" itemprop="sku">154544578</span></span>
+                                            <span class="posted_in">
+                                                <span class="meta-label">Categories: </span>                                 
+                                                <a href="#" rel="tag">@Model.VCategoryCategoryName</a>,
+                                                <a href="#" rel="tag">@Model.HCategoryCategoryName</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="woocommerce-tabs resp-vtabs" id="product-tab">
+                                <ul class="resp-tabs-list">
+                                    <li aria-controls="tab_item-0" class="resp-tab-item resp-tab-active" role="tab">Description</li>
+                                    <li aria-controls="tab_item-1" class="resp-tab-item" role="tab">Additional Information</li>
+                                </ul>
+                                <div class="resp-tabs-container">
+                                    <h2 class="resp-accordion resp-tab-active" role="tab" aria-controls="tab_item-0"><span class="resp-arrow"></span>Description</h2>
+                                    <div id="tab-description" class="resp-tab-content resp-tab-content-active" aria-labelledby="tab_item-0" style="display:block">
+                                        <h2>Product Description</h2>
+                                        <p>@Model.Description</p>
+                                    </div>
+                                    <h2 class="resp-accordion" role="tab" aria-controls="tab_item-1"><span class="resp-arrow"></span>Additional Information</h2>
+                                    <div id="tab-additional_information" class="resp-tab-content" aria-labelledby="tab_item-1">
+                                        <h2>Additional Information</h2>
+                                        <p>Integer semper quam turpis, id dapibus nunc ultrices at. Vestibulum eget orci lobortis, imperdiet diam a, ornare eros. Nam porttitor rutrum massa, eu varius velit facilisis at. Quisque porta elit et viverra suscipit. Proin laoreet, nisl et auctor mollis, felis sapien aliquet felis, nec facilisis tellus enim vitae enim. Nam rhoncus enim diam, a consequat nisi bibendum pulvinar. Donec aliquam lectus vitae ante pulvinar facilisis. Curabitur sed sem est.</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="related products product-slider">
+                            <h2 class="entry-title line-heading"><span class="inline-title">Related Products</span><span class="line line-related"></span></h2>
+
+                            <div class="archive-products">
+                                <div class="product-row">
+                                    <ul class="products row clearfix grid">                                      
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marista.DL", "Marista.DL\Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marista.Common", "Marista.Common\Marista.Common.csproj", "{0625FFB1-116A-42BA-AA03-34E56AE73DD1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marista.Site", "Marista.Site\Marista.Site.csproj", "{3B04F394-D031-4A4B-B08A-5DA011B0B55F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,12 @@ Global
 		{0625FFB1-116A-42BA-AA03-34E56AE73DD1}.DebugV|Any CPU.Build.0 = Debug|Any CPU
 		{0625FFB1-116A-42BA-AA03-34E56AE73DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0625FFB1-116A-42BA-AA03-34E56AE73DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B04F394-D031-4A4B-B08A-5DA011B0B55F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B04F394-D031-4A4B-B08A-5DA011B0B55F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B04F394-D031-4A4B-B08A-5DA011B0B55F}.DebugV|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B04F394-D031-4A4B-B08A-5DA011B0B55F}.DebugV|Any CPU.Build.0 = Debug|Any CPU
+		{3B04F394-D031-4A4B-B08A-5DA011B0B55F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B04F394-D031-4A4B-B08A-5DA011B0B55F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
