@@ -1,0 +1,128 @@
+﻿@model IPagedList<ProductVM>
+<div id="main" class="column1">
+    <!-- main -->
+    <div class="container">
+        <div class="row">
+            <div class="main-content col-sm-12 col-md-12">
+                <!-- main content -->
+                <div id="container">
+                    <div id="content" role="main">
+                        <div class="content-before">
+                            <div class="toolbar clearfix">
+                                <div class="sorter clearfix">
+                                    <div class="sort-by">
+                                        <label class="left">Sort By </label>
+                                        <div class="dropdown left dropdown-select">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="false" title="Sort By">Default <span class="arrow"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a tabindex="-1" href="@Url.Action("index", new { orderby="popularity"})">Popularity</a></li>
+                                                <li><a tabindex="-1" href="@Url.Action("index", new {orderby="rating"})">Rating</a></li>
+                                                <li><a tabindex="-1" href="@Url.Action("index", new {orderby="date"})">Date</a></li>
+                                                <li><a tabindex="-1" href="@Url.Action("index", new {orderby="price"})">Price</a></li>
+                                                <li><a tabindex="-1" href="@Url.Action("index", new {orderby="title"})">Name</a></li>
+                                            </ul>
+                                        </div>
+                                        <a class="btn-arrow order-asc left" href="@Url.Action("index",new{order="desc"})"></a>
+                                    </div>
+                                    <div class="view-mode gridlist-toggle">
+                                        <a href="#" id="grid" title="Grid View" class="active"></a><a href="#" id="list" title="List View"></a>
+                                    </div>
+                                </div>
+                                <div class="pager">
+                                    <nav class="woocommerce-pagination">
+                                        <ul class="page-numbers">
+                                            @for (int i = 1; i <= Model.PageCount; i++)
+                                            {
+                                                <li><a href="@Url.Action("Index", "Product", new { page = Model.PageNumber })" class="page-numbers @(i+1 == Model.PageNumber ? "current" : "")">@Model.PageNumber</a></li>
+                                            }
+                                            @if (Model.HasNextPage)
+                                            {
+                                                <li><a class="next page-numbers" href="@Url.Action("Index", "Product", new { page = Model.PageNumber + 1 })"></a></li>
+                                            }
+                                        </ul>
+                                    </nav>
+                                    
+                                    <div class="limiter">
+                                        <label>View </label>
+                                        <div class="dropdown left dropdown-select">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="false" title="View">12<span class="arrow"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a tabindex="-1" href="@Url.Action("index",new {count = 24 })">24</a></li>
+                                                <li><a tabindex="-1" href="@Url.Action("index",new { count = 36 })">36</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="archive-products">
+                                <div class="product-row">
+                                    <ul class="products row clearfix grid">
+                                        <!-- class grid/list -->
+                                        @foreach (var p in Model)
+                                        {
+                                            <li class="col-md-3 col-sm-4 product">
+                                                <div class="inner clearfix">
+                                                    <a href="@Url.Action("View","Product", new {id=p.ProductId })">
+                                                        <div class="product-image">
+                                                            <img src="@Url.Action("Picture","Product",new { id=p.ProductId})" alt="product_01">
+                                                            <div class="price-box bottom-right">
+                                                                <span class="price"><span class="amount"><span class="">$</span>@p.Price</span></span>
+                                                            </div>
+                                                            <div class="figcaption">
+                                                                <span class="btn btn-arrow quickview-button top-right"><span class="fa fa-search"></span></span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <div class="product-details">
+                                                        <a class="product-loop-title" href="product.html">
+                                                            <h3>@p.Name</h3>
+                                                        </a>
+                                                        <div itemprop="description" class="description">
+                                                            <p>@p.Description</p>
+                                                        </div>
+                                                        <div>
+                                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-after">
+                            <div class="pager">
+                                <nav class="woocommerce-pagination">
+                                    <ul class="page-numbers">
+                                        @for (int i = 1; i <= Model.PageCount; i++)
+                                        {
+                                            <li><a href="@Url.Action("Index", "Product", new { page = Model.PageNumber })" class="page-numbers @(i+1 == Model.PageNumber ? "current" : "")">@Model.PageNumber</a></li>
+                                        }
+                                        @if (Model.HasNextPage)
+                                        {
+                                            <li><a class="next page-numbers" href="@Url.Action("Index", "Product", new { page = Model.PageNumber + 1 })"></a></li>
+                                        }
+                                    </ul>
+                                </nav>
+
+                                <div class="limiter">
+                                    <label>View: </label>
+                                    <div class="dropdown left dropdown-select">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="false" title="View">12<span class="arrow"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a tabindex="-1" href="@Url.Action("index",new {count = 24})">24</a></li>
+                                            <li><a tabindex="-1" href="@Url.Action("index",new { count = 36})">36</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

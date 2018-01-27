@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/Content/images/favicon.png" type="image/x-icon">
+    <title>Marista Club | E-shop</title>
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/Content/css/style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/Content/css/Product.css"type="text/css" media="all"/>
+</head>
+<body>
+    <div id="wrapper" class="wrapper-full">
+        <div class="header-wrapper clearfix">
+            <div class="header-top">
+                <div class="container">
+                    <div class="right">
+                        <div class="login-links pos2">
+                            <a href="#" class="nav-top-link">For Members</a> or <a href="#" class="nav-top-link">Become a Member</a>
+                        </div>
+                        @Html.Action("Embed","Cart")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header header-menu-right">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 left">
+                    <h1 class="logo">
+                        <a href="#" title="Marista Club" rel="home">
+                            <img src="~/Content/images/marista_club_logo.jpg">
+                        </a>
+                    </h1>
+                </div>
+                <div class="col-sm-8 right"></div>
+            </div>
+        </div>
+
+        <div class="menu-wrapper">
+            <div class="container">
+                <h1 class="logo left">
+                    <a href="#" title="Marista Club" rel="home">
+                        <img src="~/Content/images/marista_club_logo.jpg">
+                    </a>
+                </h1>
+
+                <div id="main-menu" class="mega-menu menu-right">
+                    <ul id="menu-main-menu">
+                        <li class="">
+                            <a href="#" class="">Home</a>
+                        </li>
+                        <li class="">
+                            <a href="#" class="">About Us</a>
+                        </li>
+                        <li class="active">
+                            <a href="#" class="current">E-shop</a>
+                        </li>
+                        <li class="">
+                            <a href="#" class="">Opportunity</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="main-mobile-menu">
+                    <div id="main-mobile-toggle" class="mobile-menu-toggle">
+                        <span>Menu</span>
+                        <span class="btn btn-inverse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </span>
+                    </div>
+                    <div class="accordion-menu">
+                        <ul id="menu-main-menu-1" class="">
+                            <li class="">
+                                <a href="#" class="">Home</a>
+                            </li>
+                            <li class="">
+                                <a href="#" class="">About Us</a>
+                            </li>
+                            <li class="open">
+                                <a href="#" class="current">E-shop</a>
+                            </li>
+                            <li class="">
+                                <a href="#" class="">Opportunity</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container-shadow"></div>
+        </div>
+    @RenderBody()
+    <div class="footer-wrapper">
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4">
+                        <aside id="nav_menu-2" class="widget widget_nav_menu">
+                            <h3 class="widget-title">E-Shop</h3>
+                            <div class="menu-footer-links-container">
+                                <ul id="menu-footer-links" class="menu">
+                                    <li class="">
+                                        <a href="#">Marista Cosmetics</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#">Products</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#">Payments & Shipping Policy</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#">Terms of Use Policy</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#">My Account</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <aside id="nav_menu-3" class="widget widget_nav_menu">
+                            <h3 class="widget-title">Club</h3>
+                            <div class="menu-footer-information-container">
+                                <ul id="menu-footer-information" class="menu">
+                                    <li class="">
+                                        <a href="#">About us</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#">Opportunity</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#">Business Model</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#">Members Benefits</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <aside id="" class="widget">
+                            <h3 class="widget-title">Contact Us</h3>
+                            <form class="" method="POST" enctype="multipart/form-data" id="contact_form">
+                                <div>
+                                    <label id="name_label" for="name" class="control-label">Name:</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="">
+                                </div>
+                                <div>
+                                    <label id="email_label" for="email" class="control-label">Email:</label>
+                                    <input type="text" class="form-control" id="email" name="email" value="">
+                                </div>
+                                <div>
+                                    <label id="subject_label" for="subject" class="control-label">Subject:</label>
+                                    <input type="text" class="form-control" id="subject" name="subject" value="">
+                                </div>
+                                <div>
+                                    <label id="message_label" for="message" class="control-label">Message:</label>
+                                    <textarea name="message" value="" class="form-control" id="message" rows="3"></textarea>
+                                </div>
+                                <div class="right submit_container">
+                                    <input class="btn btn-default" type="submit" name="submit" id="submit_btn" value="send">
+                                </div>
+                            </form>
+                        </aside>
+                    </div>
+                    <div class="col-md-3 col-last col-sm-12">
+                        <aside id="facebook-like-widget-2" class="widget facebook-like">
+                            <h3 class="widget-title">Facebook</h3>
+                            <div style="margin-bottom:15px;">
+                                <div style="display:inline-block">
+                                    <div class="_1drq" style="max-width: 220px;">3,271 likes</div>
+                                </div>
+                                <a class="btn like-btn" href="#" style="float:none; margin:0 15px;" target="_blank">like</a>
+                            </div>
+                            <div class="fb-likebox">
+                                <div class="clearfix fb-persons">
+                                    <div class="fb-person">
+                                        <a href="#" title="Facebook 1" target="_blank">
+                                            <img src="images/17191408_1875410102748410_3063596210899889092_n.jpg" alt="">
+                                        </a>Facebook 1
+                                    </div>
+                                    <div class="fb-person">
+                                        <a href="#" title="Facebook 2" target="_blank">
+                                            <img src="images/25591993_1887536521286781_56687060939138774_n.jpg" alt="">
+                                        </a>Facebook 2
+                                    </div>
+                                    <div class="fb-person">
+                                        <a href="#" title="Facebook 3" target="_blank">
+                                            <img src="images/14906835_1110522302335424_1407757429617989437_n.jpg" alt="">
+                                        </a>Facebook 3
+                                    </div>
+                                    <div class="fb-person">
+                                        <a href="#" title="Facebook 4" target="_blank">
+                                            <img src="images/22405750_105662286861749_7976775388650107712_n.jpg" alt="">
+                                        </a>Facebook 4
+                                    </div>
+                                    <div class="fb-person">
+                                        <a href="#" title="Facebook 5" target="_blank">
+                                            <img src="images/20139753_1904325206451444_2398158477359516977_n.jpg" alt="">
+                                        </a>Facebook 5
+                                    </div>
+                                    <div class="fb-person">
+                                        <a href="#" title="Facebook 6" target="_blank">
+                                            <img src="images/10354686_10150004552801856_220367501106153455_n.jpg" alt="">
+                                        </a>Facebook 6
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="social-links left">
+                    <a target="_blank" class="social-link facebook" href="#" title="" data-toggle="tooltip" data-original-title="Facebook">
+                        <span class="fa fa-facebook"></span>
+                    </a>
+                    <a target="_blank" class="social-link twitter" href="#" title="" data-toggle="tooltip" data-original-title="Twitter">
+                        <span class="fa fa-twitter"></span>
+                    </a>
+                </div>
+                <div class="copyright right">
+                    © Copyright Marista Store. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
