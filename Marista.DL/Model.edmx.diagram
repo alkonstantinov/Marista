@@ -17,8 +17,8 @@
         <AssociationConnector Association="MaristaModel.fk_Product_VCategoryId" />
         <AssociationConnector Association="MaristaModel.RelatedProduct" ManuallyRouted="true" >
           <ConnectorPoint PointX="5.9592307692307696" PointY="7.4609993489583326" />
-          <ConnectorPoint PointX="5.9592307692307696" PointY="464.63409634831726" />
-          <ConnectorPoint PointX="6.554615384615385" PointY="464.63409634831726" />
+          <ConnectorPoint PointX="5.9592307692307696" PointY="571.09522634311224" />
+          <ConnectorPoint PointX="6.554615384615385" PointY="571.09522634311224" />
           <ConnectorPoint PointX="6.554615384615385" PointY="7.4609993489583326" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MaristaModel.BonusSize" Width="1.5" PointX="10.625" PointY="0.75" />
@@ -52,6 +52,9 @@
         <EntityTypeShape EntityType="MaristaModel.vSalesTotal" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="MaristaModel.vMonthSalesPerUser" Width="1.5" PointX="7.375" PointY="11.75" />
         <EntityTypeShape EntityType="MaristaModel.vMyTeamReport" Width="1.5" PointX="12.375" PointY="12.75" />
+        <EntityTypeShape EntityType="MaristaModel.v3MonthSalesPerUser" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="MaristaModel.vBonus" Width="1.5" PointX="3.375" PointY="14.75" />
+        <EntityTypeShape EntityType="MaristaModel.v3MonthsBonuses" Width="1.5" PointX="13.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

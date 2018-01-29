@@ -142,6 +142,15 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="UserService.cs" />
+    <Compile Include="v3MonthSalesPerUser.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="v3MonthsBonuses.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vBonus.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="VCategory.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

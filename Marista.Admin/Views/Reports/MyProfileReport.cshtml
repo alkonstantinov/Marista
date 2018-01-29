@@ -1,0 +1,110 @@
+﻿@model Marista.Common.ViewModels.MyProfileReportVM
+
+@{
+    ViewBag.Title = "MyTeamReport";
+}
+
+<h2>My Profile Report</h2>
+
+@if (Model.LeaderName != null)
+{
+    <b>Leader: </b>@Model.LeaderName<br />
+    <b>Mail: </b>@Model.LeaderEmail<br />
+}
+
+<h3 onclick="Toggle($('#dSales'))" style="cursor:pointer;">My 3 Months Sales</h3>
+<div class="table-responsive" id="dSales" style="display:none;">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rec in Model.Sales)
+            {
+                <tr>
+                    <td>@rec.CustomerName</td>
+                    <td>@rec.OnDate.ToShortDateString()</td>
+                    <td>@rec.Total</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<h3 onclick="Toggle($('#dFirstLevel'))" style="cursor:pointer;">My Team 3 Months Bonuses</h3>
+<div class="table-responsive" id="dFirstLevel" style="display:none;">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Month</th>
+                <th>Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rec in Model.FirstLevel)
+            {
+                <tr>
+                    <td>@rec.BPName</td>
+                    <td>@rec.Month/@rec.Year</td>
+                    <td>@rec.Bonus</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<h3 onclick="Toggle($('#dAllBonuses'))" style="cursor:pointer;">All My Bonuses</h3>
+<div class="table-responsive" id="dAllBonuses" style="display:none;">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rec in Model.Bonuses)
+            {
+                <tr>
+                    <td>@rec.Month/@rec.Year</td>
+                    <td>@rec.Bonus</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<h3 onclick="Toggle($('#dYearBonuses'))" style="cursor:pointer;">My Bonuses for the Year</h3>
+<div class="table-responsive" id="dYearBonuses" style="display:none;">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rec in Model.Bonuses)
+            {
+                <tr>
+                    <td>@rec.Month/@rec.Year</td>
+                    <td>@rec.Bonus</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    function Toggle(div) {
+        $(div).toggle();
+    }
+</script>

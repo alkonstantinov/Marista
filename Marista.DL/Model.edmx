@@ -195,6 +195,56 @@
           <Property Name="CategoryName" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'Marista.dbo.v3MonthSalesPerUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v3MonthSalesPerUser">
+          <Key>
+            <PropertyRef Name="SaleId" />
+            <PropertyRef Name="OnDate" />
+            <PropertyRef Name="CustomerName" />
+          </Key>
+          <Property Name="SaleId" Type="int" Nullable="false" />
+          <Property Name="OnDate" Type="datetime" Nullable="false" />
+          <Property Name="SiteUserId" Type="int" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="38" Scale="4" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Marista.dbo.v3MonthsBonuses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v3MonthsBonuses">
+          <Key>
+            <PropertyRef Name="ResultHistoryId" />
+            <PropertyRef Name="BPName" />
+            <PropertyRef Name="SiteUserId" />
+            <PropertyRef Name="ParentSiteId" />
+            <PropertyRef Name="Month" />
+            <PropertyRef Name="Year" />
+          </Key>
+          <Property Name="ResultHistoryId" Type="int" Nullable="false" />
+          <Property Name="BPName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Bonus" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="SiteUserId" Type="int" Nullable="false" />
+          <Property Name="ParentSiteId" Type="int" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Marista.dbo.vBonuses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vBonuses">
+          <Key>
+            <PropertyRef Name="ResultHistoryId" />
+            <PropertyRef Name="BPName" />
+            <PropertyRef Name="SiteUserId" />
+            <PropertyRef Name="Month" />
+            <PropertyRef Name="Year" />
+          </Key>
+          <Property Name="ResultHistoryId" Type="int" Nullable="false" />
+          <Property Name="BPName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Bonus" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="SiteUserId" Type="int" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'Marista.dbo.vMonthSalesPerUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vMonthSalesPerUser">
           <Key>
@@ -523,6 +573,36 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySet Name="SiteUser" EntityType="Self.SiteUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SOBonusSize" EntityType="Self.SOBonusSize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VCategory" EntityType="Self.VCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v3MonthSalesPerUser" EntityType="Self.v3MonthSalesPerUser" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v3MonthSalesPerUser].[SaleId] AS [SaleId], 
+    [v3MonthSalesPerUser].[OnDate] AS [OnDate], 
+    [v3MonthSalesPerUser].[SiteUserId] AS [SiteUserId], 
+    [v3MonthSalesPerUser].[CustomerName] AS [CustomerName], 
+    [v3MonthSalesPerUser].[Total] AS [Total]
+    FROM [dbo].[v3MonthSalesPerUser] AS [v3MonthSalesPerUser]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v3MonthsBonuses" EntityType="Self.v3MonthsBonuses" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v3MonthsBonuses].[ResultHistoryId] AS [ResultHistoryId], 
+    [v3MonthsBonuses].[BPName] AS [BPName], 
+    [v3MonthsBonuses].[Bonus] AS [Bonus], 
+    [v3MonthsBonuses].[SiteUserId] AS [SiteUserId], 
+    [v3MonthsBonuses].[ParentSiteId] AS [ParentSiteId], 
+    [v3MonthsBonuses].[Month] AS [Month], 
+    [v3MonthsBonuses].[Year] AS [Year]
+    FROM [dbo].[v3MonthsBonuses] AS [v3MonthsBonuses]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vBonuses" EntityType="Self.vBonuses" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vBonuses].[ResultHistoryId] AS [ResultHistoryId], 
+    [vBonuses].[BPName] AS [BPName], 
+    [vBonuses].[Bonus] AS [Bonus], 
+    [vBonuses].[SiteUserId] AS [SiteUserId], 
+    [vBonuses].[Month] AS [Month], 
+    [vBonuses].[Year] AS [Year]
+    FROM [dbo].[vBonuses] AS [vBonuses]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vMonthSalesPerUser" EntityType="Self.vMonthSalesPerUser" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vMonthSalesPerUser].[SiteUserId] AS [SiteUserId], 
@@ -786,6 +866,9 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySet Name="vSalesTotals" EntityType="MaristaModel.vSalesTotal" />
           <EntitySet Name="vMonthSalesPerUsers" EntityType="MaristaModel.vMonthSalesPerUser" />
           <EntitySet Name="vMyTeamReports" EntityType="MaristaModel.vMyTeamReport" />
+          <EntitySet Name="v3MonthSalesPerUser" EntityType="MaristaModel.v3MonthSalesPerUser" />
+          <EntitySet Name="vBonuses" EntityType="MaristaModel.vBonus" />
+          <EntitySet Name="v3MonthsBonuses" EntityType="MaristaModel.v3MonthsBonuses" />
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -1257,6 +1340,50 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="BPName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="EMail" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="v3MonthSalesPerUser">
+          <Key>
+            <PropertyRef Name="SaleId" />
+            <PropertyRef Name="OnDate" />
+            <PropertyRef Name="CustomerName" />
+          </Key>
+          <Property Name="SaleId" Type="Int32" Nullable="false" />
+          <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SiteUserId" Type="Int32" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Total" Type="Decimal" Precision="38" Scale="4" />
+        </EntityType>
+        <EntityType Name="vBonus">
+          <Key>
+            <PropertyRef Name="ResultHistoryId" />
+            <PropertyRef Name="BPName" />
+            <PropertyRef Name="SiteUserId" />
+            <PropertyRef Name="Month" />
+            <PropertyRef Name="Year" />
+          </Key>
+          <Property Name="ResultHistoryId" Type="Int32" Nullable="false" />
+          <Property Name="BPName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Bonus" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SiteUserId" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="v3MonthsBonuses">
+          <Key>
+            <PropertyRef Name="ResultHistoryId" />
+            <PropertyRef Name="BPName" />
+            <PropertyRef Name="SiteUserId" />
+            <PropertyRef Name="ParentSiteId" />
+            <PropertyRef Name="Month" />
+            <PropertyRef Name="Year" />
+          </Key>
+          <Property Name="ResultHistoryId" Type="Int32" Nullable="false" />
+          <Property Name="BPName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Bonus" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SiteUserId" Type="Int32" Nullable="false" />
+          <Property Name="ParentSiteId" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1501,6 +1628,42 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
                 <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
                 <ScalarProperty Name="PyramidParentId" ColumnName="PyramidParentId" />
                 <ScalarProperty Name="PyramidId" ColumnName="PyramidId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v3MonthSalesPerUser">
+            <EntityTypeMapping TypeName="MaristaModel.v3MonthSalesPerUser">
+              <MappingFragment StoreEntitySet="v3MonthSalesPerUser">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vBonuses">
+            <EntityTypeMapping TypeName="MaristaModel.vBonus">
+              <MappingFragment StoreEntitySet="vBonuses">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="BPName" ColumnName="BPName" />
+                <ScalarProperty Name="ResultHistoryId" ColumnName="ResultHistoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v3MonthsBonuses">
+            <EntityTypeMapping TypeName="MaristaModel.v3MonthsBonuses">
+              <MappingFragment StoreEntitySet="v3MonthsBonuses">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="ParentSiteId" ColumnName="ParentSiteId" />
+                <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="BPName" ColumnName="BPName" />
+                <ScalarProperty Name="ResultHistoryId" ColumnName="ResultHistoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

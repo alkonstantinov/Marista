@@ -47,5 +47,8 @@ namespace Marista.DL
         public virtual DbSet<vSalesTotal> vSalesTotals { get; set; }
         public virtual DbSet<vMonthSalesPerUser> vMonthSalesPerUsers { get; set; }
         public virtual DbSet<vMyTeamReport> vMyTeamReports { get; set; }
+        public virtual DbSet<v3MonthSalesPerUser> v3MonthSalesPerUser { get; set; }
+        public virtual DbSet<vBonus> vBonuses { get; set; }
+        public virtual DbSet<v3MonthsBonuses> v3MonthsBonuses { get; set; }
     }
 }

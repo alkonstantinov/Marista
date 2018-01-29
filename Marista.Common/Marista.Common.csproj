@@ -49,6 +49,7 @@
     <Compile Include="Tools\Mailer.cs" />
     <Compile Include="Tools\MD5.cs" />
     <Compile Include="ViewModels\BonusSizeVM.cs" />
+    <Compile Include="ViewModels\BonusVM.cs" />
     <Compile Include="ViewModels\BPRegVM.cs" />
     <Compile Include="ViewModels\ChatItemVM.cs" />
     <Compile Include="ViewModels\ChatVM.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="ViewModels\CouponVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\MarketingMaterialVM.cs" />
+    <Compile Include="ViewModels\MyProfileReportVM.cs" />
     <Compile Include="ViewModels\MyTeamReportVM.cs" />
     <Compile Include="ViewModels\ProductVM.cs" />
     <Compile Include="ViewModels\PyramidResultVM.cs" />

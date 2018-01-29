@@ -81,7 +81,65 @@ namespace Marista.DL
             return rec;
         }
 
-        
+        public async Task<MyProfileReportVM> GetMyProfileReport(int siteUserId)
+        {
+            MyProfileReportVM result = new MyProfileReportVM();
+            var myPyramid = await db.Pyramids.FirstAsync(b => b.SiteUserId == siteUserId);
+            var MyLeader = await db.Pyramids.FirstOrDefaultAsync(b => b.PyramidId == myPyramid.PyramidParentId);
+            if (MyLeader != null)
+            {
+                var myBP = MyLeader.SiteUser.BPs.FirstOrDefault();
+                result.LeaderEmail = myBP.EMail;
+                result.LeaderName = myBP.BPName;
+            }
+            List<SaleVM> lSales = new List<SaleVM>();
+            foreach (var s in db.v3MonthSalesPerUser.Where(v => v.SiteUserId == siteUserId).OrderBy(v => v.OnDate))
+            {
+                SaleVM sale = new SaleVM()
+                {
+                    CustomerName = s.CustomerName,
+                    OnDate = s.OnDate,
+                    Total = s.Total.Value
+                };
+                lSales.Add(sale);
+            }
+            result.Sales = lSales;
+            List<BonusVM> lFirstLevel = new List<BonusVM>();
+            foreach (var fl in db.v3MonthsBonuses.Where(v => v.ParentSiteId == siteUserId))
+            {
+                var b = new BonusVM()
+                {
+                    BPName = fl.BPName,
+                    Bonus = fl.Bonus.Value,
+                    Month = fl.Month,
+                    Year = fl.Year
+
+                };
+                lFirstLevel.Add(b);
+            }
+            result.FirstLevel = lFirstLevel;
+
+            List<BonusVM> lAllBonuses = new List<BonusVM>();
+            List<BonusVM> lYearBonuses = new List<BonusVM>();
+            foreach (var fl in db.vBonuses.Where(v => v.SiteUserId == siteUserId).OrderBy(v=>v.Year).OrderBy(v=>v.Month))
+            {
+                var b = new BonusVM()
+                {
+                    BPName = fl.BPName,
+                    Bonus = fl.Bonus.Value,
+                    Month = fl.Month,
+                    Year = fl.Year
+
+                };
+                lAllBonuses.Add(b);
+                if (fl.Year == DateTime.Now.Year)
+                    lYearBonuses.Add(b);
+            }
+            result.Bonuses = lAllBonuses;
+            result.BonusesPerYear = lYearBonuses;
+
+            return result;
+        }
 
     }
 }

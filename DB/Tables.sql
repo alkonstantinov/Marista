@@ -459,3 +459,31 @@ go
 
 exec p_ak_create_fk_indeces 'SaleDetail'
 go
+
+
+if OBJECT_ID('ResultHistory') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'ResultHistory'
+  drop table ResultHistory
+end
+go
+
+create table ResultHistory
+(
+  ResultHistoryId int not null identity(1,1),
+  BpId int not null,
+  Month int not null,
+  Year int not null,
+  Sales decimal(10,2),
+  PBV decimal(10,2),
+  NBV decimal(10,2),
+  Bonus decimal(10,2),
+  constraint pk_ResultHistoryId primary key (ResultHistoryId),
+  constraint fk_ResultHistory_BPId foreign key (BPId) references BP(BPId)
+)
+go
+
+exec p_ak_create_fk_indeces 'ResultHistory'
+go
+
+

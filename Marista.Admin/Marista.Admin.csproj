@@ -333,6 +333,7 @@
     <Content Include="Views\BPReg\Success.cshtml" />
     <Content Include="Views\BPReg\NotApproved.cshtml" />
     <Content Include="Views\Reports\MyTeamReport.cshtml" />
+    <Content Include="Views\Reports\MyProfileReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

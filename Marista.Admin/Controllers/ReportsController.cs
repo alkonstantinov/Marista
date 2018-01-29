@@ -32,6 +32,12 @@ namespace Marista.Admin.Controllers
             var report = await _db.GetMyTeamReport(this.UserData.UserId);
             return View(report);
         }
-        
+
+        public async Task<ActionResult> MyProfileReport()
+        {
+            var report = await _db.GetMyProfileReport(this.UserData.UserId);
+            return View(report);
+        }
+
     }
 }

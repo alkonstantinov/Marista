@@ -1,3 +1,6 @@
+use Marista
+go
+
 if OBJECT_ID('vSalesTotal') is not null
   drop view vSalesTotal
 go
@@ -52,4 +55,56 @@ create view vMyTeamReport as
   join BP on bp.SiteUserId = p.SiteUserId
 go
 
+if OBJECT_ID('v3MonthSalesPerUser') is not null
+  drop view v3MonthSalesPerUser
+go
+--select * from v3MonthSalesPerUser
+create view v3MonthSalesPerUser as
+  select 
+    v.SaleId,
+    v.OnDate,
+    v.SiteUserId,
+    v.CustomerName,
+    v.Total
+  from vSalesTotal v
+  where v.OnDate> DATEADD(month,-3,getdate())
+go
+  
+if OBJECT_ID('v3MonthsBonuses') is not null
+  drop view v3MonthsBonuses
+go
+--select * from v3MonthsBonuses
+create view v3MonthsBonuses as
+  select 
+    rh.ResultHistoryId, 
+    bp.BPName,
+    rh.Bonus,
+    p.SiteUserId,
+    p2.SiteUserId ParentSiteId,
+    rh.Month,
+    rh.Year
+  from ResultHistory rh
+  join bp on bp.BPId = rh.BpId
+  join Pyramid p on p.SiteUserId = bp.SiteUserId
+  join Pyramid p2 on p2.PyramidId = p.PyramidParentId
+  where DATEFROMPARTS(rh.Year, rh.Month, 1)> DATEADD(month,-3,getdate())
+go
+
+if OBJECT_ID('vBonuses') is not null
+  drop view vBonuses
+go
+--select * from vBonuses
+create view vBonuses as
+  select 
+    rh.ResultHistoryId, 
+    bp.BPName,
+    rh.Bonus,
+    p.SiteUserId,
+    rh.Month,
+    rh.Year
+  from ResultHistory rh
+  join bp on bp.BPId = rh.BpId
+  join Pyramid p on p.SiteUserId = bp.SiteUserId
+  
+go
   
