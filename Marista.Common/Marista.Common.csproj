@@ -60,6 +60,7 @@
     <Compile Include="ViewModels\MarketingMaterialVM.cs" />
     <Compile Include="ViewModels\MyProfileReportVM.cs" />
     <Compile Include="ViewModels\MyTeamReportVM.cs" />
+    <Compile Include="ViewModels\ProductDiscountVM.cs" />
     <Compile Include="ViewModels\ProductVM.cs" />
     <Compile Include="ViewModels\PyramidResultVM.cs" />
     <Compile Include="ViewModels\RelatedProductVM.cs" />

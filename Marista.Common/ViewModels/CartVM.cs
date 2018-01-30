@@ -16,5 +16,7 @@ namespace Marista.Common.ViewModels
         public string CountryId { get; set; }
 
         public IEnumerable<SelectListItem> Countries { get; set; }
+
+        public string CouponUniqueId { get; set; }
     }
 }

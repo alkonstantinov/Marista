@@ -153,5 +153,14 @@ namespace Marista.DL
         {
             return db.Countries.First(c => c.CountryId == countryId).DeliveryPrice;
         }
+
+        public CouponVM GetCouponInfo(string uniqueId)
+        {
+            var cpn = db.Coupons.FirstOrDefault(c => c.UniqueId==uniqueId&&c.Expires>DateTime.Now&&c.Sales.Count==0);
+            if (cpn == null)
+                return null;
+            else
+                return _map.Map<CouponVM>(cpn);
+        }
     }
 }

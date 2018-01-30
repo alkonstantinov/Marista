@@ -285,7 +285,9 @@ go
 exec p_ak_create_fk_indeces 'Coupon'
 go
 
-
+insert into Coupon(UniqueId, SiteUserId, Expires, ForAll, Discount)
+values ('1',1,'20190101',1,20)
+go
 
 if OBJECT_ID('Pyramid') is not null
 begin

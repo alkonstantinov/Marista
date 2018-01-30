@@ -44,6 +44,8 @@
                                                     <td class="product-price">
                                                         <span class="mobile-show">Price: </span>
                                                         <input type="hidden" id="hPrice_@p.ProductId" value="@p.Price" />
+                                                        <input type="hidden" id="hDiscount_@p.ProductId" value="0" />
+
                                                         <span class="amount">EUR @p.Price.ToString("0.##")</span>
                                                     </td>
                                                     <td class="product-quantity">
@@ -80,7 +82,14 @@
                                                             @Html.DropDownListFor(model => model.CountryId, new SelectList(Model.Countries, "Value", "Text"), new { @class = "country_to_state", @id = "ddlCountry", @onchange = "ChangeCountry()" })
 
                                                         </p>
-
+                                                        <p class="form-row form-row-wide input-field">
+                                                            <label for="tbCoupon"><span class="fa fa-truck"></span>Coupon</label>
+                                                            <input type="text" class="input-text" value="" placeholder="Coupon" name="tbCoupon" id="tbCoupon">
+                                                            <div class="alert alert-warning" style="display:none" id="dInvalidCoupon">Invalid coupon</div>
+                                                        </p>
+                                                        <p class="clearfix button-row">
+                                                            <button type="button" name="calc_shipping" value="1" class="button btn-lg update-cart-btn" onclick="SetCoupon()">Update Totals</button>
+                                                        </p>
 
                                                     </section>
                                                 </div>
@@ -135,6 +144,47 @@
 </div>
 <script>
 
+    function SetCoupon() {
+
+        var uniqueId = $("#tbCoupon").val();
+        $("input[id^='hDiscount_']").each(
+            function (i, e) {
+                $(e).val(0);
+            }
+        );
+
+        var result = null;
+        $.ajax({
+            url: "/cart/SetCoupon",
+            method: "GET",
+            cache: false,
+            data: { uniqueId: uniqueId },
+            async: false,
+
+        }).done(function (res) {
+            if (res == "error")
+                result = false;
+            else
+                result = res;
+
+        }).fail(function (jqXHR, textStatus) {
+            alert(jqXHR);
+        });
+        if (!result) {
+            $("#dInvalidCoupon").show();
+            return;
+        }
+        else
+            $("#dInvalidCoupon").hide();
+
+
+        
+        for (var item of result)
+            $("#hDiscount_" + item.ProductId).val(item.Discount);
+        DisplayTotals();
+    }
+
+
     function ChangeCountry() {
         var countryId = $("#ddlCountry").val();
         var price = 0;
@@ -154,20 +204,22 @@
         $("#hCountryPrice").val(price);
         DisplayTotals();
     }
+
     function DisplayTotals() {
         var subTotal = 0;
         $("input[id^='tbQuantity_']").each(
             function (i, e) {
                 var id = $(e).attr("pid");
-                var sum = parseFloat($("#hPrice_" + id).val()) * parseFloat($(e).val());
-                $("#sTotal_" + id).text(sum);
-                subTotal += sum;
+                var discount = (100 - parseFloat($("#hDiscount_" + id).val())) / 100;
+                var sum = parseFloat($("#hPrice_" + id).val()) * parseFloat($(e).val()) * discount;
+                $("#sTotal_" + id).text("EUR " + sum.toFixed(2));
+                subTotal += parseFloat(sum.toFixed(2));
             }
         );
-        $("#sSubTotal").text("EUR " + subTotal);
+        $("#sSubTotal").text("EUR " + subTotal.toFixed(2));
         var shipping = parseFloat($("#hCountryPrice").val());
-        $("#sShipping").text("EUR " + shipping);
-        $("#sTotal").text("EUR " + (shipping + subTotal));
+        $("#sShipping").text("EUR " + shipping.toFixed(2));
+        $("#sTotal").text("EUR " + (shipping + subTotal).toFixed(2));
 
 
 
@@ -196,7 +248,6 @@
 
     function RemoveProduct(productId) {
         $("#tr_" + productId).remove();
-        alert(productId);
         $.ajax({
             url: "/cart/removeproduct?productId=" + productId,
             method: "GET",

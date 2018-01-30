@@ -22,7 +22,7 @@ namespace Marista.Site.Controllers
             CartVM cart = (CartVM)Session["Cart"];
             foreach (var d in cart.Products)
                 if (d.ProductId == productId)
-                { 
+                {
                     d.Quantity += step;
                     break;
                 }
@@ -53,6 +53,34 @@ namespace Marista.Site.Controllers
             return Json(cart.CountryPrice, JsonRequestBehavior.AllowGet);
         }
 
+        public async Task<ActionResult> SetCoupon(string uniqueId)
+        {
+            CartVM cart = (CartVM)Session["Cart"];
+            cart.CouponUniqueId = "";
+            foreach (var p in cart.Products)
+                p.Discount = 0;
+            var c = db.GetCouponInfo(uniqueId);
+            if (c == null)
+                return Json("error", JsonRequestBehavior.AllowGet);
+            cart.CouponUniqueId = uniqueId;
+
+            List<ProductDiscountVM> result = new List<ProductDiscountVM>();
+            foreach (var p in cart.Products)
+            {
+                ProductVM prd = await db.Get(p.ProductId);
+                if (c.ForAll || c.HCategoryId == prd.HCategoryId || c.VCategoryId == prd.VCategoryId || c.ProductId == prd.ProductId)
+                {
+                    p.Discount = c.Discount;
+                    result.Add(new ProductDiscountVM()
+                    {
+                        ProductId = prd.ProductId,
+                        Discount = c.Discount
+                    });
+
+                }
+            }
+            return Json(result.ToArray(), JsonRequestBehavior.AllowGet);
+        }
 
         public async Task<ActionResult> Index()
         {
@@ -62,6 +90,7 @@ namespace Marista.Site.Controllers
             {
                 Price = 12,
                 ProductId = 1,
+                Discount = 0,
                 ProductName = "xxxxxxxxxxx",
                 Quantity = 2
             };
