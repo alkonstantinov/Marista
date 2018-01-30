@@ -2,7 +2,7 @@
 set nocount on
 
 truncate table pyramid
-truncate table BP
+delete from BP
 
 delete from SiteUser where SiteUserId>1
 
@@ -81,7 +81,7 @@ join Pyramid p on p.SiteUserId = psu.SiteUserId
 where su.Username = 'B1.1'
 
 insert into BP (BPName, EMail, PayPal, Address, CountryId, SiteUserId, Files, FileName, Active)
-select s.Username, 'aaa@aaa.aaa', 'aaa@aaa.aaa', 'cc1', 1, s.SiteUserId, 0x00,'aaaa',1
+select s.Username, 'aaa@aaa.aaa', 'aaa@aaa.aaa', 'cc1', 'bg', s.SiteUserId, 0x00,'aaaa',1
 from Pyramid p
 join SiteUser s on s.SiteUserId = p.SiteUserId
 

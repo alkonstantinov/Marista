@@ -39,9 +39,6 @@ namespace Marista.DL
         public virtual DbSet<Coupon> Coupons { get; set; }
         public virtual DbSet<Pyramid> Pyramids { get; set; }
         public virtual DbSet<MarketingMaterial> MarketingMaterials { get; set; }
-        public virtual DbSet<BP> BPs { get; set; }
-        public virtual DbSet<Country> Countries { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<SaleDetail> SaleDetails { get; set; }
         public virtual DbSet<vSalesTotal> vSalesTotals { get; set; }
@@ -50,5 +47,9 @@ namespace Marista.DL
         public virtual DbSet<v3MonthSalesPerUser> v3MonthSalesPerUser { get; set; }
         public virtual DbSet<vBonus> vBonuses { get; set; }
         public virtual DbSet<v3MonthsBonuses> v3MonthsBonuses { get; set; }
+        public virtual DbSet<BP> BPs { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<ResultHistory> ResultHistories { get; set; }
     }
 }

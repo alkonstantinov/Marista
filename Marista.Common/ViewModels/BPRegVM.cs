@@ -33,7 +33,7 @@ namespace Marista.Common.ViewModels
         public IEnumerable<SelectListItem> Countries { get; set; }
 
         [Display(Name = "Country")]
-        public int CountryId { get; set; }
+        public string CountryId { get; set; }
 
         public IEnumerable<SelectListItem> Leaders { get; set; }
 

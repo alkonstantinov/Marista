@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Marista.DL
 {
@@ -140,6 +141,17 @@ namespace Marista.DL
         public async Task<IList<VCategory>> GetVCategories()
         {
             return await db.VCategories.ToListAsync();
+        }
+
+        public IEnumerable<SelectListItem> GetCountries()
+        {
+            return db.Countries.OrderBy(o => o.CountryName).Select(c => new SelectListItem() { Text = c.CountryName, Value = c.CountryId.ToString() }).ToList();
+
+        }
+
+        public decimal GetCountryDeliveryPrice (string countryId)
+        {
+            return db.Countries.First(c => c.CountryId == countryId).DeliveryPrice;
         }
     }
 }

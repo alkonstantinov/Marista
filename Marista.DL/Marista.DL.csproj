@@ -98,6 +98,9 @@
     <Compile Include="Pyramid.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ResultHistory.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Sale.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

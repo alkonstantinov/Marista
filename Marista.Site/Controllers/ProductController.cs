@@ -30,5 +30,7 @@ namespace Marista.Site.Controllers
             var picture = await _ps.Get(id);
             return File(picture.Picture, "image/jpeg");
         }
+
+        
     }
 }

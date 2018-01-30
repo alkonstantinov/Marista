@@ -21,8 +21,9 @@ namespace Marista.DL
             this.Customers = new HashSet<Customer>();
         }
     
-        public int CountryId { get; set; }
+        public string CountryId { get; set; }
         public string CountryName { get; set; }
+        public decimal DeliveryPrice { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BP> BPs { get; set; }

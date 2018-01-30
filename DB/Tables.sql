@@ -349,8 +349,9 @@ go
 
 create table Country
 (
-  CountryId int not null,
+  CountryId nvarchar(2) not null,
   CountryName nvarchar(200) not null,
+  DeliveryPrice decimal(10,2) not null,
   constraint pk_CountryId primary key (CountryId)
 )
 go
@@ -358,9 +359,8 @@ go
 exec p_ak_create_fk_indeces 'Country'
 go
 
-insert into Country(CountryId, CountryName) values (1, 'Bulgaria'), (2, 'Germany')
+insert into Country(CountryId, CountryName, DeliveryPrice) values ('bg', 'Bulgaria', 5), ('de', 'Germany', 7)
 go
-
 
 if OBJECT_ID('BP') is not null
 begin
@@ -376,7 +376,7 @@ create table BP
   EMail nvarchar(200) not null,
   PayPal nvarchar(200) not null,
   Address nvarchar(max) not null,
-  CountryId int not null,
+  CountryId nvarchar(2) not null,
   SiteUserId int not null,
   Files varbinary(max) not null,
   FileName nvarchar(200) not null,
@@ -404,7 +404,7 @@ create table Customer
   Password nvarchar(32) not null,
   CustomerName nvarchar(200) not null,
   Address nvarchar(max) not null,
-  CountryId int not null
+  CountryId nvarchar(2) not null,
   constraint pk_CustomerId primary key (CustomerId),
   constraint fk_Customer_CountryId foreign key (CountryId) references Country(CountryId)
 )

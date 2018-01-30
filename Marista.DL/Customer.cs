@@ -25,7 +25,7 @@ namespace Marista.DL
         public string Password { get; set; }
         public string CustomerName { get; set; }
         public string Address { get; set; }
-        public int CountryId { get; set; }
+        public string CountryId { get; set; }
     
         public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

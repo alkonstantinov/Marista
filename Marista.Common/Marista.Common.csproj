@@ -51,6 +51,7 @@
     <Compile Include="ViewModels\BonusSizeVM.cs" />
     <Compile Include="ViewModels\BonusVM.cs" />
     <Compile Include="ViewModels\BPRegVM.cs" />
+    <Compile Include="ViewModels\CartVM.cs" />
     <Compile Include="ViewModels\ChatItemVM.cs" />
     <Compile Include="ViewModels\ChatVM.cs" />
     <Compile Include="ViewModels\ConstantVM.cs" />

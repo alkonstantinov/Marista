@@ -26,8 +26,8 @@ namespace Marista.DL
         public Nullable<int> CouponId { get; set; }
     
         public virtual Coupon Coupon { get; set; }
-        public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SaleDetail> SaleDetails { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }
