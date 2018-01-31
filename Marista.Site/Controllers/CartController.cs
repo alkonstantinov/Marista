@@ -84,24 +84,38 @@ namespace Marista.Site.Controllers
 
         public async Task<ActionResult> Index()
         {
-            CartVM cart = new CartVM();
-            cart.Products = new List<SaleDetailVM>();
-            SaleDetailVM detail = new SaleDetailVM()
+            CartVM cart = null;
+            if (Session["Cart"] == null)
             {
-                Price = 12,
-                ProductId = 1,
-                Discount = 0,
-                ProductName = "xxxxxxxxxxx",
-                Quantity = 2
-            };
+                cart = new CartVM();
+                cart.Products = new List<SaleDetailVM>();
 
-            cart.Products.Add(detail);
+                Session.Add("Cart", cart);
+            }
+            else
+                cart = (CartVM)Session["Cart"];
             cart.Countries = db.GetCountries();
             cart.CountryId = "bg";
             cart.CountryPrice = db.GetCountryDeliveryPrice(cart.CountryId);
 
-            Session.Add("Cart", cart);
             return View(cart);
         }
+
+        public ActionResult GetSmallCart()
+        {
+            SmallCartInfoVM result = new SmallCartInfoVM();
+            if (Session["Cart"] != null)
+            { 
+                
+            CartVM cart = (CartVM)Session["Cart"];
+            foreach (var p in cart.Products)
+            {
+                    result.ItemsCount += p.Quantity;
+                    result.Price += p.Price * p.Quantity * (100 - p.Discount) / 100;
+            }
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

@@ -51,5 +51,7 @@ namespace Marista.DL
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<ResultHistory> ResultHistories { get; set; }
+        public virtual DbSet<vBoiko> vBoikoes { get; set; }
+        public virtual DbSet<vMicroinvest> vMicroinvests { get; set; }
     }
 }

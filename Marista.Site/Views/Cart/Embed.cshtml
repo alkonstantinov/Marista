@@ -4,8 +4,8 @@
             <span class="glyphicon glyphicon-shopping-cart"></span>
         </span>
         <span class="cart-details">
-            <span class="cart-items">1 item(s)</span>
-            <span class="mobile-hide"> - <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>9.00</span></span>
+            <span class="cart-items"><span id="sSmallCartItems">0</span> item(s)</span>
+            <span class="mobile-hide"> - <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&euro;</span><span id="sSmallCartPrice">0</span></span></span>
         </span>
     </div>
     <div class="dropdown-menu">
@@ -62,3 +62,29 @@
         </div>
     </div>
 </div>
+<script>
+    function UpdateSmallCart() {
+        $.ajax({
+            url: "/cart/GetSmallCart",
+            method: "GET",
+            cache: false,
+            async: false,
+
+        }).done(function (res) {
+            result = res;
+
+        }).fail(function (jqXHR, textStatus) {
+            alert(jqXHR);
+            });
+
+        $("#sSmallCartItems").text(result.ItemsCount);
+        $("#sSmallCartPrice").text(result.Price.toFixed(2));
+    }
+
+    $(document).ready(
+        function () {
+
+            UpdateSmallCart();
+        }
+    );
+</script>

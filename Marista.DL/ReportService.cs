@@ -141,5 +141,16 @@ namespace Marista.DL
             return result;
         }
 
+        public async Task<IList<BoikoVM>> GetBoikoReport()
+        {
+            var boiko = await db.vBoikoes.ProjectToListAsync<BoikoVM>(_map.ConfigurationProvider);
+            return boiko;
+        }
+
+        public async Task<IList<MicroinvestVM>> GetMicroinvestReport()
+        {
+            var mi = await db.vMicroinvests.ProjectToListAsync<MicroinvestVM>(_map.ConfigurationProvider);
+            return mi;
+        }
     }
 }

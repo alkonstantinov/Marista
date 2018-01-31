@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "MyTeamReport";
+}
+
+<h2>Monthly reports</h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Report</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.ActionLink("Sales CSV", "BoikoReport")</td>
+
+            </tr>
+            <tr>
+                <td>@Html.ActionLink("Export to Microinvest", "MicroInvestReport")</td>
+
+            </tr>
+
+        </tbody>
+    </table>
+</div>

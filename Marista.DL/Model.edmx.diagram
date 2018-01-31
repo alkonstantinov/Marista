@@ -57,6 +57,8 @@
         <AssociationConnector Association="MaristaModel.fk_ResultHistory_BPId" />
         <AssociationConnector Association="MaristaModel.fk_Customer_CountryId" />
         <AssociationConnector Association="MaristaModel.fk_Sale_CustomerId" />
+        <EntityTypeShape EntityType="MaristaModel.vBoiko" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MaristaModel.vMicroinvest" Width="1.5" PointX="5.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

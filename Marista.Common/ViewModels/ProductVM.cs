@@ -41,5 +41,18 @@ namespace Marista.Common.ViewModels
         //required, enforced by the controller
         [Display(Name = "Picture")]
         public byte[] Picture { get; set; }
+
+        [Required]
+        [Display(Name = "Barcode")]
+        public string Barcode { get; set; }
+
+        [Required]
+        [Display(Name = "Available Quantity")]
+        public int Available { get; set; }
+
+        [Required]
+        [Display(Name = "Minimum Available Quantity")]
+        public int MinQuantity { get; set; }
+
     }
 }

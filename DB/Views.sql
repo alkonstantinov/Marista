@@ -90,21 +90,54 @@ create view v3MonthsBonuses as
   where DATEFROMPARTS(rh.Year, rh.Month, 1)> DATEADD(month,-3,getdate())
 go
 
-if OBJECT_ID('vBonuses') is not null
-  drop view vBonuses
+  
+if OBJECT_ID('vBoiko') is not null
+  drop view vBoiko
 go
---select * from vBonuses
-create view vBonuses as
+
+create view vBoiko as
+
+with sales(id) as
+(
+  select s.SaleId
+  from Sale s
+  where 
+    DATEPART(month, s.OnDate)= DATEPART(month, dateadd(month,-1,getdate())) and
+    DATEPART(year, s.OnDate)= DATEPART(year, dateadd(month,-1,getdate()))
+), products (Id, Barcode, Quantity) as
+(
+  select p.ProductId, p.Barcode, sum(sd.Quantity)
+  from sales s
+  join SaleDetail sd on sd.SaleId = s.id
+  join Product p on p.ProductId = sd.ProductId
+  group by p.ProductId, p.Barcode 
+) 
+select * from products
+go
+
+
+if OBJECT_ID('vMicroinvest') is not null
+  drop view vMicroinvest
+go
+
+create view vMicroinvest as
   select 
-    rh.ResultHistoryId, 
-    bp.BPName,
-    rh.Bonus,
-    p.SiteUserId,
-    rh.Month,
-    rh.Year
-  from ResultHistory rh
-  join bp on bp.BPId = rh.BpId
-  join Pyramid p on p.SiteUserId = bp.SiteUserId
+    s.SaleId,
+    s.OnDate,
+    c.CustomerName,
+    c.City,
+    c.Address,
+    co.CountryName,
+    (
+      select sum((sd.Price*sd.Quantity)*(100-sd.Discount)/100)
+      from SaleDetail sd 
+      where sd.SaleId = s.SaleId
+    )  + s.DeliveryPrice Total
+  from Sale s
+  join Customer c on c.CustomerId = s.CustomerId
+  join Country co on co.CountryId= c.CountryId
+  where 
+    DATEPART(month, s.OnDate)= DATEPART(month, dateadd(month,-1,getdate())) and
+    DATEPART(year, s.OnDate)= DATEPART(year, dateadd(month,-1,getdate()))
   
 go
-  

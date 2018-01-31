@@ -12,16 +12,14 @@ namespace Marista.DL
     using System;
     using System.Collections.Generic;
     
-    public partial class SaleDetail
+    public partial class vMicroinvest
     {
-        public int SaleDetailId { get; set; }
         public int SaleId { get; set; }
-        public int ProductId { get; set; }
-        public decimal Price { get; set; }
-        public int Quantity { get; set; }
-        public decimal Discount { get; set; }
-    
-        public virtual Product Product { get; set; }
-        public virtual Sale Sale { get; set; }
+        public System.DateTime OnDate { get; set; }
+        public string CustomerName { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
+        public string CountryName { get; set; }
+        public Nullable<decimal> Total { get; set; }
     }
 }

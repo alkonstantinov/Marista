@@ -60,6 +60,15 @@ namespace Marista.DL
 
                     cfg.CreateMap<BP, BPRegVM>()
                         .ReverseMap();
+
+                    cfg.CreateMap<Product, ShopItemVM>()
+                        .ReverseMap();
+
+                    cfg.CreateMap<vBoiko, BoikoVM>()
+                        .ReverseMap();
+                    cfg.CreateMap<vMicroinvest, MicroinvestVM>()
+                        .ReverseMap();
+
                 }
             );
 

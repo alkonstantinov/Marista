@@ -1,4 +1,6 @@
 ﻿	<!-- banner -->
+
+@model ShopVM
 <div class="banner-container">
     <div id="banner-wrapper" class="category-banner m-b-none">
         <div class="container">
@@ -31,5 +33,167 @@
         </ul>
     </div>
 </div>
+@using (Html.BeginForm("Search", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @id = "SearchForm" }))
+{
+    @Html.AntiForgeryToken()
 
-@Html.Action("List", "Product")
+
+    <div id="main" class="column1">
+        <!-- main -->
+        <div class="container">
+            <div class="row">
+                <div class="main-content col-sm-12 col-md-12">
+                    <!-- main content -->
+                    <div id="container">
+                        <div id="content" role="main">
+                            <div class="content-before">
+                                <div class="toolbar clearfix">
+                                    <div class="sorter clearfix">
+                                        <div class="sort-by">
+                                            <label class="left">Sort By </label>
+                                            @Html.DropDownListFor(model => model.SortById, new SelectList(Model.SortBy, "Value", "Text"), new { @class = "country_to_state", @onchange = "$('#SearchForm').submit();" })
+
+                                        </div>
+                                        <div class="view-mode gridlist-toggle">
+                                            <a id="grid" title="Grid View" class="active" onclick="ChangeResultView(1)" style="cursor:pointer"></a>
+                                            <a id="list" title="List View" onclick="ChangeResultView(2)" style="cursor:pointer"></a>
+                                        </div>
+                                        @Html.DropDownListFor(model => model.HCategoryId, new SelectList(Model.HCategory, "Value", "Text"), "HCategory", new { @class = "cat-filter", @onchange = "$('#SearchForm').submit();" })
+                                        @Html.DropDownListFor(model => model.VCategoryId, new SelectList(Model.VCategory, "Value", "Text"), "VCategory", new { @class = "cat-filter", @onchange = "$('#SearchForm').submit();" })
+                                    </div>
+                                    <div class="pager">
+                                        <nav class="woocommerce-pagination">
+                                            <input type="hidden" id="Page" name="Page" value="@Model.Page" />
+                                            <ul class="page-numbers">
+                                                @for (int page = 1; page <= Model.PagesCount; page++)
+                                                {
+                                                    if (page == Model.Page)
+                                                    {
+                                                        <li onclick="alert(page)"><span class="page-numbers current">@page</span></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><a class="page-numbers" href="#" onclick="$('#Page').val(@page);$('#SearchForm').submit();">@page</a></li>
+                                                    }
+                                                }
+
+                                            </ul>
+                                        </nav>
+                                        <div class="limiter">
+                                            <label>View </label>
+                                            @Html.DropDownListFor(model => model.PageSizeId, new SelectList(Model.PageSize, "Value", "Text"), new { @class = "cat-filter", @onchange = "$('#SearchForm').submit();" })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="archive-products">
+                                    <div class="product-row">
+                                        <ul class="products row clearfix grid" id="ulResults">
+                                            <!-- class grid/list -->
+                                            @foreach (var p in Model.Products)
+                                            {
+                                                <li class="col-md-3 col-sm-4 product">
+                                                    <div class="inner clearfix">
+                                                        <a href="/Product/View?id=@p.ProductId">
+                                                            <span class="product-image">
+                                                                <img width="228" height="228" src="/Product/Picture?id=@p.ProductId" alt="@p.Name">
+                                                                <div class="price-box bottom-right">
+                                                                    <span class="price"><span class="amount"><span class="">&euro; </span>@p.Price.ToString("0.##")</span></span>
+                                                                </div>
+                                                                <div class="figcaption">
+                                                                    <span class="btn btn-arrow quickview-button top-right"><span class="fa fa-search"></span></span>
+                                                                </div>
+                                                            </span>
+                                                        </a>
+                                                        <div class="product-details">
+                                                            <a class="product-loop-title" href="/Product/View?id=@p.ProductId">
+                                                                <h3>@p.Name</h3>
+                                                            </a>
+                                                            <div itemprop="description" class="description">
+                                                                <p>@p.Description</p>
+                                                            </div>
+                                                            <div>
+                                                                <a class="add-to-cart-btn" onclick="AddToCart(@p.ProductId)" style="cursor:pointer">Add to cart</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-after">
+                                <div class="pager">
+                                    <nav class="woocommerce-pagination">
+                                        <input type="hidden" id="Page" name="Page" value="@Model.Page" />
+                                        <ul class="page-numbers">
+                                            @for (int page = 1; page <= Model.PagesCount; page++)
+                                            {
+                                                if (page == Model.Page)
+                                                {
+                                                    <li onclick="alert(page)"><span class="page-numbers current">@page</span></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><a class="page-numbers" href="#" onclick="$('#Page').val(@page);$('#SearchForm').submit();">@page</a></li>
+                                                }
+                                            }
+
+                                        </ul>
+                                    </nav>
+                                    <div class="limiter">
+                                        <label>View </label>
+                                        @Html.DropDownListFor(model => model.PageSizeId, new SelectList(Model.PageSize, "Value", "Text"), new { @class = "cat-filter", @onchange = "$('#SearchForm').submit();" })
+
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function AddToCart(productId) {
+        $.ajax({
+            url: "/home/addtocart?productId=" + productId,
+            method: "GET",
+            cache: false,
+            async: false,
+
+        }).done(function (res) {
+
+        }).fail(function (jqXHR, textStatus) {
+            alert(textStatus);
+        });
+        UpdateSmallCart();
+    }
+
+    function ChangeResultView(mode) {
+        if (mode == 1) {
+            $("#ulResults").removeClass("list");
+            $("#list").removeClass("active");
+            $("#ulResults").addClass("grid");
+            $("#grid").addClass("active");
+        }
+        else {
+            $("#ulResults").removeClass("grid");
+            $("#grid").removeClass("active");
+            $("#ulResults").addClass("list");
+            $("#list").addClass("active");
+        }
+    }
+
+</script>

@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\Mailer.cs" />
     <Compile Include="Tools\MD5.cs" />
+    <Compile Include="ViewModels\BoikoVM.cs" />
     <Compile Include="ViewModels\BonusSizeVM.cs" />
     <Compile Include="ViewModels\BonusVM.cs" />
     <Compile Include="ViewModels\BPRegVM.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="ViewModels\CouponVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\MarketingMaterialVM.cs" />
+    <Compile Include="ViewModels\MicroinvestVM.cs" />
     <Compile Include="ViewModels\MyProfileReportVM.cs" />
     <Compile Include="ViewModels\MyTeamReportVM.cs" />
     <Compile Include="ViewModels\ProductDiscountVM.cs" />
@@ -66,6 +68,9 @@
     <Compile Include="ViewModels\RelatedProductVM.cs" />
     <Compile Include="ViewModels\SaleDetailVM.cs" />
     <Compile Include="ViewModels\SaleVM.cs" />
+    <Compile Include="ViewModels\ShopItemVM.cs" />
+    <Compile Include="ViewModels\ShopVM.cs" />
+    <Compile Include="ViewModels\SmallCartInfoVM.cs" />
     <Compile Include="ViewModels\SOBonusSizeVM.cs" />
     <Compile Include="ViewModels\TeamReportVM.cs" />
   </ItemGroup>

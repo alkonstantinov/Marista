@@ -151,10 +151,16 @@
     <Compile Include="v3MonthsBonuses.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="vBoiko.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="vBonus.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="VCategory.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vMicroinvest.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="VMMapper.cs" />

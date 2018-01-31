@@ -117,6 +117,9 @@ create table Product
   VCategoryId int not null, --ВЕРТИКАЛНА КАТЕГОРИЯ - от таблица VCategory
   HCategoryId int not null, --ХОРИЗОНТАЛНА КАТЕГОРИЯ - от таблица HCategory
   Picture varbinary(max) not null, --СНИМКА
+  Barcode varbinary(20) not null default '',
+  Available int not null default 0,
+  MinQuantity int not null default 0,
   constraint pk_ProductId primary key (ProductId),
   constraint fk_Product_VCategoryId foreign key (VCategoryId) references VCategory(VCategoryId),
   constraint fk_Product_HCategoryId foreign key (HCategoryId) references HCategory(HCategoryId)
@@ -406,6 +409,7 @@ create table Customer
   Password nvarchar(32) not null,
   CustomerName nvarchar(200) not null,
   Address nvarchar(max) not null,
+  City nvarchar(max) not null,
   CountryId nvarchar(2) not null,
   constraint pk_CustomerId primary key (CustomerId),
   constraint fk_Customer_CountryId foreign key (CountryId) references Country(CountryId)
@@ -429,6 +433,8 @@ create table Sale
   CustomerId int not null,
   OnDate datetime not null default getdate(),
   CouponId int null,
+  DeliveryPrice decimal(10,2) not null default 0,
+
   constraint pk_SaleId primary key (SaleId),
   constraint fk_Sale_CustomerId foreign key (CustomerId) references Customer(CustomerId),
   constraint fk_Sale_CouponId foreign key (CouponId) references Coupon(CouponId)
@@ -453,13 +459,12 @@ create table SaleDetail
   ProductId int not null,
   Price decimal(10,2) not null,
   Quantity int not null,
+  Discount decimal(10,2) not null default 0,
   constraint pk_SaleDetailId primary key (SaleDetailId),
   constraint fk_SaleDetail_SaleId foreign key (SaleId) references Sale(SaleId),
   constraint fk_SaleDetail_ProductId foreign key (ProductId) references Product(ProductId)
 )
-go
-
-exec p_ak_create_fk_indeces 'SaleDetail'
+goexec p_ak_create_fk_indeces 'SaleDetail'
 go
 
 
@@ -487,5 +492,4 @@ go
 
 exec p_ak_create_fk_indeces 'ResultHistory'
 go
-
 

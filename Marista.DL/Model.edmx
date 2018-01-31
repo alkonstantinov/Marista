@@ -89,6 +89,7 @@
           <Property Name="CustomerName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CountryId" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="City" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="HCategory">
           <Key>
@@ -125,6 +126,9 @@
           <Property Name="VCategoryId" Type="int" Nullable="false" />
           <Property Name="HCategoryId" Type="int" Nullable="false" />
           <Property Name="Picture" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Available" Type="int" Nullable="false" />
+          <Property Name="MinQuantity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Pyramid">
           <Key>
@@ -171,6 +175,7 @@
           <Property Name="CustomerId" Type="int" Nullable="false" />
           <Property Name="OnDate" Type="datetime" Nullable="false" />
           <Property Name="CouponId" Type="int" />
+          <Property Name="DeliveryPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="SaleDetail">
           <Key>
@@ -181,6 +186,7 @@
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Discount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="SiteUser">
           <Key>
@@ -242,6 +248,17 @@ warning 6002: The table/view 'Marista.dbo.v3MonthsBonuses' does not have a prima
           <Property Name="Year" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'Marista.dbo.vBoiko' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vBoiko">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Barcode" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'Marista.dbo.vBonuses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vBonuses">
           <Key>
@@ -257,6 +274,25 @@ warning 6002: The table/view 'Marista.dbo.vBonuses' does not have a primary key 
           <Property Name="SiteUserId" Type="int" Nullable="false" />
           <Property Name="Month" Type="int" Nullable="false" />
           <Property Name="Year" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Marista.dbo.vMicroinvest' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vMicroinvest">
+          <Key>
+            <PropertyRef Name="SaleId" />
+            <PropertyRef Name="OnDate" />
+            <PropertyRef Name="CustomerName" />
+            <PropertyRef Name="City" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="CountryName" />
+          </Key>
+          <Property Name="SaleId" Type="int" Nullable="false" />
+          <Property Name="OnDate" Type="datetime" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="38" Scale="8" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Marista.dbo.vMonthSalesPerUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -620,6 +656,13 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
     [v3MonthsBonuses].[Year] AS [Year]
     FROM [dbo].[v3MonthsBonuses] AS [v3MonthsBonuses]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vBoiko" EntityType="Self.vBoiko" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vBoiko].[Id] AS [Id], 
+    [vBoiko].[Barcode] AS [Barcode], 
+    [vBoiko].[Quantity] AS [Quantity]
+    FROM [dbo].[vBoiko] AS [vBoiko]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vBonuses" EntityType="Self.vBonuses" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vBonuses].[ResultHistoryId] AS [ResultHistoryId], 
@@ -629,6 +672,17 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
     [vBonuses].[Month] AS [Month], 
     [vBonuses].[Year] AS [Year]
     FROM [dbo].[vBonuses] AS [vBonuses]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vMicroinvest" EntityType="Self.vMicroinvest" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vMicroinvest].[SaleId] AS [SaleId], 
+    [vMicroinvest].[OnDate] AS [OnDate], 
+    [vMicroinvest].[CustomerName] AS [CustomerName], 
+    [vMicroinvest].[City] AS [City], 
+    [vMicroinvest].[Address] AS [Address], 
+    [vMicroinvest].[CountryName] AS [CountryName], 
+    [vMicroinvest].[Total] AS [Total]
+    FROM [dbo].[vMicroinvest] AS [vMicroinvest]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vMonthSalesPerUser" EntityType="Self.vMonthSalesPerUser" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -905,6 +959,8 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Sale" EntitySet="Sales" />
           </AssociationSet>
+          <EntitySet Name="vBoikoes" EntityType="MaristaModel.vBoiko" />
+          <EntitySet Name="vMicroinvests" EntityType="MaristaModel.vMicroinvest" />
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -941,6 +997,9 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <NavigationProperty Name="RelatedToProducts" Relationship="MaristaModel.RelatedProduct" FromRole="Product1" ToRole="Product" />
           <NavigationProperty Name="Coupons" Relationship="MaristaModel.fk_Coupon_ProductId" FromRole="Product" ToRole="Coupon" />
           <NavigationProperty Name="SaleDetails" Relationship="MaristaModel.fk_SaleDetail_ProductId" FromRole="Product" ToRole="SaleDetail" />
+          <Property Name="Barcode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Available" Type="Int32" Nullable="false" />
+          <Property Name="MinQuantity" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="SOBonusSize">
           <Key>
@@ -1201,6 +1260,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <NavigationProperty Name="Coupon" Relationship="MaristaModel.fk_Sale_CouponId" FromRole="Sale" ToRole="Coupon" />
           <NavigationProperty Name="SaleDetails" Relationship="MaristaModel.fk_SaleDetail_SaleId" FromRole="Sale" ToRole="SaleDetail" />
           <NavigationProperty Name="Customer" Relationship="MaristaModel.fk_Sale_CustomerId" FromRole="Sale" ToRole="Customer" />
+          <Property Name="DeliveryPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="SaleDetail">
           <Key>
@@ -1213,6 +1273,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="MaristaModel.fk_SaleDetail_ProductId" FromRole="SaleDetail" ToRole="Product" />
           <NavigationProperty Name="Sale" Relationship="MaristaModel.fk_SaleDetail_SaleId" FromRole="SaleDetail" ToRole="Sale" />
+          <Property Name="Discount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
         </EntityType>
         <Association Name="fk_Sale_CouponId">
           <End Type="MaristaModel.Coupon" Role="Coupon" Multiplicity="0..1" />
@@ -1373,6 +1434,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="CountryId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Country" Relationship="MaristaModel.fk_Customer_CountryId" FromRole="Customer" ToRole="Country" />
           <NavigationProperty Name="Sales" Relationship="MaristaModel.fk_Sale_CustomerId" FromRole="Customer" ToRole="Sale" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ResultHistory">
           <Key>
@@ -1448,6 +1510,32 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vBoiko">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Barcode" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Barcode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vMicroinvest">
+          <Key>
+            <PropertyRef Name="SaleId" />
+            <PropertyRef Name="OnDate" />
+            <PropertyRef Name="CustomerName" />
+            <PropertyRef Name="City" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="CountryName" />
+          </Key>
+          <Property Name="SaleId" Type="Int32" Nullable="false" />
+          <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Total" Type="Decimal" Precision="38" Scale="8" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1493,6 +1581,9 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="MaristaModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="MinQuantity" ColumnName="MinQuantity" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="HCategoryId" ColumnName="HCategoryId" />
                 <ScalarProperty Name="VCategoryId" ColumnName="VCategoryId" />
@@ -1607,6 +1698,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="Sales">
             <EntityTypeMapping TypeName="MaristaModel.Sale">
               <MappingFragment StoreEntitySet="Sale">
+                <ScalarProperty Name="DeliveryPrice" ColumnName="DeliveryPrice" />
                 <ScalarProperty Name="CouponId" ColumnName="CouponId" />
                 <ScalarProperty Name="OnDate" ColumnName="OnDate" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
@@ -1617,6 +1709,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="SaleDetails">
             <EntityTypeMapping TypeName="MaristaModel.SaleDetail">
               <MappingFragment StoreEntitySet="SaleDetail">
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
@@ -1723,6 +1816,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="MaristaModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
@@ -1743,6 +1837,28 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
                 <ScalarProperty Name="Month" ColumnName="Month" />
                 <ScalarProperty Name="BpId" ColumnName="BpId" />
                 <ScalarProperty Name="ResultHistoryId" ColumnName="ResultHistoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vBoikoes">
+            <EntityTypeMapping TypeName="MaristaModel.vBoiko">
+              <MappingFragment StoreEntitySet="vBoiko">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vMicroinvests">
+            <EntityTypeMapping TypeName="MaristaModel.vMicroinvest">
+              <MappingFragment StoreEntitySet="vMicroinvest">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

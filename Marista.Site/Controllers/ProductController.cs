@@ -1,4 +1,5 @@
-﻿using Marista.DL;
+﻿using Marista.Common.ViewModels;
+using Marista.DL;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,11 @@ namespace Marista.Site.Controllers
     {
         private readonly ProductService _ps = new ProductService();
 
-        public ActionResult List(int? page)
+        public ActionResult List()
         {
-            var products = Task.Run(async () => await _ps.Get()).Result;
-            return PartialView(products.ToPagedList(page ?? 1, 8));
+            ShopVM shop = new ShopVM();
+            _ps.GetShopContent(shop);
+            return PartialView(shop);
         }
 
         public async Task<ActionResult> View(int id)
@@ -31,6 +33,6 @@ namespace Marista.Site.Controllers
             return File(picture.Picture, "image/jpeg");
         }
 
-        
+
     }
 }

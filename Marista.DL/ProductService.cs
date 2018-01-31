@@ -31,7 +31,7 @@ namespace Marista.DL
             {
                 query = query.Where(x => x.Name.Contains(search) || x.Description.Contains(search));
             }
-                
+
             return await query.ProjectToListAsync<ProductVM>(_map.ConfigurationProvider);
         }
 
@@ -61,7 +61,7 @@ namespace Marista.DL
             {
                 await db.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Trace.WriteLine(ex.Message);
             }
@@ -94,14 +94,14 @@ namespace Marista.DL
         {
             var products = await db.Products.Include(x => x.RelatedToProducts).Where(x => x.RelatedToProducts.Any()).ToListAsync();
             var list = new List<RelatedProductVM>();
-            foreach(var p in products)
+            foreach (var p in products)
             {
-                foreach(var rp in p.RelatedToProducts)
+                foreach (var rp in p.RelatedToProducts)
                 {
                     list.Add(new RelatedProductVM(_map.Map<ProductVM>(p), _map.Map<ProductVM>(rp)));
                 }
             }
-            if(!string.IsNullOrEmpty(search))
+            if (!string.IsNullOrEmpty(search))
             {
                 search = search.ToUpper();
                 list = list.Where(x => x.FromProductName.ToUpper().Contains(search) || x.ToProductName.ToUpper().Contains(search)).ToList();
@@ -113,11 +113,11 @@ namespace Marista.DL
         {
             var fromProduct = await db.Products.SingleOrDefaultAsync(x => x.ProductId == rp.FromProductId);
             var toProduct = await db.Products.SingleOrDefaultAsync(x => x.ProductId == rp.ToProductId);
-            if(fromProduct == null || toProduct == null)
+            if (fromProduct == null || toProduct == null)
             {
                 throw new ArgumentException("Both products are required");
             }
-            if(fromProduct.ProductId == toProduct.ProductId)
+            if (fromProduct.ProductId == toProduct.ProductId)
             {
                 throw new ArgumentException("Cannot create a relationship between the same product");
             }
@@ -149,18 +149,39 @@ namespace Marista.DL
 
         }
 
-        public decimal GetCountryDeliveryPrice (string countryId)
+        public decimal GetCountryDeliveryPrice(string countryId)
         {
             return db.Countries.First(c => c.CountryId == countryId).DeliveryPrice;
         }
 
         public CouponVM GetCouponInfo(string uniqueId)
         {
-            var cpn = db.Coupons.FirstOrDefault(c => c.UniqueId==uniqueId&&c.Expires>DateTime.Now&&c.Sales.Count==0);
+            var cpn = db.Coupons.FirstOrDefault(c => c.UniqueId == uniqueId && c.Expires > DateTime.Now && c.Sales.Count == 0);
             if (cpn == null)
                 return null;
             else
                 return _map.Map<CouponVM>(cpn);
+        }
+
+        public void GetShopContent(ShopVM shop)
+        {
+            var allResults = db.Products.Where(p => (!shop.HCategoryId.HasValue || shop.HCategoryId.Value == p.HCategoryId) && (!shop.VCategoryId.HasValue || shop.VCategoryId.Value == p.VCategoryId));
+            int rc = allResults.Count();
+            shop.PagesCount = rc / shop.PageSizeId + (rc % shop.PageSizeId > 0 ? 1 : 0);
+            switch (shop.SortById)
+            {
+                case 1: allResults = allResults.OrderBy(i => i.Name); break;
+                case 2: allResults = allResults.OrderBy(i => i.Price); break;
+
+            }
+            int toSkip = (shop.Page - 1) * shop.PageSizeId;
+            var page = allResults.Skip<Product>(toSkip).Take(shop.PageSizeId);
+            shop.Products = page.ProjectToList<ShopItemVM>(_map.ConfigurationProvider);
+            shop.HCategory = db.HCategories.Select(c => new SelectListItem() { Text = c.CategoryName, Value = c.HCategoryId.ToString() }).ToList();
+            shop.VCategory = db.VCategories.Select(c => new SelectListItem() { Text = c.CategoryName, Value = c.VCategoryId.ToString() }).ToList();
+
+
+
         }
     }
 }
