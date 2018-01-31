@@ -117,7 +117,7 @@ create table Product
   VCategoryId int not null, --ВЕРТИКАЛНА КАТЕГОРИЯ - от таблица VCategory
   HCategoryId int not null, --ХОРИЗОНТАЛНА КАТЕГОРИЯ - от таблица HCategory
   Picture varbinary(max) not null, --СНИМКА
-  Barcode varbinary(20) not null default '',
+  Barcode nvarchar(20) not null default '',
   Available int not null default 0,
   MinQuantity int not null default 0,
   constraint pk_ProductId primary key (ProductId),
@@ -464,7 +464,9 @@ create table SaleDetail
   constraint fk_SaleDetail_SaleId foreign key (SaleId) references Sale(SaleId),
   constraint fk_SaleDetail_ProductId foreign key (ProductId) references Product(ProductId)
 )
-goexec p_ak_create_fk_indeces 'SaleDetail'
+go
+
+exec p_ak_create_fk_indeces 'SaleDetail'
 go
 
 
