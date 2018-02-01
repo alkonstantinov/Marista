@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\UserData.cs" />
+    <Compile Include="PayPalModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\Mailer.cs" />
     <Compile Include="Tools\MD5.cs" />
