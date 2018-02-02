@@ -60,6 +60,7 @@
     <Compile Include="ViewModels\CouponVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\MarketingMaterialVM.cs" />
+    <Compile Include="ViewModels\MassPaymentPaypalVM.cs" />
     <Compile Include="ViewModels\MicroinvestVM.cs" />
     <Compile Include="ViewModels\MyProfileReportVM.cs" />
     <Compile Include="ViewModels\MyTeamReportVM.cs" />

@@ -32,6 +32,7 @@ namespace Marista.DL
         public decimal SoPrcnt { get; set; }
         public decimal FromOthers { get; set; }
         public decimal ToReceive { get; set; }
+        public decimal SaleBonus { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pyramid> Pyramid1 { get; set; }

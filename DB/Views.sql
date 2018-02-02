@@ -141,3 +141,4 @@ create view vMicroinvest as
     DATEPART(year, s.OnDate)= DATEPART(year, dateadd(month,-1,getdate()))
   
 go
+

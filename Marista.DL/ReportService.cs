@@ -152,5 +152,21 @@ namespace Marista.DL
             var mi = await db.vMicroinvests.ProjectToListAsync<MicroinvestVM>(_map.ConfigurationProvider);
             return mi;
         }
+
+        public IList<MassPaymentPaypalVM> GetMassPaymentPaypalReport()
+        {
+            int month = DateTime.Now.AddMonths(-1).Month;
+            int year = DateTime.Now.AddMonths(-1).Year;
+            List<MassPaymentPaypalVM> l = new List<MassPaymentPaypalVM>();
+            foreach (var rec in db.ResultHistories.Where(rh => rh.Month == month && rh.Year == year && rh.Bonus.HasValue && rh.Bonus.Value > 0))
+                l.Add(
+                    new MassPaymentPaypalVM()
+                    {
+                        Ammount = rec.Bonus.HasValue ? rec.Bonus.Value : 0,
+                        EMail = rec.BP.EMail
+                    }
+                    );
+            return l;
+        }
     }
 }

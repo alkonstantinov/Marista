@@ -74,6 +74,22 @@ namespace Marista.Admin.Controllers
             return fc;
         }
 
+        public async Task<ActionResult> MassPaymentPaypalReport()
+        {
+            if (this.UserData.LevelId != 1)
+            {
+                return RedirectToAction("Login", "User");
+            }
+
+            var report = _db.GetMassPaymentPaypalReport();
+            StringBuilder sb = new StringBuilder();
+            foreach (var r in report)
+                sb.AppendLine(r.EMail + ";"+r.Ammount.ToString() + ";EUR;");
+            var fc = new FileContentResult(Encoding.UTF8.GetBytes(sb.ToString()), "application/octet-stream");
+            fc.FileDownloadName = "paypal.csv";
+            return fc;
+        }
+
         public async Task<ActionResult> MicroInvestReport()
         {
             if (this.UserData.LevelId != 1)

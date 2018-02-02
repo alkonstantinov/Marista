@@ -118,6 +118,7 @@ begin
     PyramidId int not null primary key,
     PyramidParentId int null,
     SiteUserId int not null,
+    SaleBonus decimal (10,2) not null default 0,  
     PBV decimal (10,2) not null default 0,
     Prcnt decimal(10,2) not null default 0,
     ParentPrcnt decimal(10,2) not null default 0,
@@ -234,9 +235,72 @@ begin
       
     --изчисляваме печалбите    
       
-    update mp
-    set ToReceive = isnull(PBV*(select top 1 c.Value from constant c where c.ConstantId = 4)/100.00,0)
-      + 
+    --update mp
+    --set ToReceive = isnull(PBV*(select top 1 c.Value from constant c where c.ConstantId = 4)/100.00,0)
+    --  + 
+    --  isnull((
+    --    select sum ( 
+    --      case
+    --        when children.PBV>=100 then children.FromOthers*(children.ParentPrcnt - children.Prcnt)/100.0
+    --        else 0.0
+    --      end 
+    --      )
+    --    from @mp children
+    --    where children.PyramidParentId = mp.PyramidId
+    --  ),0)+
+    --  isnull((
+    --    select sum (         
+    --      case
+    --        when children.PBV>=100 then children.FromOthers*children.SoParentPrcnt/100.0
+    --        else 0.0
+    --      end 
+    --      )
+    --    from Pyramid children
+    --    where children.PyramidSpinoffParentId = mp.PyramidId
+    --  ),0)
+    --from @mp mp
+    --join @process p on p.PyramidId = mp.PyramidId 
+
+    --проверяваме дали има спиноф
+    
+    --if exists (
+    --  select top 1 1 
+    --  from @mp mp
+    --  join @process p on p.PyramidId = mp.PyramidId        
+    --  where mp.Prcnt = (select max(bs.BonusPercent) from BonusSize bs)
+    --) 
+    --begin
+    --  -- ако да - спиноф и повтаряме
+    --  update Pyramid
+    --  set 
+    --    PyramidSpinoffParentId = p.PyramidParentId,
+    --    PyramidParentId = null
+    --  from Pyramid p
+    --  join  @mp mp on mp.PyramidId = p.PyramidId
+    --  join @process prc on prc.PyramidId = mp.PyramidId        
+    --  where mp.Prcnt = (select max(bs.BonusPercent) from BonusSize bs)
+
+    --  return 1;
+    --end
+    --else
+    --begin
+    --  select @level = @level - 1
+      
+    --end
+    select @level = @level - 1
+    --select * from @mp    
+  end
+
+
+  update @mp
+  set ToReceive = 
+    Salebonus +
+    ISNULL(
+      case 
+        when PBV>=100 then PBV*Prcnt
+        else 0
+      end
+      ,0)+
       isnull((
         select sum ( 
           case
@@ -245,50 +309,30 @@ begin
           end 
           )
         from @mp children
-        where children.PyramidParentId = mp.PyramidId
-      ),0)+
-      isnull((
-        select sum (         
-          case
-            when children.PBV>=100 then children.FromOthers*children.SoParentPrcnt/100.0
-            else 0.0
-          end 
-          )
-        from Pyramid children
-        where children.PyramidSpinoffParentId = mp.PyramidId
-      ),0)
-    from @mp mp
-    join @process p on p.PyramidId = mp.PyramidId 
-
-    --проверяваме дали има спиноф
+        where children.PyramidParentId = PyramidId
+      ),0)*
+      (
+        case 
+          when (select count(1) from @mp mp where mp.PyramidParentId=PyramidId)>=4 then 1
+          else 0
+        end
+      )+
+      case 
+        when PyramidParentId is null then    
+          isnull(
+            (
+              select sum (       
+               case
+                 when children.PBV>=100 then children.FromOthers*children.SoParentPrcnt/100.0
+                 else 0.0
+               end)
+              from Pyramid children
+              where children.PyramidSpinoffParentId = PyramidId
+            ),0)
+        else 0
+      end
     
-    if exists (
-      select top 1 1 
-      from @mp mp
-      join @process p on p.PyramidId = mp.PyramidId        
-      where mp.Prcnt = (select max(bs.BonusPercent) from BonusSize bs)
-    ) 
-    begin
-      -- ако да - спиноф и повтаряме
-      update Pyramid
-      set 
-        PyramidSpinoffParentId = p.PyramidParentId,
-        PyramidParentId = null
-      from Pyramid p
-      join  @mp mp on mp.PyramidId = p.PyramidId
-      join @process prc on prc.PyramidId = mp.PyramidId        
-      where mp.Prcnt = (select max(bs.BonusPercent) from BonusSize bs)
-
-      return 1;
-    end
-    else
-    begin
-      select @level = @level - 1
-      
-    end
-
-    --select * from @mp    
-  end
+  
     
   update p
   set
@@ -303,72 +347,132 @@ begin
 end
 go
 
-declare @process table
-(
-  id int not null identity (1,1) primary key,
-  PyramidId int not null 
-)
+if OBJECT_ID('pCalcAllProfits') is not null
+  drop procedure pCalcAllProfits
+go
 
-declare @su int 
-declare @repeat bit = 0
-declare @calcResult int = 0
-while 1 > 0
+create procedure pCalcAllProfits as
 begin
-  delete from @process
-  select @repeat = 0
+  declare @process table
+  (
+    id int not null identity (1,1) primary key,
+    PyramidId int not null 
+  )
 
-  ;with roots as
-  (
-    select p.pyramidid id
-    from Pyramid p
-    where p.PyramidParentId is null
-  ), id2root as
-  (
-    select r.id id, r.id root
-    from roots r
-    union all
-    select p.PyramidId id, i2r.root
-    from Pyramid p
-    join id2root i2r on i2r.id = p.PyramidParentId
-  ), so as
-  (
-    select r.id, 1 level
-    from roots r
-    join Pyramid p on p.PyramidId = r.id
-    where p.PyramidSpinoffParentId is null
-    union all
-    select r.id, so.level + 1 level
-    from roots r
-    join Pyramid p on p.PyramidId = r.id
-    join id2root i2r on p.PyramidSpinoffParentId = i2r.id
-    join so on so.id = i2r.root
+  declare @su int 
+  declare @repeat bit = 0
+  declare @calcResult int = 0
+  while 1 > 0
+  begin
+    delete from @process
+    select @repeat = 0
+
+    ;with roots as
+    (
+      select p.pyramidid id
+      from Pyramid p
+      where p.PyramidParentId is null
+    ), id2root as
+    (
+      select r.id id, r.id root
+      from roots r
+      union all
+      select p.PyramidId id, i2r.root
+      from Pyramid p
+      join id2root i2r on i2r.id = p.PyramidParentId
+    ), so as
+    (
+      select r.id, 1 level
+      from roots r
+      join Pyramid p on p.PyramidId = r.id
+      where p.PyramidSpinoffParentId is null
+      union all
+      select r.id, so.level + 1 level
+      from roots r
+      join Pyramid p on p.PyramidId = r.id
+      join id2root i2r on p.PyramidSpinoffParentId = i2r.id
+      join so on so.id = i2r.root
   
 
-  )
-  insert into @process (PyramidId)
-  select id from so order by level desc
+    )
+    insert into @process (PyramidId)
+    select id from so order by level desc
 
 
-  declare crs cursor for select Pyramidid from @process order by id
-  open crs
-  fetch next from crs into @su
-
-  while @@FETCH_STATUS=0 
-  begin
-    exec @calcResult = pCalcMyProfit @su
-    
-    if @calcResult = 1
-    begin
-      select @repeat = 1;
-      break;
-    end
-
+    declare crs cursor for select Pyramidid from @process order by id
+    open crs
     fetch next from crs into @su
+
+    while @@FETCH_STATUS=0 
+    begin
+      exec @calcResult = pCalcMyProfit @su
+    
+      if @calcResult = 1
+      begin
+        select @repeat = 1;
+        break;
+      end
+
+      fetch next from crs into @su
+    end
+    close crs
+    deallocate crs
+    if @repeat = 0 break
   end
-  close crs
-  deallocate crs
-  if @repeat = 0 break
+  
 end
+go
+
+if OBJECT_ID('pNewSpinoffs') is not null
+  drop procedure pNewSpinoffs
+go
+
+create procedure pNewSpinoffs as
+begin
+  update Pyramid 
+  set
+    PyramidSpinoffParentId = PyramidParentId,
+    PyramidParentId = null
+  where 
+    PyramidParentId is not null and
+    Prcnt = (select max(bs.BonusPercent) from BonusSize bs)
+  
+end
+go
+
+if OBJECT_ID('pFinishMonth') is not null
+  drop procedure pFinishMonth
+go
+
+create procedure pFinishMonth as
+begin
+  declare @year int = datepart(year, dateadd(month,-1,getdate()))
+  declare @month int = datepart(month, dateadd(month,-1,getdate()))
+
+  insert into ResultHistory(BpId, Month, Year, Sales, PBV, NBV, Bonus)
+  select bp.BPId, @month, @year,
+  isnull(
+    (select sum (total)
+    from vSalesTotal v
+    where Month(v.OnDate)=@month and Year(v.OnDate)=@year and v.SiteUserId=p.siteuserid)
+  ,0), p.PBV, p.FromOthers, p.SaleBonus
+  from Pyramid p
+  join BP on bp.SiteUserId = p.SiteUserId
+  
+  update Pyramid
+  set 
+    SaleBonus = 0,
+    PBV = 0,
+    Prcnt = 0,
+    ParentPrcnt = 0,
+    SoParentPrcnt = 0,
+    SoPrcnt = 0,
+    FromOthers = 0,
+    ToReceive = 0
+
+end
+go
+
 
 select * from Pyramid
 --exec pCalcMyProfit @su

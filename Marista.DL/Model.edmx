@@ -145,6 +145,7 @@
           <Property Name="SoPrcnt" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="FromOthers" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="ToReceive" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SaleBonus" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="RelatedProduct">
           <Key>
@@ -1203,6 +1204,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <NavigationProperty Name="Pyramid11" Relationship="MaristaModel.fk_Pyramid_PyramidSpinoffParentId" FromRole="Pyramid" ToRole="Pyramid1" />
           <NavigationProperty Name="Pyramid3" Relationship="MaristaModel.fk_Pyramid_PyramidSpinoffParentId" FromRole="Pyramid1" ToRole="Pyramid" />
           <NavigationProperty Name="SiteUser" Relationship="MaristaModel.fk_Pyramid_SiteUserId" FromRole="Pyramid" ToRole="SiteUser" />
+          <Property Name="SaleBonus" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
         </EntityType>
         <Association Name="fk_Pyramid_PyramidParentId">
           <End Type="MaristaModel.Pyramid" Role="Pyramid" Multiplicity="0..1" />
@@ -1671,6 +1673,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="Pyramids">
             <EntityTypeMapping TypeName="MaristaModel.Pyramid">
               <MappingFragment StoreEntitySet="Pyramid">
+                <ScalarProperty Name="SaleBonus" ColumnName="SaleBonus" />
                 <ScalarProperty Name="ToReceive" ColumnName="ToReceive" />
                 <ScalarProperty Name="FromOthers" ColumnName="FromOthers" />
                 <ScalarProperty Name="SoPrcnt" ColumnName="SoPrcnt" />
