@@ -69,6 +69,9 @@ namespace Marista.DL
                     cfg.CreateMap<vMicroinvest, MicroinvestVM>()
                         .ReverseMap();
 
+                    cfg.CreateMap<Sale, CheckoutVM>()
+                        .ReverseMap();
+
                 }
             );
 

@@ -177,6 +177,18 @@
           <Property Name="OnDate" Type="datetime" Nullable="false" />
           <Property Name="CouponId" Type="int" />
           <Property Name="DeliveryPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CustomerEmail" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CustomerPhone" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="BillingAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BillingCity" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="BillingZip" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="DeliveryAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DeliveryCity" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DeliveryZip" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="DeliveryCountryId" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="BillingCountryId" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SaleDetail">
           <Key>
@@ -556,6 +568,18 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Sale_BillingCountryId">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="BillingCountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Sale_CouponId">
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="0..1" />
           <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
@@ -577,6 +601,18 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Principal>
             <Dependent Role="Sale">
               <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Sale_DeliveryCountryId">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="DeliveryCountryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -785,12 +821,20 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             <End Role="BP" EntitySet="BP" />
             <End Role="ResultHistory" EntitySet="ResultHistory" />
           </AssociationSet>
+          <AssociationSet Name="fk_Sale_BillingCountryId" Association="Self.fk_Sale_BillingCountryId">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
           <AssociationSet Name="fk_Sale_CouponId" Association="Self.fk_Sale_CouponId">
             <End Role="Coupon" EntitySet="Coupon" />
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
           <AssociationSet Name="fk_Sale_CustomerId" Association="Self.fk_Sale_CustomerId">
             <End Role="Customer" EntitySet="Customer" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Sale_DeliveryCountryId" Association="Self.fk_Sale_DeliveryCountryId">
+            <End Role="Country" EntitySet="Country" />
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
           <AssociationSet Name="fk_SaleDetail_ProductId" Association="Self.fk_SaleDetail_ProductId">
@@ -962,6 +1006,14 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           </AssociationSet>
           <EntitySet Name="vBoikoes" EntityType="MaristaModel.vBoiko" />
           <EntitySet Name="vMicroinvests" EntityType="MaristaModel.vMicroinvest" />
+          <AssociationSet Name="fk_Sale_BillingCountryId" Association="MaristaModel.fk_Sale_BillingCountryId">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Sale_DeliveryCountryId" Association="MaristaModel.fk_Sale_DeliveryCountryId">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -1263,6 +1315,20 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <NavigationProperty Name="SaleDetails" Relationship="MaristaModel.fk_SaleDetail_SaleId" FromRole="Sale" ToRole="SaleDetail" />
           <NavigationProperty Name="Customer" Relationship="MaristaModel.fk_Sale_CustomerId" FromRole="Sale" ToRole="Customer" />
           <Property Name="DeliveryPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerEmail" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerPhone" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="BillingAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BillingCity" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="BillingZip" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryCity" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryZip" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryCountryId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="BillingCountryId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Country" Relationship="MaristaModel.fk_Sale_BillingCountryId" FromRole="Sale" ToRole="Country" />
+          <NavigationProperty Name="Country1" Relationship="MaristaModel.fk_Sale_DeliveryCountryId" FromRole="Sale" ToRole="Country" />
         </EntityType>
         <EntityType Name="SaleDetail">
           <Key>
@@ -1423,6 +1489,8 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="DeliveryPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <NavigationProperty Name="BPs" Relationship="MaristaModel.fk_BP_CountryId" FromRole="Country" ToRole="BP" />
           <NavigationProperty Name="Customers" Relationship="MaristaModel.fk_Customer_CountryId" FromRole="Country" ToRole="Customer" />
+          <NavigationProperty Name="Sales" Relationship="MaristaModel.fk_Sale_BillingCountryId" FromRole="Country" ToRole="Sale" />
+          <NavigationProperty Name="Sales1" Relationship="MaristaModel.fk_Sale_DeliveryCountryId" FromRole="Country" ToRole="Sale" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -1538,6 +1606,30 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="CountryName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Total" Type="Decimal" Precision="38" Scale="8" />
         </EntityType>
+        <Association Name="fk_Sale_BillingCountryId">
+          <End Type="MaristaModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="MaristaModel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="BillingCountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Sale_DeliveryCountryId">
+          <End Type="MaristaModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="MaristaModel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="DeliveryCountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1701,6 +1793,18 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="Sales">
             <EntityTypeMapping TypeName="MaristaModel.Sale">
               <MappingFragment StoreEntitySet="Sale">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="BillingCountryId" ColumnName="BillingCountryId" />
+                <ScalarProperty Name="DeliveryCountryId" ColumnName="DeliveryCountryId" />
+                <ScalarProperty Name="DeliveryZip" ColumnName="DeliveryZip" />
+                <ScalarProperty Name="DeliveryCity" ColumnName="DeliveryCity" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="BillingZip" ColumnName="BillingZip" />
+                <ScalarProperty Name="BillingCity" ColumnName="BillingCity" />
+                <ScalarProperty Name="BillingAddress" ColumnName="BillingAddress" />
+                <ScalarProperty Name="CustomerPhone" ColumnName="CustomerPhone" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="DeliveryPrice" ColumnName="DeliveryPrice" />
                 <ScalarProperty Name="CouponId" ColumnName="CouponId" />
                 <ScalarProperty Name="OnDate" ColumnName="OnDate" />

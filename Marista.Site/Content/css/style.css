@@ -20643,6 +20643,7 @@ html.filter-opened body .category-filter {
   height: 46px;
   line-height: 1;
   width: 100%;
+  font-family: Arial, Helvetica, sans-serif !important;
 }
 @media (max-width: 991px) {
   .input-field input[type="text"],
@@ -27314,7 +27315,29 @@ body .flex-control-paging li a.flex-active {
     font-size:18px !important;
 }
 
-.cat-filter{
+.cat-filter {
 	margin-left:20px;
-	
 }
+
+.woocommerce-checkout-review-order-table .product-quantity {
+	font-size: 22px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    

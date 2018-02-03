@@ -436,15 +436,29 @@ create table Sale
   OnDate datetime not null default getdate(),
   CouponId int null,
   DeliveryPrice decimal(10,2) not null default 0,
-
+  CustomerName nvarchar(200) not null,
+  CustomerEmail nvarchar(200) not null,
+  CustomerPhone nvarchar(200) not null,
+  BillingCountryId nvarchar(2) not null,
+  BillingAddress nvarchar(max) not null,
+  BillingCity nvarchar(200) not null,
+  BillingZip nvarchar(20) not null,
+  DeliveryCountryId nvarchar(2) not null,
+  DeliveryAddress nvarchar(max) not null,
+  DeliveryCity nvarchar(200) not null,
+  DeliveryZip nvarchar(20) not null,
+  Note nvarchar(max),
   constraint pk_SaleId primary key (SaleId),
   constraint fk_Sale_CustomerId foreign key (CustomerId) references Customer(CustomerId),
-  constraint fk_Sale_CouponId foreign key (CouponId) references Coupon(CouponId)
+  constraint fk_Sale_CouponId foreign key (CouponId) references Coupon(CouponId),
+  constraint fk_Sale_BillingCountryId foreign key (BillingCountryId) references Country(CountryId),
+  constraint fk_Sale_DeliveryCountryId foreign key (DeliveryCountryId) references Country(CountryId),
 )
 go
 
 exec p_ak_create_fk_indeces 'Sale'
 go
+
 
 
 if OBJECT_ID('SaleDetail') is not null

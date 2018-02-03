@@ -25,10 +25,24 @@ namespace Marista.DL
         public System.DateTime OnDate { get; set; }
         public Nullable<int> CouponId { get; set; }
         public decimal DeliveryPrice { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerEmail { get; set; }
+        public string CustomerPhone { get; set; }
+        public string BillingAddress { get; set; }
+        public string BillingCity { get; set; }
+        public string BillingZip { get; set; }
+        public string DeliveryAddress { get; set; }
+        public string DeliveryCity { get; set; }
+        public string DeliveryZip { get; set; }
+        public string DeliveryCountryId { get; set; }
+        public string BillingCountryId { get; set; }
+        public string Note { get; set; }
     
         public virtual Coupon Coupon { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SaleDetail> SaleDetails { get; set; }
         public virtual Customer Customer { get; set; }
+        public virtual Country Country { get; set; }
+        public virtual Country Country1 { get; set; }
     }
 }

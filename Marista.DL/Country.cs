@@ -19,6 +19,8 @@ namespace Marista.DL
         {
             this.BPs = new HashSet<BP>();
             this.Customers = new HashSet<Customer>();
+            this.Sales = new HashSet<Sale>();
+            this.Sales1 = new HashSet<Sale>();
         }
     
         public string CountryId { get; set; }
@@ -29,5 +31,9 @@ namespace Marista.DL
         public virtual ICollection<BP> BPs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer> Customers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sale> Sales { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sale> Sales1 { get; set; }
     }
 }
