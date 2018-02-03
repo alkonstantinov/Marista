@@ -71,6 +71,7 @@
     <Compile Include="BP.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="CheckOutService.cs" />
     <Compile Include="ReportService.cs" />
     <Compile Include="Country.cs">
       <DependentUpon>Model.tt</DependentUpon>

@@ -56,6 +56,7 @@
     <Compile Include="ViewModels\CartVM.cs" />
     <Compile Include="ViewModels\ChatItemVM.cs" />
     <Compile Include="ViewModels\ChatVM.cs" />
+    <Compile Include="ViewModels\CheckoutVM.cs" />
     <Compile Include="ViewModels\ConstantVM.cs" />
     <Compile Include="ViewModels\CouponVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="ViewModels\MicroinvestVM.cs" />
     <Compile Include="ViewModels\MyProfileReportVM.cs" />
     <Compile Include="ViewModels\MyTeamReportVM.cs" />
+    <Compile Include="ViewModels\NewCustomerVM.cs" />
     <Compile Include="ViewModels\ProductDiscountVM.cs" />
     <Compile Include="ViewModels\ProductVM.cs" />
     <Compile Include="ViewModels\PyramidResultVM.cs" />
