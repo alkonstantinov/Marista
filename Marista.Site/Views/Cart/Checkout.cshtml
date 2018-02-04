@@ -3,21 +3,22 @@
 @{
     ViewBag.Title = "Checkout";
 }
-
-<div id="main" class="column1">
-    <!-- main -->
-    <div class="container">
-        <div class="row">
-            <div class="main-content col-sm-12 col-md-12">
-                <!-- main content -->
-                <div id="content" class="site-content" role="main">
-                    <article id="post-1884" class="post-1884 page type-page status-publish hentry">
-                        <header class="entry-header">
-                            <h1 class="page-title">Checkout</h1>
-                        </header>
-                        <div class="entry-content">
-                            <div class="woocommerce">
-                                <form name="checkout" method="post" class="checkout woocommerce-checkout" action="#" enctype="multipart/form-data">
+@using (Html.BeginForm("Confirm", "Cart", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="main" class="column1">
+        <!-- main -->
+        <div class="container">
+            <div class="row">
+                <div class="main-content col-sm-12 col-md-12">
+                    <!-- main content -->
+                    <div id="content" class="site-content" role="main">
+                        <article id="post-1884" class="post-1884 page type-page status-publish hentry">
+                            <header class="entry-header">
+                                <h1 class="page-title">Checkout</h1>
+                            </header>
+                            <div class="entry-content">
+                                <div class="woocommerce">
                                     <div class="row">
                                         <div class="col-md-7 col-sm-6">
                                             <div class="col2-set" id="customer_details">
@@ -41,9 +42,9 @@
                                                             @Html.ValidationMessageFor(m => m.CustomerPhone, "", new { @class = "text-danger" })
                                                         </p>
                                                         <p class="form-row form-row form-row-first input-field validate-required validate-email" id="billing_email_field">
-                                                            <label for="billing_email" class=""><span class="fa fa-map-marker"></span>Address <abbr class="required" title="required">*</abbr></label>
-                                                            @Html.EditorFor(m => m.BillingAddress, new { @class = "input-text " })
-                                                            @Html.ValidationMessageFor(m => m.BillingAddress, "", new { @class = "text-danger", @onchange= "EqBillDeliv()" })
+                                                            <label for="billing_email" class=""><span class="fa fa-map-marker"></span>Address<abbr class="required" title="required">*</abbr></label>
+                                                            @Html.EditorFor(m => m.BillingAddress, new { @class = "input-text" })
+                                                            @Html.ValidationMessageFor(m => m.BillingAddress, "", new { @class = "text-danger" })
                                                         </p>
                                                         <p class="form-row form-row form-row-last input-field validate-required validate-phone" id="billing_phone_field">
                                                             <label for="billing_phone" class=""><span class="fa fa-building-o"></span>City <abbr class="required" title="required">*</abbr></label>
@@ -58,7 +59,7 @@
                                                         </p>
                                                         <p class="form-row form-row form-row-wide address-field input-field validate-required" id="billing_address_1_field">
                                                             <label for="billing_address_1" class=""><span class="fa fa-globe"></span>Country <abbr class="required" title="required">*</abbr></label>
-                                                            @Html.DropDownListFor(m => m.BillingCountryId, new SelectList(Model.Countries, "Value", "Text"), new { @class = "input-text ", @id = "cbBillingCountry", @onchange= "ChangeBillingCountry()" })
+                                                            @Html.DropDownListFor(m => m.BillingCountryId, new SelectList(Model.Countries, "Value", "Text"), new { @class = "input-text ", @id = "cbBillingCountry", @onchange = "ChangeBillingCountry()" })
                                                         </p>
                                                         <div class="clear"></div>
                                                     </div>
@@ -142,16 +143,17 @@
 
                                             </div>
                                         </div>
-                                </form>
+
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+}
 
 <script>
     function ChangeShipping() {
@@ -207,13 +209,27 @@
     function EqBillDeliv() {
         if ($("#cbDifferentShip").prop("checked"))
             return;
-        $("[name='DeliveryCountryId']").val($("[name='BillingCountryId']").val());
-        $("[name='DeliveryAddress']").val($("[name='BillingAddress']").val());
-        $("[name='DeliveryCity']").val($("[name='BillingCity']").val());
-        $("[name='DeliveryZip']").val($("[name='BillingZip']").val());
+
+        $("#cbDeliveryCountry").val($("#cbBillingCountry").val());
+        $("#DeliveryAddress").val($("#BillingAddress").val());
+        $("#DeliveryCity").val($("#BillingCity").val());
+        $("#DeliveryZip").val($("#BillingZip").val());
     }
 
     $(document).ready(function () {
         DisplayTotals();
+        $("#cbBillingCountry").keyup(function () {
+            EqBillDeliv();
+        });
+        $("#BillingAddress").keyup(function () {
+            EqBillDeliv();
+        });
+        $("#BillingCity").keyup(function () {
+            EqBillDeliv();
+        });
+        $("#BillingZip").keyup(function () {
+            EqBillDeliv();
+        });
+
     });
 </script>
