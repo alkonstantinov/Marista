@@ -19,6 +19,12 @@ namespace Marista.Common.ViewModels
         public decimal Discount { get; set; }
 
         public int Quantity { get; set; }
+
+        public decimal Total {
+            get {
+                return Price * Quantity * (100.0M - Discount) / 100.0M;
+            }
+        }
            
     }
 }

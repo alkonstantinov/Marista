@@ -1,66 +1,15 @@
 ﻿<div id="mini-cart" class="mini-cart dropdown">
-    <div class="dropdown-toggle cart-head" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="false">
+    <a href="/cart/index">
         <span class="cart-icon">
             <span class="glyphicon glyphicon-shopping-cart"></span>
         </span>
+
         <span class="cart-details">
             <span class="cart-items"><span id="sSmallCartItems">0</span> item(s)</span>
             <span class="mobile-hide"> - <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&euro;</span><span id="sSmallCartPrice">0</span></span></span>
         </span>
-    </div>
-    <div class="dropdown-menu">
-        <div class="block-content cart-content">
-            <div class="scroll-wrapper cart_list_wrap scrollbar-rail" style="position: relative;">
-                <div class="cart_list_wrap scrollbar-rail scroll-content" style="margin-bottom: 0px; margin-right: 0px;">
-                    <ul class="cart_list product_list_widget">
-                        <li>
-                            <a href="#" class="product-image">
-                                <img src="~/Content/images/products/product_01.png" class="">
-                            </a>
-                            <div class="product-details">
-                                <a href="#" class="product-name">Product 1</a>
-                                <span class="quantity">1 × <span class="amount"><span class="">$</span>9.00</span></span>
-                            </div>
-                            <a href="#" class="remove remove-product" title="Remove this item">×</a>
-                            <div class="ajax-loading"></div>
-                        </li>
-                        <li>
-                            <a href="#" class="product-image">
-                                <img width="128" height="128" src="~/Content/images/products/product_01.png" class="">
-                            </a>
-                            <div class="product-details">
-                                <a href="#" class="product-name">Product 1</a>
-                                <span class="quantity">1 × <span class="amount"><span class="">$</span>9.00</span></span>
-                            </div>
-                            <a href="#" class="remove remove-product" title="Remove this item">×</a>
-                            <div class="ajax-loading"></div>
-                        </li>
-                        <li>
-                            <a href="#" class="product-image">
-                                <img width="128" height="128" src=" ~/Content/images/products/product_01.png" class="">
-                            </a>
-                            <div class="product-details">
-                                <a href="#" class="product-name">Product 1</a>
-                                <span class="quantity">1 × <span class="amount"><span class="">$</span>9.00</span></span>
-                            </div>
-                            <a href="#" class="remove remove-product" title="Remove this item">×</a>
-                            <div class="ajax-loading"></div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="minicart-actions clearfix">
-                <div class="total">
-                    <span class="total-label">Subtotal: </span>
-                    <span class="amount"><span class="amount"><span class="">$</span>9.00</span></span>
-                </div>
-                <div class="buttons">
-                    <a class="button btn-special cart-link" href="#">Cart</a>
-                    <a class="button checkout-link" href="#">Checkout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    </a>
 </div>
 <script>
     function UpdateSmallCart() {
@@ -75,7 +24,7 @@
 
         }).fail(function (jqXHR, textStatus) {
             alert(jqXHR);
-            });
+        });
 
         $("#sSmallCartItems").text(result.ItemsCount);
         $("#sSmallCartPrice").text(result.Price.toFixed(2));

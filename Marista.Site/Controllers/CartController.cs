@@ -118,7 +118,20 @@ namespace Marista.Site.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        
+        public ActionResult Checkout()
+        {
+            int customerId = -1;
+            if (Session["CustomerId"] != null)
+                customerId = (int)Session["CustomerId"];
+            var model = db.GetLastCheckoutData(customerId);
+            model.Countries = db.GetCountries();
+            CartVM cart = (CartVM)Session["Cart"];
+            model.BillingCountryId = cart.CountryId;
+            model.DeliveryCountryId = cart.CountryId;
+            model.Details = cart.Products;
+            model.DeliveryPrice = cart.CountryPrice;
+            return View(model);
+        }
        
 
     }
