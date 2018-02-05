@@ -22,10 +22,10 @@ namespace Marista.Common.ViewModels
         [Display(Name = "Customer name"), Required]
         public string CustomerName { get; set; }
 
-        [Display(Name = "eMail"), Required]
+        [Display(Name = "eMail"), Required, EmailAddress]
         public string CustomerEmail { get; set; }
 
-        [Display(Name = "Phone"), Required, EmailAddress]
+        [Display(Name = "Phone"), Required]
         public string CustomerPhone { get; set; }
 
         public string BillingCountryId { get; set; }

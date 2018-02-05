@@ -106,14 +106,14 @@ namespace Marista.Site.Controllers
         {
             SmallCartInfoVM result = new SmallCartInfoVM();
             if (Session["Cart"] != null)
-            { 
-                
-            CartVM cart = (CartVM)Session["Cart"];
-            foreach (var p in cart.Products)
             {
+
+                CartVM cart = (CartVM)Session["Cart"];
+                foreach (var p in cart.Products)
+                {
                     result.ItemsCount += p.Quantity;
                     result.Price += p.Price * p.Quantity * (100 - p.Discount) / 100;
-            }
+                }
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -132,7 +132,66 @@ namespace Marista.Site.Controllers
             model.DeliveryPrice = cart.CountryPrice;
             return View(model);
         }
-       
+
+        [HttpPost]
+        public ActionResult Checkout(CheckoutVM model)
+        {
+            model.Countries = db.GetCountries();
+            CartVM cart = (CartVM)Session["Cart"];
+            model.Details = cart.Products;
+            model.DeliveryPrice = db.GetCountryDeliveryPrice(model.DeliveryCountryId);
+            if (!ModelState.IsValid)
+                return View(model);
+            if (Session["CustomerId"] == null && db.CustomerExists(model.CustomerEmail))
+            {
+                ViewBag.EmailUsed = true;
+                return View(model);
+
+            }
+
+
+            return RedirectToAction("Pay", model);
+        }
+
+        public ActionResult Pay(CheckoutVM model)
+        {
+            model.Countries = db.GetCountries();
+            CartVM cart = (CartVM)Session["Cart"];
+            model.Details = cart.Products;
+            model.DeliveryPrice = db.GetCountryDeliveryPrice(model.DeliveryCountryId);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult SaveOrder(CheckoutVM model)
+        {
+            CartVM cart = (CartVM)Session["Cart"];
+            model.Details = cart.Products;
+            model.DeliveryPrice = db.GetCountryDeliveryPrice(model.DeliveryCountryId);
+            if (!string.IsNullOrEmpty(cart.CouponUniqueId))
+                model.CouponId = db.GetCouponInfo(cart.CouponUniqueId).CouponId;
+            Session.Remove("Cart");
+            if (Session["CustomerId"] == null)
+            {
+                var customerData = db.CreateCustomer(model);
+                string content = System.IO.File.ReadAllText(Server.MapPath("/Mails/newuser.txt"));
+                content = content.Replace("{username}", model.CustomerEmail);
+                content = content.Replace("{password}", customerData.Password);
+
+                new Common.Tools.Mailer().SendMailSpecific(
+                content,
+                model.CustomerEmail,
+                "Your user is created"
+                );
+
+                Session["CustomerId"] = customerData.CustomerId;
+            }
+
+
+
+            model.CustomerId = (int)Session["CustomerId"];
+            db.SaveSale(model);
+            return RedirectToAction("Index", "Home");
+        }
 
     }
 }

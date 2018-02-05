@@ -10,6 +10,9 @@ namespace Marista.Common.ViewModels
     {
         public int SaleDetailId { get; set; }
 
+        public int SaleId { get; set; }
+
+
         public int ProductId { get; set; }
 
         public string ProductName { get; set; }

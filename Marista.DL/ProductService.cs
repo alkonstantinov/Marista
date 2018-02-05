@@ -188,11 +188,38 @@ namespace Marista.DL
         public void SaveSale(CheckoutVM model)
         {
             Sale s = _map.Map<Sale>(model);
+            s.OnDate = DateTime.Now;
             db.Sales.Add(s);
             db.SaveChanges();
             int saleId = s.SaleId;
+            decimal PBV = 0;
+            decimal SalesBonus = 0;
+
             foreach (var sd in model.Details)
-                db.SaleDetails.Add(_map.Map<SaleDetail>(sd));
+            {
+                sd.SaleId = saleId;
+                var item =  new SaleDetail()
+                {
+                    ProductId = sd.ProductId,
+                    Discount = sd.Discount,
+                    Price = sd.Price,
+                    Quantity = sd.Quantity,
+                    SaleId = saleId
+                };
+                db.SaleDetails.Add(item);
+                PBV += sd.Price * sd.Quantity;
+                SalesBonus += sd.Price * sd.Quantity * (23.0M - sd.Discount) / 100.0M;
+                //db.SaveChanges();
+            }
+            if (model.CouponId.HasValue)
+            {
+                var co = db.Coupons.First(c => c.CouponId == model.CouponId.Value);
+                var py = db.Pyramids.First(item => item.SiteUserId == co.SiteUserId);
+                
+                py.SaleBonus += SalesBonus;
+                py.PBV += PBV;
+            }
+
             db.SaveChanges();
 
 
