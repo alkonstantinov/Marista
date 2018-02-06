@@ -18,6 +18,20 @@ namespace Marista.Site.Controllers
             return PartialView();
         }
 
+        private decimal GetDeliveryPrice(string countryId)
+        {
+            CartVM cart = (CartVM)Session["Cart"];
+            decimal weight = 0;
+            decimal price = 0;
+            foreach (var d in cart.Products)
+            {
+                weight += d.TotalWeight;
+                price += d.Total;
+            }
+            return price <= 80 ? db.GetCountryDeliveryPrice(countryId, weight) : 0;
+
+        }
+
         public ActionResult ChangeAmmount(int productId, int step)
         {
             CartVM cart = (CartVM)Session["Cart"];
@@ -45,11 +59,13 @@ namespace Marista.Site.Controllers
             return Json("ok", JsonRequestBehavior.AllowGet);
         }
 
+
+
         public ActionResult ChangeCountry(string countryId)
         {
             CartVM cart = (CartVM)Session["Cart"];
             cart.CountryId = countryId;
-            cart.CountryPrice = db.GetCountryDeliveryPrice(cart.CountryId);
+            cart.CountryPrice = GetDeliveryPrice(cart.CountryId);
 
             return Json(cart.CountryPrice, JsonRequestBehavior.AllowGet);
         }
@@ -97,7 +113,7 @@ namespace Marista.Site.Controllers
                 cart = (CartVM)Session["Cart"];
             cart.Countries = db.GetCountries();
             cart.CountryId = "bg";
-            cart.CountryPrice = db.GetCountryDeliveryPrice(cart.CountryId);
+            cart.CountryPrice = GetDeliveryPrice(cart.CountryId);
 
             return View(cart);
         }
@@ -139,7 +155,7 @@ namespace Marista.Site.Controllers
             model.Countries = db.GetCountries();
             CartVM cart = (CartVM)Session["Cart"];
             model.Details = cart.Products;
-            model.DeliveryPrice = db.GetCountryDeliveryPrice(model.DeliveryCountryId);
+            model.DeliveryPrice = GetDeliveryPrice(model.DeliveryCountryId);
             if (!ModelState.IsValid)
                 return View(model);
             if (Session["CustomerId"] == null && db.CustomerExists(model.CustomerEmail))
@@ -158,7 +174,7 @@ namespace Marista.Site.Controllers
             model.Countries = db.GetCountries();
             CartVM cart = (CartVM)Session["Cart"];
             model.Details = cart.Products;
-            model.DeliveryPrice = db.GetCountryDeliveryPrice(model.DeliveryCountryId);
+            model.DeliveryPrice = GetDeliveryPrice(model.DeliveryCountryId);
             return View(model);
         }
         [HttpPost]
@@ -166,7 +182,7 @@ namespace Marista.Site.Controllers
         {
             CartVM cart = (CartVM)Session["Cart"];
             model.Details = cart.Products;
-            model.DeliveryPrice = db.GetCountryDeliveryPrice(model.DeliveryCountryId);
+            model.DeliveryPrice = GetDeliveryPrice(model.DeliveryCountryId);
             if (!string.IsNullOrEmpty(cart.CouponUniqueId))
                 model.CouponId = db.GetCouponInfo(cart.CouponUniqueId).CouponId;
             Session.Remove("Cart");

@@ -150,9 +150,11 @@ namespace Marista.DL
 
         }
 
-        public decimal GetCountryDeliveryPrice(string countryId)
+        public decimal GetCountryDeliveryPrice(string countryId, decimal weight)
         {
-            return db.Countries.First(c => c.CountryId == countryId).DeliveryPrice;
+            var country = db.Countries.First(c => c.CountryId == countryId);
+
+            return db.CountryDeliveries.First(cd => cd.CountryTypeId == country.CountryTypeId && cd.FromWeight <= weight && cd.ToWeight >= weight).Price.Value;
         }
 
         public CouponVM GetCouponInfo(string uniqueId)
@@ -198,7 +200,7 @@ namespace Marista.DL
             foreach (var sd in model.Details)
             {
                 sd.SaleId = saleId;
-                var item =  new SaleDetail()
+                var item = new SaleDetail()
                 {
                     ProductId = sd.ProductId,
                     Discount = sd.Discount,
@@ -215,7 +217,7 @@ namespace Marista.DL
             {
                 var co = db.Coupons.First(c => c.CouponId == model.CouponId.Value);
                 var py = db.Pyramids.First(item => item.SiteUserId == co.SiteUserId);
-                
+
                 py.SaleBonus += SalesBonus;
                 py.PBV += PBV;
             }
@@ -232,7 +234,7 @@ namespace Marista.DL
         }
         public CheckoutVM GetLastCheckoutData(int customerId)
         {
-            var sale = db.Sales.Where(s => s.CustomerId == customerId).OrderByDescending(s=>s.SaleId).FirstOrDefault();
+            var sale = db.Sales.Where(s => s.CustomerId == customerId).OrderByDescending(s => s.SaleId).FirstOrDefault();
             if (sale == null)
                 return new CheckoutVM();
             return _map.Map<CheckoutVM>(sale);

@@ -120,6 +120,7 @@ create table Product
   Barcode nvarchar(20) not null default '',
   Available int not null default 0,
   MinQuantity int not null default 0,
+  Weight decimal(10,2) not null default 0,
   constraint pk_ProductId primary key (ProductId),
   constraint fk_Product_VCategoryId foreign key (VCategoryId) references VCategory(VCategoryId),
   constraint fk_Product_HCategoryId foreign key (HCategoryId) references HCategory(HCategoryId)
@@ -346,27 +347,45 @@ go
 exec p_ak_create_fk_indeces 'MarketingMaterial'
 go
 
+if OBJECT_ID('CountryType') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'CountryType'
+  drop table CountryType
+end
+go
+create table CountryType
+(
+  CountryTypeId int not null,
+  CountryTypeName nvarchar(200) not null,
+  constraint pk_CountryTypeId primary key (CountryTypeId)
+)
+go
 
+exec p_ak_create_fk_indeces 'CountryType'
+go
+insert into CountryType(CountryTypeId, CountryTypeName)
+values (1,'България'), (2,'Съседни държави'),(3,'Европейски държави'), (4,'Извъневропейски държави')
+go
 if OBJECT_ID('Country') is not null
 begin
   exec p_ak_drop_all_foreign_keys 'Country'
   drop table Country
 end
 go
-
 create table Country
 (
   CountryId nvarchar(2) not null,
   CountryName nvarchar(200) not null,
-  DeliveryPrice decimal(10,2) not null,
-  constraint pk_CountryId primary key (CountryId)
+  CountryTypeId int not null
+  constraint pk_CountryId primary key (CountryId),
+  constraint fk_country_CountryTypeId foreign key (CountryTypeId) references CountryType(CountryTypeId)
 )
 go
 
 exec p_ak_create_fk_indeces 'Country'
 go
-
-insert into Country(CountryId, CountryName, DeliveryPrice) values ('bg', 'Bulgaria', 5), ('de', 'Germany', 7)
+  
+insert into Country(CountryId, CountryName, CountryTypeId) values ('bg', 'Bulgaria', 1), ('de', 'Germany', 3)
 go
 
 if OBJECT_ID('BP') is not null
@@ -511,3 +530,25 @@ go
 exec p_ak_create_fk_indeces 'ResultHistory'
 go
 
+
+if OBJECT_ID('CountryDelivery') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'CountryDelivery'
+  drop table CountryDelivery
+end
+go
+create table CountryDelivery
+(
+  CountryDeliveryId int identity(1,1) not null,
+  CountryTypeId int not null,
+  FromWeight decimal(10,2),
+  ToWeight decimal (10,2),
+  Price decimal(10,2),
+  constraint pk_CountryDeliveryId primary key (CountryDeliveryId),
+  constraint fk_CountryDelivery_CountryTypeId foreign key (CountryTypeId) references CountryType(CountryTypeId)
+)
+go
+
+insert into CountryDelivery(CountryTypeId,FromWeight, ToWeight,Price)
+values (1,0,10000,2), (3,0,10000,7)
+go

@@ -72,6 +72,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="CheckOutService.cs" />
+    <Compile Include="CountryDelivery.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CountryType.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="ReportService.cs" />
     <Compile Include="Country.cs">
       <DependentUpon>Model.tt</DependentUpon>

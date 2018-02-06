@@ -34,6 +34,7 @@ namespace Marista.DL
         public string Barcode { get; set; }
         public int Available { get; set; }
         public int MinQuantity { get; set; }
+        public decimal Weight { get; set; }
     
         public virtual HCategory HCategory { get; set; }
         public virtual VCategory VCategory { get; set; }

@@ -48,10 +48,12 @@ namespace Marista.DL
         public virtual DbSet<vBonus> vBonuses { get; set; }
         public virtual DbSet<v3MonthsBonuses> v3MonthsBonuses { get; set; }
         public virtual DbSet<BP> BPs { get; set; }
-        public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<ResultHistory> ResultHistories { get; set; }
         public virtual DbSet<vBoiko> vBoikoes { get; set; }
         public virtual DbSet<vMicroinvest> vMicroinvests { get; set; }
+        public virtual DbSet<CountryDelivery> CountryDeliveries { get; set; }
+        public virtual DbSet<CountryType> CountryTypes { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
     }
 }

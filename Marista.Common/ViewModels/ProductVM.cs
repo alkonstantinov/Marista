@@ -54,5 +54,9 @@ namespace Marista.Common.ViewModels
         [Display(Name = "Minimum Available Quantity")]
         public int MinQuantity { get; set; }
 
+        [Required]
+        [Display(Name = "Weight")]
+        public decimal Weight { get; set; }
+
     }
 }

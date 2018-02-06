@@ -58,7 +58,8 @@ namespace Marista.Site.Controllers
                     ProductId = productId,
                     Discount = 0,
                     ProductName = product.Name,
-                    Quantity = 1
+                    Quantity = 1,
+                    Weight = product.Weight
                 };
                 cart.Products.Add(detail);
             }

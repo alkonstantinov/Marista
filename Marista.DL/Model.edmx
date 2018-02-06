@@ -61,7 +61,24 @@
           </Key>
           <Property Name="CountryId" Type="nvarchar" MaxLength="2" Nullable="false" />
           <Property Name="CountryName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="DeliveryPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CountryTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CountryDelivery">
+          <Key>
+            <PropertyRef Name="CountryDeliveryId" />
+          </Key>
+          <Property Name="CountryDeliveryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryTypeId" Type="int" Nullable="false" />
+          <Property Name="FromWeight" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ToWeight" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="CountryType">
+          <Key>
+            <PropertyRef Name="CountryTypeId" />
+          </Key>
+          <Property Name="CountryTypeId" Type="int" Nullable="false" />
+          <Property Name="CountryTypeName" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="Coupon">
           <Key>
@@ -129,6 +146,7 @@
           <Property Name="Barcode" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Available" Type="int" Nullable="false" />
           <Property Name="MinQuantity" Type="int" Nullable="false" />
+          <Property Name="Weight" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Pyramid">
           <Key>
@@ -412,6 +430,30 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_country_CountryTypeId">
+          <End Role="CountryType" Type="Self.CountryType" Multiplicity="1" />
+          <End Role="Country" Type="Self.Country" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CountryType">
+              <PropertyRef Name="CountryTypeId" />
+            </Principal>
+            <Dependent Role="Country">
+              <PropertyRef Name="CountryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CountryDelivery_CountryTypeId">
+          <End Role="CountryType" Type="Self.CountryType" Multiplicity="1" />
+          <End Role="CountryDelivery" Type="Self.CountryDelivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CountryType">
+              <PropertyRef Name="CountryTypeId" />
+            </Principal>
+            <Dependent Role="CountryDelivery">
+              <PropertyRef Name="CountryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Coupon_HCategoryId">
           <End Role="HCategory" Type="Self.HCategory" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
@@ -659,6 +701,8 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySet Name="ChatItem" EntityType="Self.ChatItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Constant" EntityType="Self.Constant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CountryDelivery" EntityType="Self.CountryDelivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CountryType" EntityType="Self.CountryType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HCategory" EntityType="Self.HCategory" Schema="dbo" store:Type="Tables" />
@@ -768,6 +812,14 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <AssociationSet Name="fk_ChatItem_SiteUserId" Association="Self.fk_ChatItem_SiteUserId">
             <End Role="SiteUser" EntitySet="SiteUser" />
             <End Role="ChatItem" EntitySet="ChatItem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_country_CountryTypeId" Association="Self.fk_country_CountryTypeId">
+            <End Role="CountryType" EntitySet="CountryType" />
+            <End Role="Country" EntitySet="Country" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CountryDelivery_CountryTypeId" Association="Self.fk_CountryDelivery_CountryTypeId">
+            <End Role="CountryType" EntitySet="CountryType" />
+            <End Role="CountryDelivery" EntitySet="CountryDelivery" />
           </AssociationSet>
           <AssociationSet Name="fk_Coupon_HCategoryId" Association="Self.fk_Coupon_HCategoryId">
             <End Role="HCategory" EntitySet="HCategory" />
@@ -981,13 +1033,8 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySet Name="vBonuses" EntityType="MaristaModel.vBonus" />
           <EntitySet Name="v3MonthsBonuses" EntityType="MaristaModel.v3MonthsBonuses" />
           <EntitySet Name="BPs" EntityType="MaristaModel.BP" />
-          <EntitySet Name="Countries" EntityType="MaristaModel.Country" />
           <EntitySet Name="Customers" EntityType="MaristaModel.Customer" />
           <EntitySet Name="ResultHistories" EntityType="MaristaModel.ResultHistory" />
-          <AssociationSet Name="fk_BP_CountryId" Association="MaristaModel.fk_BP_CountryId">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="BP" EntitySet="BPs" />
-          </AssociationSet>
           <AssociationSet Name="fk_BP_SiteUserId" Association="MaristaModel.fk_BP_SiteUserId">
             <End Role="SiteUser" EntitySet="SiteUsers" />
             <End Role="BP" EntitySet="BPs" />
@@ -996,16 +1043,31 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             <End Role="BP" EntitySet="BPs" />
             <End Role="ResultHistory" EntitySet="ResultHistories" />
           </AssociationSet>
-          <AssociationSet Name="fk_Customer_CountryId" Association="MaristaModel.fk_Customer_CountryId">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="Customer" EntitySet="Customers" />
-          </AssociationSet>
           <AssociationSet Name="fk_Sale_CustomerId" Association="MaristaModel.fk_Sale_CustomerId">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Sale" EntitySet="Sales" />
           </AssociationSet>
           <EntitySet Name="vBoikoes" EntityType="MaristaModel.vBoiko" />
           <EntitySet Name="vMicroinvests" EntityType="MaristaModel.vMicroinvest" />
+          <EntitySet Name="CountryDeliveries" EntityType="MaristaModel.CountryDelivery" />
+          <EntitySet Name="CountryTypes" EntityType="MaristaModel.CountryType" />
+          <AssociationSet Name="fk_CountryDelivery_CountryTypeId" Association="MaristaModel.fk_CountryDelivery_CountryTypeId">
+            <End Role="CountryType" EntitySet="CountryTypes" />
+            <End Role="CountryDelivery" EntitySet="CountryDeliveries" />
+          </AssociationSet>
+          <EntitySet Name="Countries" EntityType="MaristaModel.Country" />
+          <AssociationSet Name="fk_BP_CountryId" Association="MaristaModel.fk_BP_CountryId">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="BP" EntitySet="BPs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_country_CountryTypeId" Association="MaristaModel.fk_country_CountryTypeId">
+            <End Role="CountryType" EntitySet="CountryTypes" />
+            <End Role="Country" EntitySet="Countries" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Customer_CountryId" Association="MaristaModel.fk_Customer_CountryId">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
           <AssociationSet Name="fk_Sale_BillingCountryId" Association="MaristaModel.fk_Sale_BillingCountryId">
             <End Role="Country" EntitySet="Countries" />
             <End Role="Sale" EntitySet="Sales" />
@@ -1053,6 +1115,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="Barcode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Available" Type="Int32" Nullable="false" />
           <Property Name="MinQuantity" Type="Int32" Nullable="false" />
+          <Property Name="Weight" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="SOBonusSize">
           <Key>
@@ -1476,21 +1539,9 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="Files" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="FileName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Country" Relationship="MaristaModel.fk_BP_CountryId" FromRole="BP" ToRole="Country" />
           <NavigationProperty Name="SiteUser" Relationship="MaristaModel.fk_BP_SiteUserId" FromRole="BP" ToRole="SiteUser" />
           <NavigationProperty Name="ResultHistories" Relationship="MaristaModel.fk_ResultHistory_BPId" FromRole="BP" ToRole="ResultHistory" />
-        </EntityType>
-        <EntityType Name="Country">
-          <Key>
-            <PropertyRef Name="CountryId" />
-          </Key>
-          <Property Name="CountryId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DeliveryPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <NavigationProperty Name="BPs" Relationship="MaristaModel.fk_BP_CountryId" FromRole="Country" ToRole="BP" />
-          <NavigationProperty Name="Customers" Relationship="MaristaModel.fk_Customer_CountryId" FromRole="Country" ToRole="Customer" />
-          <NavigationProperty Name="Sales" Relationship="MaristaModel.fk_Sale_BillingCountryId" FromRole="Country" ToRole="Sale" />
-          <NavigationProperty Name="Sales1" Relationship="MaristaModel.fk_Sale_DeliveryCountryId" FromRole="Country" ToRole="Sale" />
+          <NavigationProperty Name="Country" Relationship="MaristaModel.fk_BP_CountryId" FromRole="BP" ToRole="Country" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -1502,9 +1553,9 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CountryId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Country" Relationship="MaristaModel.fk_Customer_CountryId" FromRole="Customer" ToRole="Country" />
           <NavigationProperty Name="Sales" Relationship="MaristaModel.fk_Sale_CustomerId" FromRole="Customer" ToRole="Sale" />
           <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Country" Relationship="MaristaModel.fk_Customer_CountryId" FromRole="Customer" ToRole="Country" />
         </EntityType>
         <EntityType Name="ResultHistory">
           <Key>
@@ -1520,18 +1571,6 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="Bonus" Type="Decimal" Precision="10" Scale="2" />
           <NavigationProperty Name="BP" Relationship="MaristaModel.fk_ResultHistory_BPId" FromRole="ResultHistory" ToRole="BP" />
         </EntityType>
-        <Association Name="fk_BP_CountryId">
-          <End Type="MaristaModel.Country" Role="Country" Multiplicity="1" />
-          <End Type="MaristaModel.BP" Role="BP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="CountryId" />
-            </Principal>
-            <Dependent Role="BP">
-              <PropertyRef Name="CountryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_BP_SiteUserId">
           <End Type="MaristaModel.SiteUser" Role="SiteUser" Multiplicity="1" />
           <End Type="MaristaModel.BP" Role="BP" Multiplicity="*" />
@@ -1553,18 +1592,6 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Principal>
             <Dependent Role="ResultHistory">
               <PropertyRef Name="BpId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_Customer_CountryId">
-          <End Type="MaristaModel.Country" Role="Country" Multiplicity="1" />
-          <End Type="MaristaModel.Customer" Role="Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="CountryId" />
-            </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="CountryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1606,6 +1633,87 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="CountryName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Total" Type="Decimal" Precision="38" Scale="8" />
         </EntityType>
+        <EntityType Name="CountryDelivery">
+          <Key>
+            <PropertyRef Name="CountryDeliveryId" />
+          </Key>
+          <Property Name="CountryDeliveryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryTypeId" Type="Int32" Nullable="false" />
+          <Property Name="FromWeight" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ToWeight" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="CountryType" Relationship="MaristaModel.fk_CountryDelivery_CountryTypeId" FromRole="CountryDelivery" ToRole="CountryType" />
+        </EntityType>
+        <EntityType Name="CountryType">
+          <Key>
+            <PropertyRef Name="CountryTypeId" />
+          </Key>
+          <Property Name="CountryTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CountryTypeName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CountryDeliveries" Relationship="MaristaModel.fk_CountryDelivery_CountryTypeId" FromRole="CountryType" ToRole="CountryDelivery" />
+          <NavigationProperty Name="Countries" Relationship="MaristaModel.fk_country_CountryTypeId" FromRole="CountryType" ToRole="Country" />
+        </EntityType>
+        <Association Name="fk_CountryDelivery_CountryTypeId">
+          <End Type="MaristaModel.CountryType" Role="CountryType" Multiplicity="1" />
+          <End Type="MaristaModel.CountryDelivery" Role="CountryDelivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CountryType">
+              <PropertyRef Name="CountryTypeId" />
+            </Principal>
+            <Dependent Role="CountryDelivery">
+              <PropertyRef Name="CountryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CountryTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BPs" Relationship="MaristaModel.fk_BP_CountryId" FromRole="Country" ToRole="BP" />
+          <NavigationProperty Name="CountryType" Relationship="MaristaModel.fk_country_CountryTypeId" FromRole="Country" ToRole="CountryType" />
+          <NavigationProperty Name="Customers" Relationship="MaristaModel.fk_Customer_CountryId" FromRole="Country" ToRole="Customer" />
+          <NavigationProperty Name="Sales" Relationship="MaristaModel.fk_Sale_BillingCountryId" FromRole="Country" ToRole="Sale" />
+          <NavigationProperty Name="Sales1" Relationship="MaristaModel.fk_Sale_DeliveryCountryId" FromRole="Country" ToRole="Sale" />
+        </EntityType>
+        <Association Name="fk_BP_CountryId">
+          <End Type="MaristaModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="MaristaModel.BP" Role="BP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="BP">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_country_CountryTypeId">
+          <End Type="MaristaModel.CountryType" Role="CountryType" Multiplicity="1" />
+          <End Type="MaristaModel.Country" Role="Country" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CountryType">
+              <PropertyRef Name="CountryTypeId" />
+            </Principal>
+            <Dependent Role="Country">
+              <PropertyRef Name="CountryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Customer_CountryId">
+          <End Type="MaristaModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="MaristaModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Sale_BillingCountryId">
           <End Type="MaristaModel.Country" Role="Country" Multiplicity="1" />
           <End Type="MaristaModel.Sale" Role="Sale" Multiplicity="*" />
@@ -1675,6 +1783,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="MaristaModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
                 <ScalarProperty Name="MinQuantity" ColumnName="MinQuantity" />
                 <ScalarProperty Name="Available" ColumnName="Available" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
@@ -1911,15 +2020,6 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Countries">
-            <EntityTypeMapping TypeName="MaristaModel.Country">
-              <MappingFragment StoreEntitySet="Country">
-                <ScalarProperty Name="DeliveryPrice" ColumnName="DeliveryPrice" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="MaristaModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
@@ -1966,6 +2066,34 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="OnDate" ColumnName="OnDate" />
                 <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CountryDeliveries">
+            <EntityTypeMapping TypeName="MaristaModel.CountryDelivery">
+              <MappingFragment StoreEntitySet="CountryDelivery">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ToWeight" ColumnName="ToWeight" />
+                <ScalarProperty Name="FromWeight" ColumnName="FromWeight" />
+                <ScalarProperty Name="CountryTypeId" ColumnName="CountryTypeId" />
+                <ScalarProperty Name="CountryDeliveryId" ColumnName="CountryDeliveryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CountryTypes">
+            <EntityTypeMapping TypeName="MaristaModel.CountryType">
+              <MappingFragment StoreEntitySet="CountryType">
+                <ScalarProperty Name="CountryTypeName" ColumnName="CountryTypeName" />
+                <ScalarProperty Name="CountryTypeId" ColumnName="CountryTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="MaristaModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="CountryTypeId" ColumnName="CountryTypeId" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

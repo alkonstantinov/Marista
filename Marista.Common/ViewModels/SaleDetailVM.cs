@@ -23,11 +23,23 @@ namespace Marista.Common.ViewModels
 
         public int Quantity { get; set; }
 
-        public decimal Total {
-            get {
+        public decimal Weight { get; set; }
+
+        public decimal TotalWeight
+        {
+            get
+            {
+                return Weight * Quantity;
+            }
+        }
+
+        public decimal Total
+        {
+            get
+            {
                 return Price * Quantity * (100.0M - Discount) / 100.0M;
             }
         }
-           
+
     }
 }
