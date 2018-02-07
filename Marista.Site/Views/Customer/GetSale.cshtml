@@ -1,0 +1,146 @@
+﻿@model Marista.Common.ViewModels.CheckoutVM
+
+@{
+    ViewBag.Title = "GetSale";
+}
+<div class="breadcrumbs">
+    <!-- breadcrumbs -->
+    <div class="container">
+        <ul>
+            <li>
+                <a class="home" href="#">Home</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                <a href="shop.html">E-shop</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                My Account
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div id="main" class="column1">
+    <!-- main -->
+    <div class="container">
+        <div class="row">
+            <div class="main-content col-sm-12 col-md-12">
+                <!-- main content -->
+                <div id="content" class="site-content" role="main">
+                    <article class="page type-page status-publish hentry">
+                        <header class="entry-header">
+                            <h1 class="page-title">Orders</h1>
+                        </header>
+                        <div class="entry-content">
+                            <div class="woocommerce">
+                                <nav class="woocommerce-MyAccount-navigation">
+                                    <ul>
+                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard">
+                                            <a href="my_account.html">Dashboard</a>
+                                        </li>
+                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--orders is-active">
+                                            <a href="my_account_orders.html">Orders</a>
+                                        </li>
+                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-address">
+                                            <a href="my_account_addresses.html">Addresses</a>
+                                        </li>
+                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account">
+                                            <a href="my_account_details.html">Account Details</a>
+                                        </li>
+                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
+                                            <a href="#">Logout</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div class="woocommerce-MyAccount-content">
+                                    <p>Order #<mark class="order-number">@Model.SaleId</mark> was placed on <mark class="order-date">@Model.OnDate.ToShortDateString()</mark> and is currently <mark class="order-status">On Hold</mark>.</p>
+                                    <h2 class="m-t-lg">Order Details</h2>
+                                    <table class="shop_table order_details">
+                                        <thead>
+                                            <tr>
+                                                <th class="product-name">Product</th>
+                                                <th class="product-total">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var sd in Model.Details)
+                                            {
+                                                <tr class="order_item">
+                                                    <td class="product-name">
+                                                        <a href="/product/view?prdouctid=@sd.ProductId">@sd.ProductName</a> <strong class="product-quantity">× @sd.Quantity</strong>
+                                                    </td>
+                                                    <td class="product-total">
+                                                        <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&euro;</span>@sd.Total.ToString("0.##")</span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th scope="row">Subtotal:</th>
+                                                <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&euro;</span>@Model.SubTotal.ToString("0.##")</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Shipping:</th>
+                                                <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&euro;</span>@Model.DeliveryPrice.ToString("0.##")</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Total:</th>
+                                                <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&euro;</span>@Convert.ToDecimal(Model.DeliveryPrice+Model.SubTotal).ToString("0.##")</span></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <header><h2>Customer Details</h2></header>
+                                    <table class="shop_table customer_details">
+                                        <tbody>
+                                            <tr>
+                                                <th>Email:</th>
+                                                <td>@Model.CustomerEmail</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Phone:</th>
+                                                <td>@Model.CustomerPhone</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="col2-set addresses">
+                                        <div class="col-1">
+                                            <header class="title">
+                                                <h3>Billing Address</h3>
+                                            </header>
+                                            <address>
+                                                @Model.CustomerName<br>
+                                                @Model.BillingAddress<br>
+                                                @Model.BillingCity<br>
+                                                @Model.BillingZip<br>
+                                                @Model.BillingCountry
+                                            </address>
+                                        </div>
+                                        <div class="col-2">
+                                            <header class="title">
+                                                <h3>Shipping Address</h3>
+                                            </header>
+                                            <address>
+                                                @Model.CustomerName<br>
+                                                @Model.DeliveryAddress<br>
+                                                @Model.DeliveryCity<br>
+                                                @Model.DeliveryZip<br>
+                                                @Model.DeliveryCountry
+                                            </address>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

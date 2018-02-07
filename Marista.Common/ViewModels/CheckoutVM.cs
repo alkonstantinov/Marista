@@ -29,6 +29,7 @@ namespace Marista.Common.ViewModels
         public string CustomerPhone { get; set; }
 
         public string BillingCountryId { get; set; }
+        public string BillingCountry { get; set; }
 
         [Display(Name = "Address"), Required]
         public string BillingAddress { get; set; }
@@ -40,6 +41,7 @@ namespace Marista.Common.ViewModels
         public string BillingZip { get; set; }
 
         public string DeliveryCountryId { get; set; }
+        public string DeliveryCountry { get; set; }
 
         [Display(Name = "Address"), Required]
         public string DeliveryAddress { get; set; }
@@ -56,7 +58,18 @@ namespace Marista.Common.ViewModels
 
         public List<SaleDetailVM> Details { get; set; }
 
+        public decimal SubTotal {
+            get {
+                decimal result = 0;
+                foreach (var sd in Details)
+                {
+                    result += sd.Price * sd.Quantity * (100.0M - sd.Discount) / 100.0M;
+                }
+                return result;
+            }
+        }
 
-        
+        public int SaleId { get; set; }
+
     }
 }

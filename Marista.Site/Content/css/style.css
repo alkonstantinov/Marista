@@ -20503,33 +20503,33 @@ html.filter-opened body .category-filter {
 .woocommerce-account .woocommerce:after {
   clear: both;
 }
-.woocommerce-account .woocommerce-MyAccount-navigation {
+.woocommerce-MyAccount-navigation {
   float: left;
   width: 23%;
   padding: 0 0 30px;
 }
 @media (max-width: 767px) {
-  .woocommerce-account .woocommerce-MyAccount-navigation {
+  .woocommerce-MyAccount-navigation {
     float: none;
     width: 100%;
   }
 }
-.woocommerce-account .woocommerce-MyAccount-navigation ul {
+.woocommerce-MyAccount-navigation ul {
   list-style: none;
   padding: 0;
 }
-.woocommerce-account .woocommerce-MyAccount-navigation ul li {
+.woocommerce-MyAccount-navigation ul li {
   margin: 0;
   padding: 0;
   display: block;
   position: relative;
 }
-.woocommerce-account .woocommerce-MyAccount-navigation ul li a {
+.woocommerce-MyAccount-navigation ul li a {
   padding: 8px 0 8px 10px;
   display: block;
   text-decoration: none;
 }
-.woocommerce-account .woocommerce-MyAccount-navigation ul li a:before {
+.woocommerce-MyAccount-navigation ul li a:before {
   content: "";
   display: inline-block;
   width: 0;
@@ -20541,32 +20541,32 @@ html.filter-opened body .category-filter {
   top: 14px;
   left: 0;
 }
-.woocommerce-account .woocommerce-MyAccount-navigation ul li.is-active > a {
+.woocommerce-MyAccount-navigation ul li.is-active > a {
   font-weight: bold;
 }
-.woocommerce-account .woocommerce-MyAccount-navigation ul li ul {
+.woocommerce-MyAccount-navigation ul li ul {
   list-style: none;
   margin: 0 0 0 25px;
   padding: 0;
 }
-.woocommerce-account .woocommerce-MyAccount-navigation ul li:last-child a {
+.woocommerce-MyAccount-navigation ul li:last-child a {
   border-bottom: none;
 }
-.woocommerce-account .woocommerce-MyAccount-content {
+.woocommerce-MyAccount-content {
   float: right;
   width: 75%;
   padding: 0;
 }
 @media (max-width: 767px) {
-  .woocommerce-account .woocommerce-MyAccount-content {
+  .woocommerce-MyAccount-content {
     float: none;
     width: 100%;
   }
 }
-.woocommerce-account .woocommerce-MyAccount-content h1:first-child, .woocommerce-account .woocommerce-MyAccount-content h2:first-child, .woocommerce-account .woocommerce-MyAccount-content h3:first-child, .woocommerce-account .woocommerce-MyAccount-content h4:first-child, .woocommerce-account .woocommerce-MyAccount-content h5:first-child {
+.woocommerce-MyAccount-content h1:first-child, .woocommerce-MyAccount-content h2:first-child, .woocommerce-MyAccount-content h3:first-child, .woocommerce-MyAccount-content h4:first-child, .woocommerce-MyAccount-content h5:first-child {
   margin-top: 0;
 }
-.woocommerce-account .woocommerce-MyAccount-content header {
+.woocommerce-MyAccount-content header {
   margin-top: 20px;
 }
 
@@ -27232,7 +27232,7 @@ body .flex-control-paging li a.flex-active {
 	font-size:30px;
 }
 
-.single_add_to_cart_button, #place_order, .join-us-btn, .wc-forward, .update-cart-btn {
+.single_add_to_cart_button, #place_order, .join-us-btn, .wc-forward, .update-cart-btn, .btn-login, .btn-register, .btn-reset, .btn-save-address, .btn-go-shop, .btn-view-order, .btn-save-details {
 	font-family: "cormorant_garamondregular", serif !important;
     border:none !important;
     font-size:25px !important;
@@ -27241,7 +27241,7 @@ body .flex-control-paging li a.flex-active {
 	text-transform: lowercase !important;
 }
 
-.single_add_to_cart_button:hover, #place_order:hover, .join-us-btn:hover, .wc-forward:hover, .update-cart-btn:hover {
+.single_add_to_cart_button:hover, #place_order:hover, .join-us-btn:hover, .wc-forward:hover, .update-cart-btn:hover, .btn-login:hover, .btn-register:hover, .btn-reset:hover, .btn-save-address:hover, .btn-go-shop:hover, .btn-view-order:hover, .btn-save-details:hover {
 	background: #444645 !important;
     color: #fff !important;
 }
@@ -27319,11 +27319,13 @@ body .flex-control-paging li a.flex-active {
 	margin-left:20px;
 }
 
-.woocommerce-checkout-review-order-table .product-quantity {
+.woocommerce-checkout-review-order-table .product-quantity, .order-thankyou .product-quantity {
 	font-size: 22px;
 }
 
-
+ul.woocommerce-thankyou-order-details {
+	font-size:20px !important;
+}
 
 
 

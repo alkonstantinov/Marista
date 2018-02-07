@@ -17,5 +17,7 @@ namespace Marista.Common.ViewModels
         public IList<SaleDetailVM> SaleDetails { get; set; }
 
         public decimal Total { get; set; }
+
+        public int ItemCount { get; set; }
     }    
 }

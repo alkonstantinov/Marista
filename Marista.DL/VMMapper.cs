@@ -74,6 +74,9 @@ namespace Marista.DL
                     cfg.CreateMap<SaleDetail, SaleDetailVM>()
                         .ReverseMap();
 
+                    cfg.CreateMap<Customer, CustomerVM>()
+                        .ReverseMap();
+
                 }
             );
 

@@ -1,0 +1,109 @@
+﻿@model Marista.Common.ViewModels.CustomerVM
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="breadcrumbs">
+    <!-- breadcrumbs -->
+    <div class="container">
+        <ul>
+            <li>
+                <a class="home" href="#">Home</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                <a href="shop.html">E-shop</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                My Account
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="main" class="column1">
+    <!-- main -->
+    <div class="container">
+        <div class="row">
+            <div class="main-content col-sm-12 col-md-12">
+                <!-- main content -->
+                <div id="content" class="site-content" role="main">
+                    <article class="page type-page status-publish hentry">
+                        <header class="entry-header">
+                            <h1 class="page-title">Account Details</h1>
+                        </header>
+                        <div class="entry-content">
+                            <div class="woocommerce">
+                                <nav class="woocommerce-MyAccount-navigation">
+                                    <ul>
+                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard">
+                                            <a href="my_account.html">Dashboard</a>
+                                        </li>
+                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--orders">
+                                            <a href="my_account_orders.html">Orders</a>
+                                        </li>
+                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-address">
+                                            <a href="my_account_addresses.html">Addresses</a>
+                                        </li>
+                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account is-active">
+                                            <a href="my_account_details.html">Account Details</a>
+                                        </li>
+                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
+                                            <a href="#">Logout</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                @using (Html.BeginForm("ChangePass", "Customer", FormMethod.Post))
+                                {
+                                    @Html.HiddenFor(m=>m.CustomerId)
+                                    @Html.HiddenFor(m => m.Username)
+                                    @Html.HiddenFor(m => m.CustomerName)
+                                    <div class="woocommerce-MyAccount-content">
+                                        <p class="woocommerce-FormRow woocommerce-FormRow--first form-row form-row-first input-field">
+                                            <label for="account_first_name">Customer Name <span class="required">*</span></label>
+                                            <strong>@Model.CustomerName</strong>
+                                        </p>
+                                        <p class="woocommerce-FormRow woocommerce-FormRow--first form-row form-row-first input-field">
+                                            <label for="account_first_name">eMail <span class="required">*</span></label>
+                                            <strong>@Model.Username</strong>
+                                        </p>
+                                        <fieldset>
+                                            <legend>Password Change </legend>
+                                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide input-field">
+                                                <label for="password_current">New password</label>
+                                                @Html.PasswordFor(m => m.NewPassword, new { @class = "woocommerce-Input woocommerce-Input--password input-text" })
+                                                @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+                                            </p>
+                                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide input-field">
+                                                <label for="password_2">Confirm New</label>
+                                                @Html.PasswordFor(m => m.RePassword, new { @class = "woocommerce-Input woocommerce-Input--password input-text" })
+                                                @Html.ValidationMessageFor(model => model.RePassword, "", new { @class = "text-danger" })
+                                            </p>
+                                        </fieldset>
+                                        <div class="clear"></div>
+                                        <p>
+                                            <input type="submit" class="woocommerce-Button button pt-right btn-save-details" name="save_account_details" value="Save changes">
+                                            @if (ViewBag.ok == true)
+                                            {
+                                                <div class="woocommerce-message alert alert-add-to-cart">
+                                                    <span>Password successfuly changed.</span>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                </div>
+                                            }
+                                        </p>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+﻿@model Marista.Common.ViewModels.CustomerVM
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="breadcrumbs">
+    <!-- breadcrumbs -->
+    <div class="container">
+        <ul>
+            <li>
+                <a class="home" href="#">Home</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                <a href="shop.html">E-shop</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                My Account
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div id="main" class="column1">
+    <!-- main -->
+    <div class="container">
+        <div class="row">
+            <div class="main-content col-sm-12 col-md-12">
+                <!-- main content -->
+                <div id="content" class="site-content" role="main">
+                    <article class="page type-page status-publish hentry">
+                        <header class="entry-header">
+                            <h1 class="page-title">My Account</h1>
+                        </header>
+                        <div class="entry-content">
+                            <div class="woocommerce">
+                                <div class="u-columns row" id="customer_login">
+                                    <div class="u-column1 col-sm-6">
+                                        <h2>Login</h2>
+                                        @using (Html.BeginForm("login", "customer", FormMethod.Post))
+                                        {
+                                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-first input-field">
+                                                <label for="username"><span class="fa fa-user"></span>Username <span class="required">*</span></label>
+                                                @Html.EditorFor(m => m.Username, new { @class = "input-text" })
+
+                                            </p>
+                                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-last input-field">
+                                                <label for="password"><span class="fa fa-lock"></span>Password <span class="required">*</span></label>
+                                                @Html.PasswordFor(m => m.Password, new { @class = "input-text" })
+                                            </p>
+                                            <div class="clear"></div>
+                                            <p class="form-row button-row">
+                                                <input type="submit" class="button btn-lg btn-login" name="login" value="Login">
+                                                @if (ViewBag.LoginError == true)
+                                                {
+                                                    <div class="alert alert-danger">Invalid username or password</div> 
+                                                }
+                                            </p>
+                                            <p class="lost_password">
+                                                <a href="/customer/resetpassword">Lost your password?</a>
+                                            </p>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

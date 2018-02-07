@@ -59,6 +59,7 @@
     <Compile Include="ViewModels\CheckoutVM.cs" />
     <Compile Include="ViewModels\ConstantVM.cs" />
     <Compile Include="ViewModels\CouponVM.cs" />
+    <Compile Include="ViewModels\CustomerVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\MarketingMaterialVM.cs" />
     <Compile Include="ViewModels\MassPaymentPaypalVM.cs" />
