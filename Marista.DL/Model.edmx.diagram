@@ -65,6 +65,7 @@
         <AssociationConnector Association="MaristaModel.fk_Customer_CountryId" />
         <AssociationConnector Association="MaristaModel.fk_Sale_BillingCountryId" />
         <AssociationConnector Association="MaristaModel.fk_Sale_DeliveryCountryId" />
+        <AssociationConnector Association="MaristaModel.fk_Customer_BPId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

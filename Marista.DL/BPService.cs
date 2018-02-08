@@ -83,6 +83,28 @@ namespace Marista.DL
             };
             db.Pyramids.Add(pyramid);
             db.SaveChanges();
+
+            var customer = db.Customers.FirstOrDefault(c => c.Username == rec.EMail);
+            if (customer == null)
+            {
+                db.Customers.Add(
+                    new Customer()
+                    {
+                        Address = rec.Address,
+                        City = "",
+                        BPId = BP.BPId,
+                        CountryId = rec.CountryId,
+                        CustomerName = rec.BPName,
+                        Password = MD5.ConvertToMD5(rec.Password),
+                        Username = rec.EMail
+
+                    }
+                    );
+            }
+            else
+                customer.BPId = rec.BPId;
+            db.SaveChanges();
+
             return 0;
 
 

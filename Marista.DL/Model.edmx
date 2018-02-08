@@ -107,6 +107,7 @@
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CountryId" Type="nvarchar" MaxLength="2" Nullable="false" />
           <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BPId" Type="int" />
         </EntityType>
         <EntityType Name="HCategory">
           <Key>
@@ -502,6 +503,18 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Customer_BPId">
+          <End Role="BP" Type="Self.BP" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BP">
+              <PropertyRef Name="BPId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="BPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Customer_CountryId">
           <End Role="Country" Type="Self.Country" Multiplicity="1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
@@ -837,6 +850,10 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             <End Role="VCategory" EntitySet="VCategory" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
+          <AssociationSet Name="fk_Customer_BPId" Association="Self.fk_Customer_BPId">
+            <End Role="BP" EntitySet="BP" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
           <AssociationSet Name="fk_Customer_CountryId" Association="Self.fk_Customer_CountryId">
             <End Role="Country" EntitySet="Country" />
             <End Role="Customer" EntitySet="Customer" />
@@ -1075,6 +1092,10 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <AssociationSet Name="fk_Sale_DeliveryCountryId" Association="MaristaModel.fk_Sale_DeliveryCountryId">
             <End Role="Country" EntitySet="Countries" />
             <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Customer_BPId" Association="MaristaModel.fk_Customer_BPId">
+            <End Role="BP" EntitySet="BPs" />
+            <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Constant">
@@ -1542,6 +1563,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <NavigationProperty Name="SiteUser" Relationship="MaristaModel.fk_BP_SiteUserId" FromRole="BP" ToRole="SiteUser" />
           <NavigationProperty Name="ResultHistories" Relationship="MaristaModel.fk_ResultHistory_BPId" FromRole="BP" ToRole="ResultHistory" />
           <NavigationProperty Name="Country" Relationship="MaristaModel.fk_BP_CountryId" FromRole="BP" ToRole="Country" />
+          <NavigationProperty Name="Customers" Relationship="MaristaModel.fk_Customer_BPId" FromRole="BP" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -1556,6 +1578,8 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <NavigationProperty Name="Sales" Relationship="MaristaModel.fk_Sale_CustomerId" FromRole="Customer" ToRole="Sale" />
           <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Country" Relationship="MaristaModel.fk_Customer_CountryId" FromRole="Customer" ToRole="Country" />
+          <Property Name="BPId" Type="Int32" />
+          <NavigationProperty Name="BP" Relationship="MaristaModel.fk_Customer_BPId" FromRole="Customer" ToRole="BP" />
         </EntityType>
         <EntityType Name="ResultHistory">
           <Key>
@@ -1735,6 +1759,18 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Principal>
             <Dependent Role="Sale">
               <PropertyRef Name="DeliveryCountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Customer_BPId">
+          <End Type="MaristaModel.BP" Role="BP" Multiplicity="0..1" />
+          <End Type="MaristaModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BP">
+              <PropertyRef Name="BPId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="BPId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2023,6 +2059,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="MaristaModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="BPId" ColumnName="BPId" />
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
                 <ScalarProperty Name="Address" ColumnName="Address" />

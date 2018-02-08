@@ -13,10 +13,18 @@ namespace Marista.Site.Controllers
     {
         private readonly ProductService _ps = new ProductService();
 
+        private void FixPrices(ShopVM shop)
+        {
+            if (Session["IsBP"] == null || !(bool)Session["IsBP"])
+                return;
+            foreach (var good in shop.Products)
+                good.Price = good.Price * 0.77M;
+        }
         public ActionResult Index()
         {
             ShopVM shop = new ShopVM();
             _ps.GetShopContent(shop);
+            FixPrices(shop);
             return View(shop);
         }
 
@@ -24,6 +32,7 @@ namespace Marista.Site.Controllers
         public ActionResult Search(ShopVM shop)
         {
             _ps.GetShopContent(shop);
+            FixPrices(shop);
             return View("Index", shop);
         }
 
@@ -54,7 +63,7 @@ namespace Marista.Site.Controllers
                 var product = await _ps.Get(productId);
                 SaleDetailVM detail = new SaleDetailVM()
                 {
-                    Price = product.Price,
+                    Price = (Session["IsBP"] == null || !(bool)Session["IsBP"]) ? product.Price : product.Price * 0.77M,
                     ProductId = productId,
                     Discount = 0,
                     ProductName = product.Name,

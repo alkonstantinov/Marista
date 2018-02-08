@@ -12,6 +12,8 @@ namespace Marista.Common.ViewModels
     {
         public int CustomerId { get; set; }
 
+        public int? BPId { get; set; }
+
         public string Username { get; set; }
 
         public string Password { get; set; }

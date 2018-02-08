@@ -49,15 +49,16 @@ namespace Marista.Site.Controllers
         [HttpPost]
         public ActionResult Login(CustomerVM model)
         {
-            int id = db.Login(model);
-            if (id == -1)
+            var cmr = db.Login(model);
+            if (cmr == null)
             {
                 ViewBag.LoginError = true;
                 return View(model);
             }
             else
             {
-                Session["CustomerId"] = id;
+                Session["CustomerId"] = cmr.CustomerId;
+                Session["IsBP"] = cmr.BPId.HasValue;
                 return RedirectToAction("Index");
             }
         }
@@ -158,6 +159,13 @@ namespace Marista.Site.Controllers
             return fc;
         }
 
+        public ActionResult Logout()
+        {
+
+            Session.Remove("CustomerId");
+            Session.Remove("IsBP");
+            return RedirectToAction("Index", "Home");
+        }
 
     }
 }

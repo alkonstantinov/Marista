@@ -36,12 +36,12 @@ namespace Marista.DL
 
         }
 
-        public int Login(CustomerVM model)
+        public CustomerVM Login(CustomerVM model)
         {
             var cmr = db.Customers.FirstOrDefault(c => c.Username == model.Username && c.Password == model.PasswordMD5);
             if (cmr == null)
-                return -1;
-            else return cmr.CustomerId;
+                return null;
+            else return _map.Map<CustomerVM>(cmr);
         }
 
 

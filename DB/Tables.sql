@@ -432,8 +432,10 @@ create table Customer
   Address nvarchar(max) not null,
   City nvarchar(max) not null,
   CountryId nvarchar(2) not null,
+  BPId int null,
   constraint pk_CustomerId primary key (CustomerId),
-  constraint fk_Customer_CountryId foreign key (CountryId) references Country(CountryId)
+  constraint fk_Customer_CountryId foreign key (CountryId) references Country(CountryId),
+  constraint fk_Customer_BPId foreign key (BPId) references BP(BPId)
 )
 go
 
