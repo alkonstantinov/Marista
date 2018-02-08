@@ -1,0 +1,284 @@
+﻿@model Marista.Common.ViewModels.CheckoutVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<HTML>
+<HEAD>
+
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+    <TITLE></TITLE>
+    <META NAME="GENERATOR" CONTENT="OpenOffice 4.1.4  (Win32)">
+    <META NAME="CREATED" CONTENT="0;0">
+    <META NAME="CHANGED" CONTENT="0;0">
+
+    <STYLE>
+        <!--
+        BODY, DIV, TABLE, THEAD, TBODY, TFOOT, TR, TH, TD, P {
+            font-family: "Arial";
+            font-size: x-small
+        }
+        -->
+    </STYLE>
+
+</HEAD>
+
+<BODY TEXT="#000000">
+    <TABLE FRAME=VOID CELLSPACING=0 COLS=7 RULES=NONE BORDER=0>
+        <COLGROUP><COL WIDTH=44><COL WIDTH=90><COL WIDTH=297><COL WIDTH=106><COL WIDTH=120><COL WIDTH=96><COL WIDTH=120></COLGROUP>
+        <TBODY>
+            <TR>
+                <TD COLSPAN=3 ROWSPAN=2 WIDTH=430 HEIGHT=86 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General">
+                    <FONT FACE="Open Sans">
+                        <BR><IMG SRC="~/content/images/images/Invoice%20Sample_html_m2a6b7e5.png" WIDTH=265 HEIGHT=53 HSPACE=83 VSPACE=16>
+                    </FONT>
+                </TD>
+                <TD WIDTH=106 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD WIDTH=120 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD WIDTH=96 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD WIDTH=120 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-bottom: 5px solid #17375e" COLSPAN=2 ALIGN=CENTER VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans" SIZE=5 COLOR="#17375E">Sales Invoice</FONT></B></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-top: 1px solid #000000; border-left: 1px solid #000000" HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">Supplier</FONT></TD>
+                <TD STYLE="border-top: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">MARISTA CLUB EOOD</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD COLSPAN=2 ALIGN=CENTER VALIGN=BOTTOM SDNUM="1033;1033;General"><B><I><FONT FACE="Open Sans" COLOR="#17375E">Original</FONT></I></B></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">UIC</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">203402159</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">VAT Number</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">BG203402159</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">Number:</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=CENTER VALIGN=BOTTOM SDVAL="1" SDNUM="1033;0;0000000000"><B><FONT FACE="Open Sans">@Model.SaleId.ToString().PadLeft(10, '0')</FONT></B></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">Country, City</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">Bulgaria, Sofia 1164, Lozenetz</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">Date:</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=CENTER VALIGN=BOTTOM SDVAL="43132" SDNUM="1033;1033;M/D/YYYY"><B><FONT FACE="Open Sans">@Model.OnDate.ToShortDateString()</FONT></B></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">Address</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"> 60, Bigla Str., ap. 1 </FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">Location:</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=CENTER VALIGN=BOTTOM SDNUM="1033;1033;M/D/YYYY"><B><FONT FACE="Open Sans">Bulgaria</FONT></B></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">Contact</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">Mira Yankova</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">Payment Date:</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=CENTER VALIGN=BOTTOM SDVAL="43132" SDNUM="1033;1033;M/D/YYYY"><B><FONT FACE="Open Sans">@Model.OnDate.ToShortDateString()</FONT></B></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-bottom: 1px solid #000000; border-left: 1px solid #000000" HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">web page</FONT></TD>
+                <TD STYLE="border-bottom: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><U><FONT FACE="Open Sans" COLOR="#0000FF"><BR></FONT></U></TD>
+                <TD STYLE="border-bottom: 1px solid #000000; border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><U><FONT FACE="Open Sans" COLOR="#0000FF"><A HREF="http://www.maristaclub.com/">www.maristaclub.com</A></FONT></U></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans"><BR></FONT></B></TD>
+                <TD ALIGN=CENTER VALIGN=BOTTOM SDNUM="1033;1033;M/D/YYYY"><B><FONT FACE="Open Sans"><BR></FONT></B></TD>
+            </TR>
+            <TR>
+                <TD HEIGHT=8 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" HEIGHT=21 ALIGN=LEFT VALIGN=BOTTOM BGCOLOR="#DCE6F2" SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">Bill to</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM BGCOLOR="#DCE6F2" SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM BGCOLOR="#DCE6F2" SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM BGCOLOR="#DCE6F2" SDNUM="1033;1033;@Html.Raw("@")"><B><FONT FACE="Open Sans">Ship to</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" COLSPAN=3 ALIGN=LEFT VALIGN=BOTTOM BGCOLOR="#DCE6F2" SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=21 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">Name</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR>@Model.CustomerName</FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-left: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">Name</FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" COLSPAN=3 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">@Model.CustomerName<BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=21 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">Address</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">@Model.BillingAddress<BR></FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-left: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">Address</FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" COLSPAN=3 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">@Model.DeliveryAddress<BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=21 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">City, Zip Code</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">@Model.BillingCity, @Model.BillingZip<BR></FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-left: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">City, Zip Code</FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" COLSPAN=3 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR>@Model.DeliveryCity, @Model.DeliveryZip</FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=21 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">Country</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">@Model.BillingCountry<BR></FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-left: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">Country</FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" COLSPAN=3 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">@Model.DeliveryCountry<BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=21 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">Phone</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">@Model.CustomerPhone<BR></FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-left: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">Contact</FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" COLSPAN=3 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">@Model.CustomerName<BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-bottom: 1px solid #000000; border-left: 1px solid #000000" HEIGHT=21 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">Client Nr.</FONT></TD>
+                <TD STYLE="border-bottom: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">@Model.CustomerId.ToString().PadLeft(10, '0')<BR></FONT></TD>
+                <TD STYLE="border-bottom: 1px solid #000000; border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"> </FONT></TD>
+                <TD STYLE="border-bottom: 1px solid #000000; border-left: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-bottom: 1px solid #000000; border-right: 1px solid #000000" COLSPAN=3 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;@Html.Raw("@")"><U><FONT FACE="Open Sans" COLOR="#0000FF"><BR></FONT></U></TD>
+            </TR>
+            <TR>
+                <TD HEIGHT=9 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" HEIGHT=19 ALIGN=CENTER VALIGN=BOTTOM BGCOLOR="#E4EAF4" SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">&#8470;</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" COLSPAN=2 ALIGN=CENTER VALIGN=BOTTOM BGCOLOR="#E4EAF4" SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">Item</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=CENTER VALIGN=BOTTOM BGCOLOR="#E4EAF4" SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">Qty</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=CENTER VALIGN=BOTTOM BGCOLOR="#E4EAF4" SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">Unit Price (EUR)</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=CENTER VALIGN=BOTTOM BGCOLOR="#E4EAF4" SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">Discount %</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=CENTER VALIGN=BOTTOM BGCOLOR="#E4EAF4" SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">Line Total (EUR)</FONT></B></TD>
+            </TR>
+            @{ int rowNo = 1;}
+            @foreach (var sd in Model.Details)
+            {
+                <TR>
+                    <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" HEIGHT=19 ALIGN=CENTER VALIGN=MIDDLE SDVAL="1" SDNUM="1033;1033;0"><FONT FACE="Open Sans">@rowNo</FONT></TD>
+                    @{rowNo++;}
+                    <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" COLSPAN=2 ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">@sd.ProductName</FONT></TD>
+                    <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="1" SDNUM="1033;1033;0"><FONT FACE="Open Sans">@sd.Quantity</FONT></TD>
+                    <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="10" SDNUM="1033;1033;0.00"><FONT FACE="Open Sans">@Convert.ToDecimal(sd.Price / 1.2M).ToString("0.##")</FONT></TD>
+                    <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="0.1" SDNUM="1033;1033;0.00%"><FONT FACE="Open Sans">@sd.Discount%</FONT></TD>
+                    <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="9" SDNUM="1033;1033;0.00"><FONT FACE="Open Sans">@Convert.ToDecimal(sd.Total / 1.2M).ToString("0.##")</FONT></TD>
+                </TR>
+                        }
+            <TR>
+                <TD HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">Notes:</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">@Model.Note<BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=RIGHT VALIGN=MIDDLE SDNUM="1033;1033;0.00"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=RIGHT VALIGN=MIDDLE SDNUM="1033;1033;0.00"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=RIGHT VALIGN=MIDDLE SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">SUBTOTAL:</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="9" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Convert.ToDecimal(Model.SubTotal / 1.2M).ToString("0.##")</FONT></B></TD>
+            </TR>
+            <TR>
+                <TD HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=RIGHT VALIGN=BOTTOM SDVAL="0.2" SDNUM="1033;1033;0%"><B><FONT FACE="Open Sans">20%</FONT></B></TD>
+                <TD ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">VAT:</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=BOTTOM SDVAL="1.8" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Convert.ToDecimal(Model.SubTotal / 6M).ToString("0.##")</FONT></B></TD>
+            </TR>
+            <TR>
+                <TD HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;0%"><B><FONT FACE="Open Sans"><BR></FONT></B></TD>
+                <TD ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">SHIPPING &amp; HANDLING</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=BOTTOM SDVAL="7" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Model.DeliveryPrice.ToString("0.##")</FONT></B></TD>
+            </TR>
+            <TR>
+                <TD HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD COLSPAN=2 ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">TOTAL:</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=BOTTOM SDVAL="17.8" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Convert.ToDecimal(Model.DeliveryPrice+Model.SubTotal).ToString("0.##")</FONT></B></TD>
+            </TR>
+            <TR>
+                <TD HEIGHT=9 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=TOP SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=TOP SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-top: 1px solid #000000; border-left: 1px solid #000000" HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">Applicable Law:</FONT></TD>
+                <TD STYLE="border-top: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-top: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;M/D/YYYY"><FONT FACE="Open Sans">art.20, p.5 in connection with </FONT></TD>
+                <TD STYLE="border-top: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">Payment:</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">PayPal</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans"><BR></FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans"><BR></FONT></B></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans">art.14, p.1 and art.20, p.1 of BG VAT Act</FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-left: 1px solid #000000" HEIGHT=17 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans">Received by:</FONT></I></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans">Issued by: Mira Yankova</FONT></I></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+                <TD ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+                <TD STYLE="border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+            </TR>
+            <TR>
+                <TD STYLE="border-bottom: 1px solid #000000; border-left: 1px solid #000000" HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+                <TD STYLE="border-bottom: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+                <TD STYLE="border-bottom: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+                <TD STYLE="border-bottom: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+                <TD STYLE="border-bottom: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+                <TD STYLE="border-bottom: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+                <TD STYLE="border-bottom: 1px solid #000000; border-right: 1px solid #000000" ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><I><FONT FACE="Open Sans"><BR></FONT></I></TD>
+            </TR>
+        </TBODY>
+    </TABLE>
+    <!-- ************************************************************************** -->
+</BODY>
+
+</HTML>

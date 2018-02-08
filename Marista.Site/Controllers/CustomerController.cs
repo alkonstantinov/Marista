@@ -2,6 +2,9 @@
 using Marista.DL;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -99,6 +102,60 @@ namespace Marista.Site.Controllers
             if (Session["CustomerId"] == null)
                 return RedirectToAction("login");
             return View(db.GetSale(saleId));
+        }
+
+
+        [HttpGet]
+        public ActionResult Invoice(int saleId)
+        {
+            return View(db.GetSale(saleId));
+        }
+
+        string tempPath = Path.GetTempPath();
+        string GetPdf(int saleId)
+        {
+            string wkhtmlPath = ConfigurationManager.AppSettings["PATHTOWKHTMLTOPDF"];
+            string url = ConfigurationManager.AppSettings["URLTOINV"];
+            string printUrl = url + "?saleId=" + saleId;
+            string pdf_path = Path.Combine(tempPath, saleId.ToString() + ".pdf");
+
+            ProcessStartInfo psi = new ProcessStartInfo();
+
+            psi.FileName = wkhtmlPath;
+            psi.Arguments = "  \"" + printUrl + "\" \"" + pdf_path + "\"";
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
+            using (Process process = new Process())
+            {
+                process.StartInfo = psi;
+                process.EnableRaisingEvents = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.UseShellExecute = false;
+                process.Start();
+
+                process.WaitForExit();
+                process.Close();
+                string result = "";
+
+                if (System.IO.File.Exists(pdf_path))
+                {
+                    result = pdf_path;
+                    //File.Delete(pdf_path);
+                }
+
+                return result;
+
+            }
+        }
+
+        [HttpGet]
+        public ActionResult InvoicePdf(int saleId)
+        {
+            string fnm = this.GetPdf(saleId);
+            var doc = System.IO.File.ReadAllBytes(fnm);
+            System.IO.File.Delete(fnm);
+            var fc = new FileContentResult(doc, "application/octet-stream");
+            fc.FileDownloadName = fnm;
+            return fc;
         }
 
 

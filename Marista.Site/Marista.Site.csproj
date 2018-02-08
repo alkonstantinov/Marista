@@ -187,6 +187,13 @@
     <Content Include="Content\images\25591993_1887536521286781_56687060939138774_n.jpg" />
     <Content Include="Content\images\cart_baner_bgr.jpg" />
     <Content Include="Content\images\favicon.png" />
+    <Content Include="Content\images\images\Invoice Sample_html_2d1aafee.jpg" />
+    <Content Include="Content\images\images\Invoice Sample_html_4c6e95e7.jpg" />
+    <Content Include="Content\images\images\Invoice Sample_html_68117fa4.png" />
+    <Content Include="Content\images\images\Invoice Sample_html_m291446a1.jpg" />
+    <Content Include="Content\images\images\Invoice Sample_html_m2a6b7e5.png" />
+    <Content Include="Content\images\images\Invoice Sample_html_m5d5d30fd.jpg" />
+    <Content Include="Content\images\images\Invoice Sample_html_m62fd4f95.jpg" />
     <Content Include="Content\images\marista_club_logo.jpg" />
     <Content Include="Content\images\products\product_01.png" />
     <Content Include="Content\images\products\product_02.png" />
@@ -267,6 +274,7 @@
     <Content Include="Views\Customer\ResetPassword.cshtml" />
     <Content Include="Views\Customer\GetSales.cshtml" />
     <Content Include="Views\Customer\GetSale.cshtml" />
+    <Content Include="Views\Customer\Invoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

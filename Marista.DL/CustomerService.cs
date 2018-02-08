@@ -86,6 +86,7 @@ namespace Marista.DL
                 BillingCountry = db.Countries.First(i => i.CountryId == data.BillingCountryId).CountryName,
                 BillingZip = data.BillingZip,
                 CustomerEmail = data.CustomerEmail,
+                CustomerId = data.CustomerId,
                 CustomerName = data.CustomerName,
                 CustomerPhone = data.CustomerPhone,
                 DeliveryAddress = data.DeliveryAddress,
