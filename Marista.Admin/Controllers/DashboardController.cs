@@ -26,6 +26,7 @@ namespace Marista.Admin.Controllers
         public async Task<ActionResult> Index()
         {
             ViewBag.Username = this.UserData.Username;
+            ViewBag.LevelId = this.UserData.LevelId;
             return View();
         }
     }

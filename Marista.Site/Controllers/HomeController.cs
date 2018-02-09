@@ -2,6 +2,7 @@
 using Marista.DL;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -36,8 +37,10 @@ namespace Marista.Site.Controllers
             return View("Index", shop);
         }
 
-        public async Task<ActionResult> AddToCart(int productId)
+        public async Task<ActionResult> AddToCart(int productId, int? times)
         {
+            if (!times.HasValue)
+                times = 1;
             bool added = false;
             CartVM cart = null;
             if (Session["Cart"] != null)
@@ -48,7 +51,7 @@ namespace Marista.Site.Controllers
                     if (p.ProductId == productId)
                     {
                         added = true;
-                        p.Quantity++;
+                        p.Quantity += times.Value;
                     }
             }
             else
@@ -67,13 +70,61 @@ namespace Marista.Site.Controllers
                     ProductId = productId,
                     Discount = 0,
                     ProductName = product.Name,
-                    Quantity = 1,
+                    Quantity = times.Value,
                     Weight = product.Weight
                 };
                 cart.Products.Add(detail);
             }
             return Json("ok", JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public ActionResult Opportunity()
+        {
+            return View();
+        }
+
+        public ActionResult Benefits()
+        {
+            return View();
+        }
+
+        public ActionResult BusinessModel()
+        {
+            return View();
+        }
+
+        public ActionResult MaristaCosmetics()
+        {
+            return View();
+        }
+
+        public ActionResult PaymentAndShipping()
+        {
+            return View();
+        }
+
+        public ActionResult TermsOfUse()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SendFeedback(FeedbackVM data)
+        {
+            string content = "From:" + data.Name + " " + data.Email + "<br/>" + data.Message;
+            new Common.Tools.Mailer().SendMailSpecific(
+                content,
+                ConfigurationManager.AppSettings["ToEmail"],
+                data.Subject);
+
+            return Json("ok", JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

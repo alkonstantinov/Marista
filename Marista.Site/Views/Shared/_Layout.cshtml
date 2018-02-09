@@ -18,7 +18,7 @@
                 <div class="container">
                     <div class="right">
                         <div class="login-links pos2">
-                            <a href="#" class="nav-top-link">For Members</a> or <a href="#" class="nav-top-link">Become a Member</a>
+                            <a href="https://admin.maristaclub.com/user/login" class="nav-top-link">For Members</a> or <a href="https://admin.maristaclub.com/bpreg/index" class="nav-top-link">Become a Member</a>
                         </div>
                         @Html.Action("Embed", "Cart")
                     </div>
@@ -50,16 +50,16 @@
                         <div id="main-menu" class="mega-menu menu-right">
                             <ul id="menu-main-menu">
                                 <li class="">
-                                    <a href="#" class="">Home</a>
+                                    <a href="/home/index" class="">Home</a>
                                 </li>
                                 <li class="">
-                                    <a href="#" class="">About Us</a>
+                                    <a href="/home/aboutus" class="">About Us</a>
                                 </li>
                                 <li class="active">
-                                    <a href="#" class="current">E-shop</a>
+                                    <a href="/home/index" class="">E-shop</a>
                                 </li>
                                 <li class="">
-                                    <a href="#" class="">Opportunity</a>
+                                    <a href="/home/opportunity" class="">Opportunity</a>
                                 </li>
                             </ul>
                         </div>
@@ -110,19 +110,19 @@
                                 <div class="menu-footer-links-container">
                                     <ul id="menu-footer-links" class="menu">
                                         <li class="">
-                                            <a href="#">Marista Cosmetics</a>
+                                            <a href="/home/MaristaCosmetics">Marista Cosmetics</a>
                                         </li>
                                         <li class="">
-                                            <a href="#">Products</a>
+                                            <a href="/home/index">Products</a>
                                         </li>
                                         <li class="">
-                                            <a href="#">Payments & Shipping Policy</a>
+                                            <a href="/home/PaymentAndShipping">Payments & Shipping Policy</a>
                                         </li>
                                         <li class="">
-                                            <a href="#">Terms of Use Policy</a>
+                                            <a href="/home/TermsOfUse">Terms of Use Policy</a>
                                         </li>
                                         <li class="">
-                                            <a href="#">My Account</a>
+                                            <a href="/customer">My Account</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -134,16 +134,16 @@
                                 <div class="menu-footer-information-container">
                                     <ul id="menu-footer-information" class="menu">
                                         <li class="">
-                                            <a href="#">About us</a>
+                                            <a href="/home/AboutUs">About us</a>
                                         </li>
                                         <li class="">
-                                            <a href="#">Opportunity</a>
+                                            <a href="/home/Opportunity">Opportunity</a>
                                         </li>
                                         <li class="">
-                                            <a href="#">Business Model</a>
+                                            <a href="/home/BusinessModel">Business Model</a>
                                         </li>
                                         <li class="">
-                                            <a href="#">Members Benefits</a>
+                                            <a href="/home/Benefits">Members Benefits</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -156,21 +156,26 @@
                                     <div>
                                         <label id="name_label" for="name" class="control-label">Name:</label>
                                         <input type="text" class="form-control" id="name" name="name" value="">
+                                        <label id="lValName" class="text-danger" style="display:none">Please, enter value</label>
                                     </div>
                                     <div>
                                         <label id="email_label" for="email" class="control-label">Email:</label>
                                         <input type="text" class="form-control" id="email" name="email" value="">
+                                        <label id="lValEmail" class="text-danger" style="display:none">Please, enter value</label>
                                     </div>
                                     <div>
                                         <label id="subject_label" for="subject" class="control-label">Subject:</label>
                                         <input type="text" class="form-control" id="subject" name="subject" value="">
+                                        <label id="lValSubject" class="text-danger" style="display:none">Please, enter value</label>
                                     </div>
                                     <div>
                                         <label id="message_label" for="message" class="control-label">Message:</label>
                                         <textarea name="message" value="" class="form-control" id="message" rows="3"></textarea>
+                                        <label id="lValMessage" class="text-danger" style="display:none">Please, enter value</label>
                                     </div>
                                     <div class="right submit_container">
-                                        <input class="btn btn-default" type="submit" name="submit" id="submit_btn" value="send">
+                                        <input class="btn btn-default" type="button" name="submit" id="submit_btn" value="send" onclick="SendFeedback()">
+                                        <label id="lValOK" class="text-danger" style="display:none">Message successfuly sent</label>
                                     </div>
                                 </form>
                             </aside>
@@ -245,5 +250,62 @@
 
 
     @RenderSection("scripts", required: false)
+    <script>
+        function SendFeedback() {
+            $("label[id^='lVal']").hide();
+            var name = $("#name").val();
+            var email = $("#email").val();
+            var subject = $("#subject").val();
+            var message = $("#message").val();
+            var ok = true;
+            if (name === "") {
+                $("#lValName").show();
+                ok = false;
+            }
+            if (email === "") {
+                $("#lValEmail").show();
+                ok = false;
+            }
+            if (subject === "") {
+                $("#lValSubject").show();
+                ok = false;
+            }
+            if (message === "") {
+                $("#lValMessage").show();
+                ok = false;
+            }
+            if (!ok)
+                return;
+
+            $.ajax({
+                url: "/home/sendfeedback",
+                method: "POST",
+                cache: false,
+                data: { Name: name, Email: email, Subject: subject, Message: message },
+                async: false,
+
+            }).done(function (res) {
+
+            }).fail(function (jqXHR, textStatus) {
+                alert(jqXHR);
+            });
+
+            $("#name").val("");
+            $("#email").val("");
+            $("#subject").val("");
+            $("#message").val("");
+            $("#lValOK").show();
+        }
+
+        function fbshareCurrentPage() {
+            window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(window.location.href) + "&t=" + document.title, '',
+                'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+            return false;
+        }
+        function tweetCurrentPage() {
+            window.open("https://twitter.com/share?url=" + encodeURIComponent(window.location.href) + "&text=" + encodeURIComponent(document.title), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'); return false;
+        }
+
+    </script>
 </body>
 </html>

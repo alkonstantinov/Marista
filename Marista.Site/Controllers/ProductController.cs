@@ -24,6 +24,13 @@ namespace Marista.Site.Controllers
         public async Task<ActionResult> View(int id)
         {
             var product = await _ps.Get(id);
+            if (Session["IsBP"] != null && (bool)Session["IsBP"])
+            {
+
+                foreach (var good in product.RelatedProducts)
+                    good.Price = good.Price * 0.77M;
+                product.Price = product.Price * 0.77M;
+            }
             return View(product);
         }
 

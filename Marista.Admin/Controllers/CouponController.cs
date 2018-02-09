@@ -20,7 +20,7 @@ namespace Marista.Admin.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (this.UserData == null || (this.UserData != null && this.UserData.LevelId != 1))
+            if (this.UserData == null || (this.UserData != null && this.UserData.LevelId != 2))
             {
                 filterContext.HttpContext.Response.Redirect(Url.Action("Login", "User"), true);
                 return;

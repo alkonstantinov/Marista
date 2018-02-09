@@ -41,9 +41,9 @@ namespace Marista.Site.Controllers
         }
 
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(bool backToCheckout = false)
         {
-            return View(new CustomerVM());
+            return View(new CustomerVM() { BackToCheckout = backToCheckout });
         }
 
         [HttpPost]
@@ -59,7 +59,17 @@ namespace Marista.Site.Controllers
             {
                 Session["CustomerId"] = cmr.CustomerId;
                 Session["IsBP"] = cmr.BPId.HasValue;
-                return RedirectToAction("Index");
+                if (cmr.BPId.HasValue && Session["Cart"] != null)
+                {
+                    CartVM cart = (CartVM)Session["Cart"];
+                    foreach (var good in cart.Products)
+                        good.Price = good.Price * 0.77M;
+
+                }
+                if (model.BackToCheckout)
+                    return RedirectToAction("Checkout", "Cart");
+                else
+                    return RedirectToAction("Index");
             }
         }
 
@@ -166,6 +176,9 @@ namespace Marista.Site.Controllers
             Session.Remove("IsBP");
             return RedirectToAction("Index", "Home");
         }
-
+        public async Task<ActionResult> Menu()
+        {
+            return PartialView();
+        }
     }
 }

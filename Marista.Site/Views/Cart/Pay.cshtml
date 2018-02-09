@@ -3,6 +3,35 @@
 @{
     ViewBag.Title = "Checkout";
 }
+<div class="breadcrumbs">
+    <!-- breadcrumbs -->
+    <div class="container">
+        <ul>
+            <li>
+                <a class="home" href="/home/index">Home</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                <a class="home" href="/cart/index">Cart</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                <a class="home" href="/cart/Checkout">Checkout</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                Payment
+            </li>
+        </ul>
+    </div>
+</div>
+
 @using (Html.BeginForm("SaveOrder", "Cart", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()

@@ -3,6 +3,28 @@
 @{
     ViewBag.Title = "Checkout";
 }
+<div class="breadcrumbs">
+    <!-- breadcrumbs -->
+    <div class="container">
+        <ul>
+            <li>
+                <a class="home" href="/home/index">Home</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                <a class="home" href="/cart/index">Cart</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                Checkout
+            </li>
+        </ul>
+    </div>
+</div>
 @using (Html.BeginForm("Checkout", "Cart", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -17,6 +39,13 @@
                             <header class="entry-header">
                                 <h1 class="page-title">Checkout</h1>
                             </header>
+                            @if (ViewBag.login)
+                            {
+                                <div class="login-links pos2">
+                                    <a class="home" href="/customer/login?backToCheckout=true">Login</a>
+                                </div>
+                            }
+
                             <div class="entry-content">
                                 <div class="woocommerce">
                                     <div class="row">
@@ -36,128 +65,128 @@
                                                             @Html.ValidationMessageFor(m => m.CustomerEmail, "", new { @class = "text-danger" })
                                                             @if (ViewBag.EmailUsed != null && ViewBag.EmailUsed)
                                                             {
-                                                                <p class="text-danger">Email already used for new account</p>
+                                                            <p class="text-danger">Email already used for new account</p>
                                                             }
-                                                        </p>
-                                                        <div class="clear"></div>
-                                                        <p class="form-row form-row form-row-wide input-field" id="billing_company_field">
-                                                            <label for="billing_company" class=""><span class="fa fa-phone"></span>Phone</label>
-                                                            @Html.EditorFor(m => m.CustomerPhone, new { @class = "input-text " })
-                                                            @Html.ValidationMessageFor(m => m.CustomerPhone, "", new { @class = "text-danger" })
-                                                        </p>
-                                                        <p class="form-row form-row form-row-first input-field " id="billing_email_field">
-                                                            <label for="billing_email" class=""><span class="fa fa-map-marker"></span>Address<abbr class="required" title="required">*</abbr></label>
-                                                            @Html.EditorFor(m => m.BillingAddress, new { @class = "input-text" })
-                                                            @Html.ValidationMessageFor(m => m.BillingAddress, "", new { @class = "text-danger" })
-                                                        </p>
-                                                        <p class="form-row form-row form-row-last input-field " id="billing_phone_field">
-                                                            <label for="billing_phone" class=""><span class="fa fa-building-o"></span>City <abbr class="required" title="required">*</abbr></label>
-                                                            @Html.EditorFor(m => m.BillingCity, new { @class = "input-text " })
-                                                            @Html.ValidationMessageFor(m => m.BillingCity, "", new { @class = "text-danger" })
-                                                        </p>
-                                                        <div class="clear"></div>
-                                                        <p class="form-row form-row-wide input-field">
-                                                            <label for="calc_billing_country"><span class="fa fa-truck"></span>Zip</label>
-                                                            @Html.EditorFor(m => m.BillingZip, new { @class = "input-text " })
-                                                            @Html.ValidationMessageFor(m => m.BillingZip, "", new { @class = "text-danger" })
-                                                        </p>
-                                                        <p class="form-row form-row form-row-wide address-field input-field " id="billing_address_1_field">
-                                                            <label for="billing_address_1" class=""><span class="fa fa-globe"></span>Country <abbr class="required" title="required">*</abbr></label>
-                                                            @Html.DropDownListFor(m => m.BillingCountryId, new SelectList(Model.Countries, "Value", "Text"), new { @class = "input-text ", @id = "cbBillingCountry", @onchange = "ChangeBillingCountry()" })
-                                                        </p>
-                                                        <div class="clear"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-2">
-                                                    <div>
-                                                        <h3 class="checkbox" id="ship-to-different-address">
-                                                            <label>
-                                                                <input id="cbDifferentShip" class="input-checkbox" type="checkbox" name="ship_to_different_address" value="1" onclick="ChangeShipping();"> Ship to a different address?
-                                                            </label>
-                                                        </h3>
-                                                        <div class="shipping_address" style="display: none;" id="dShipping">
+                                                            </p>
+                                                            <div class="clear"></div>
+                                                            <p class="form-row form-row form-row-wide input-field" id="billing_company_field">
+                                                                <label for="billing_company" class=""><span class="fa fa-phone"></span>Phone</label>
+                                                                @Html.EditorFor(m => m.CustomerPhone, new { @class = "input-text " })
+                                                                @Html.ValidationMessageFor(m => m.CustomerPhone, "", new { @class = "text-danger" })
+                                                            </p>
                                                             <p class="form-row form-row form-row-first input-field " id="billing_email_field">
-                                                                <label for="billing_email" class=""><span class="fa fa-map-marker"></span>Address <abbr class="required" title="required">*</abbr></label>
-                                                                @Html.EditorFor(m => m.DeliveryAddress, new { @class = "input-text " })
-                                                                @Html.ValidationMessageFor(m => m.DeliveryAddress, "", new { @class = "text-danger" })
+                                                                <label for="billing_email" class=""><span class="fa fa-map-marker"></span>Address<abbr class="required" title="required">*</abbr></label>
+                                                                @Html.EditorFor(m => m.BillingAddress, new { @class = "input-text" })
+                                                                @Html.ValidationMessageFor(m => m.BillingAddress, "", new { @class = "text-danger" })
                                                             </p>
                                                             <p class="form-row form-row form-row-last input-field " id="billing_phone_field">
                                                                 <label for="billing_phone" class=""><span class="fa fa-building-o"></span>City <abbr class="required" title="required">*</abbr></label>
-                                                                @Html.EditorFor(m => m.DeliveryCity, new { @class = "input-text " })
-                                                                @Html.ValidationMessageFor(m => m.DeliveryCity, "", new { @class = "text-danger" })
+                                                                @Html.EditorFor(m => m.BillingCity, new { @class = "input-text " })
+                                                                @Html.ValidationMessageFor(m => m.BillingCity, "", new { @class = "text-danger" })
                                                             </p>
                                                             <div class="clear"></div>
                                                             <p class="form-row form-row-wide input-field">
-                                                                <label for="calc_billing_country"><span class="fa fa-truck"></span>Zip </label>
-                                                                @Html.EditorFor(m => m.DeliveryZip, new { @class = "input-text " })
-                                                                @Html.ValidationMessageFor(m => m.DeliveryZip, "", new { @class = "text-danger" })
+                                                                <label for="calc_billing_country"><span class="fa fa-truck"></span>Zip</label>
+                                                                @Html.EditorFor(m => m.BillingZip, new { @class = "input-text " })
+                                                                @Html.ValidationMessageFor(m => m.BillingZip, "", new { @class = "text-danger" })
                                                             </p>
-                                                            <p class="form-row form-row form-row-wide address-field input-field     " id="billing_address_1_field">
+                                                            <p class="form-row form-row form-row-wide address-field input-field " id="billing_address_1_field">
                                                                 <label for="billing_address_1" class=""><span class="fa fa-globe"></span>Country <abbr class="required" title="required">*</abbr></label>
-                                                                @Html.DropDownListFor(m => m.DeliveryCountryId, Model.Countries, new { @class = "input-text ", @id = "cbDeliveryCountry", @onchange = "ChangeDeliveryCountry()" })
+                                                                @Html.DropDownListFor(m => m.BillingCountryId, new SelectList(Model.Countries, "Value", "Text"), new { @class = "input-text ", @id = "cbBillingCountry", @onchange = "ChangeBillingCountry()" })
                                                             </p>
                                                             <div class="clear"></div>
                                                         </div>
-                                                        <p class="form-row form-row notes textarea-field" id="order_comments_field">
-                                                            <label for="order_comments" class=""><span class="fa fa-edit"></span>Order Notes</label>
-                                                            @Html.TextAreaFor(m => m.Note, new { @class = "input-text ", @rows = "2", @cols = "5" })
-                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <div>
+                                                            <h3 class="checkbox" id="ship-to-different-address">
+                                                                <label>
+                                                                    <input id="cbDifferentShip" class="input-checkbox" type="checkbox" name="ship_to_different_address" value="1" onclick="ChangeShipping();"> Ship to a different address?
+                                                                </label>
+                                                            </h3>
+                                                            <div class="shipping_address" style="display: none;" id="dShipping">
+                                                                <p class="form-row form-row form-row-first input-field " id="billing_email_field">
+                                                                    <label for="billing_email" class=""><span class="fa fa-map-marker"></span>Address <abbr class="required" title="required">*</abbr></label>
+                                                                    @Html.EditorFor(m => m.DeliveryAddress, new { @class = "input-text " })
+                                                                    @Html.ValidationMessageFor(m => m.DeliveryAddress, "", new { @class = "text-danger" })
+                                                                </p>
+                                                                <p class="form-row form-row form-row-last input-field " id="billing_phone_field">
+                                                                    <label for="billing_phone" class=""><span class="fa fa-building-o"></span>City <abbr class="required" title="required">*</abbr></label>
+                                                                    @Html.EditorFor(m => m.DeliveryCity, new { @class = "input-text " })
+                                                                    @Html.ValidationMessageFor(m => m.DeliveryCity, "", new { @class = "text-danger" })
+                                                                </p>
+                                                                <div class="clear"></div>
+                                                                <p class="form-row form-row-wide input-field">
+                                                                    <label for="calc_billing_country"><span class="fa fa-truck"></span>Zip </label>
+                                                                    @Html.EditorFor(m => m.DeliveryZip, new { @class = "input-text " })
+                                                                    @Html.ValidationMessageFor(m => m.DeliveryZip, "", new { @class = "text-danger" })
+                                                                </p>
+                                                                <p class="form-row form-row form-row-wide address-field input-field     " id="billing_address_1_field">
+                                                                    <label for="billing_address_1" class=""><span class="fa fa-globe"></span>Country <abbr class="required" title="required">*</abbr></label>
+                                                                    @Html.DropDownListFor(m => m.DeliveryCountryId, Model.Countries, new { @class = "input-text ", @id = "cbDeliveryCountry", @onchange = "ChangeDeliveryCountry()" })
+                                                                </p>
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                            <p class="form-row form-row notes textarea-field" id="order_comments_field">
+                                                                <label for="order_comments" class=""><span class="fa fa-edit"></span>Order Notes</label>
+                                                                @Html.TextAreaFor(m => m.Note, new { @class = "input-text ", @rows = "2", @cols = "5" })
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-5 col-sm-6">
-                                            <h3 id="order_review_heading">Your order</h3>
-                                            <div id="order_review" class="order-review woocommerce-checkout-review-order">
-                                                <input type="hidden" id="hDeliveryPrice" value='@Model.DeliveryPrice.ToString("#.00")' />
-                                                <table class="shop_table woocommerce-checkout-review-order-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="product-name">Product</th>
-                                                            <th class="product-total">Total</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var p in Model.Details)
-                                                        {
-                                                            <tr class="cart_item">
-                                                                <td class="product-name">@p.ProductName <strong class="product-quantity">× @p.Quantity</strong></td>
-                                                                <td class="product-total">
-                                                                    <span class="amount">&euro; @p.Total.ToString("#.00")</span>
-                                                                    <input type="hidden" id="hTotalRow_@p.ProductId" value="@p.Total.ToString("#.00")" />
-                                                                </td>
+                                            <div class="col-md-5 col-sm-6">
+                                                <h3 id="order_review_heading">Your order</h3>
+                                                <div id="order_review" class="order-review woocommerce-checkout-review-order">
+                                                    <input type="hidden" id="hDeliveryPrice" value='@Model.DeliveryPrice.ToString("#.00")' />
+                                                    <table class="shop_table woocommerce-checkout-review-order-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="product-name">Product</th>
+                                                                <th class="product-total">Total</th>
                                                             </tr>
-                                                        }
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr class="cart-subtotal">
-                                                            <th>Subtotal</th>
-                                                            <td><span class="amount">&euro;<span id="sSubTotal"></span></span></td>
-                                                        </tr>
-                                                        <tr class="shipping">
-                                                            <th>Shipping</th>
-                                                            <td><span class="amount">&euro;<span id="sShipping"></span></span></td>
-                                                        </tr>
-                                                        <tr class="order-total">
-                                                            <th>Total</th>
-                                                            <td><strong><span class="amount">&euro;<span id="sTotal"></span></span></strong></td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                                <br/>
-                                                <input type="submit" class="button alt btn-lg" name="woocommerce_checkout_place_order" id="place_order" value="Place order" data-value="Place order">
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var p in Model.Details)
+                                                            {
+                                                                <tr class="cart_item">
+                                                                    <td class="product-name">@p.ProductName <strong class="product-quantity">× @p.Quantity</strong></td>
+                                                                    <td class="product-total">
+                                                                        <span class="amount">&euro; @p.Total.ToString("#.00")</span>
+                                                                        <input type="hidden" id="hTotalRow_@p.ProductId" value="@p.Total.ToString("#.00")" />
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr class="cart-subtotal">
+                                                                <th>Subtotal</th>
+                                                                <td><span class="amount">&euro;<span id="sSubTotal"></span></span></td>
+                                                            </tr>
+                                                            <tr class="shipping">
+                                                                <th>Shipping</th>
+                                                                <td><span class="amount">&euro;<span id="sShipping"></span></span></td>
+                                                            </tr>
+                                                            <tr class="order-total">
+                                                                <th>Total</th>
+                                                                <td><strong><span class="amount">&euro;<span id="sTotal"></span></span></strong></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                    <br />
+                                                    <input type="submit" class="button alt btn-lg" name="woocommerce_checkout_place_order" id="place_order" value="Place order" data-value="Place order">
+                                                </div>
                                             </div>
-                                        </div>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </article>
+                            </article>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 }
 
 <script>

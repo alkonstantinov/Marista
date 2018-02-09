@@ -138,7 +138,15 @@ namespace Marista.Site.Controllers
         {
             int customerId = -1;
             if (Session["CustomerId"] != null)
+            {
                 customerId = (int)Session["CustomerId"];
+                ViewBag.login = false;
+            }
+            else
+            {
+                ViewBag.login = true;
+                
+            }
             var model = db.GetLastCheckoutData(customerId);
             model.Countries = db.GetCountries();
             CartVM cart = (CartVM)Session["Cart"];

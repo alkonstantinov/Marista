@@ -10,6 +10,8 @@ namespace Marista.Common.ViewModels
 {
     public class CustomerVM
     {
+        public bool BackToCheckout { get; set; }
+
         public int CustomerId { get; set; }
 
         public int? BPId { get; set; }

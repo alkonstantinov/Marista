@@ -9,24 +9,17 @@
     <div class="container">
         <ul>
             <li>
-                <a class="home" href="#">Home</a>
+                <a class="home" href="/home/index">Home</a>
             </li>
             <li>
                 <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
             </li>
             <li>
-                <a href="shop.html">E-shop</a>
-            </li>
-            <li>
-                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-            </li>
-            <li>
-                My Account
+                Login
             </li>
         </ul>
     </div>
 </div>
-
 <div id="main" class="column1">
     <!-- main -->
     <div class="container">
@@ -45,6 +38,7 @@
                                         <h2>Login</h2>
                                         @using (Html.BeginForm("login", "customer", FormMethod.Post))
                                         {
+                                            @Html.HiddenFor(m=>m.BackToCheckout)
                                             <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-first input-field">
                                                 <label for="username"><span class="fa fa-user"></span>Username <span class="required">*</span></label>
                                                 @Html.EditorFor(m => m.Username, new { @class = "input-text" })

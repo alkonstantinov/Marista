@@ -1,14 +1,28 @@
 ﻿@model ProductVM
+@Html.HiddenFor(m=>m.ProductId)
+<div class="breadcrumbs">
+    <!-- breadcrumbs -->
+    <div class="container">
+        <ul>
+            <li>
+                <a class="home" href="/home/index">Home</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                Product
+            </li>
+        </ul>
+    </div>
+</div>
 <div id="main" class="column1">
     <!-- main -->
     <div class="container">
         <div class="row">
             <div class="main-content col-sm-12 col-md-12">
                 <!-- main content -->
-                <div class="woocommerce-message alert alert-add-to-cart">
-                    <a href="cart.html" class="button view-cart">View Cart</a> <span>“Day Face Cream” has been added to your cart.</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                </div>
+
                 <div id="container">
                     <div id="content" role="main">
                         <div class="product type-product">
@@ -23,7 +37,7 @@
                                                 <div class="price-box bottom-right">
                                                     <div>
                                                         <div class="price">
-                                                            <span class="amount">$@Model.Price</span>
+                                                            <span class="amount">&euro;@Model.Price.ToString("0.##")</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -41,21 +55,21 @@
                                         </div>
                                         <form class="cart" method="post" enctype="multipart/form-data">
                                             <div class="quantity buttons_added">
-                                                <input type="button" value="-" class="minus">
-                                                <input type="number" step="1" min="1" max="10" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="[0-9]*" inputmode="numeric">
-                                                <input type="button" value="+" class="plus">
+                                                <input type="button" value="-" class="minus" onclick="ChangeAmmount(-1)">
+                                                <input type="number" step="1" min="1" max="10" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="[0-9]*" inputmode="numeric" id="tbQuantity">
+                                                <input type="button" value="+" class="plus" onclick="ChangeAmmount(1)">
                                             </div>
-                                            <button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
+                                            <button type="button" class="single_add_to_cart_button button alt" onclick="AddTimes()">Add to cart</button>
                                         </form>
                                         <div class="add-links show-all">
                                             <div class="addthis-icons clearfix">
                                                 <span class="share">Share: </span>
                                                 <!-- AddThis Custom -->
                                                 <div class="social-links" addthis:url="#" addthis:title="Day Face Cream">
-                                                    <a target="_blank" class="social-link facebook" href="#" title="" data-toggle="tooltip" data-original-title="Facebook">
+                                                    <a class="social-link facebook" title="" data-toggle="tooltip" data-original-title="Facebook" onclick="fbshareCurrentPage()">
                                                         <span class="fa fa-facebook"></span>
                                                     </a>
-                                                    <a target="_blank" class="social-link twitter" href="#" title="" data-toggle="tooltip" data-original-title="Twitter">
+                                                    <a class="social-link twitter" title="" data-toggle="tooltip" data-original-title="Twitter" onclick="tweetCurrentPage()">
                                                         <span class="fa fa-twitter"></span>
                                                     </a>
                                                     <div class="atclear"></div>
@@ -63,9 +77,9 @@
                                             </div>
                                         </div>
                                         <div class="product_meta">
-                                            <span class="sku_wrapper"><span class="meta-label">SKU: </span><span class="sku" itemprop="sku">154544578</span></span>
+                                            @*<span class="sku_wrapper"><span class="meta-label">SKU: </span><span class="sku" itemprop="sku">154544578</span></span>*@
                                             <span class="posted_in">
-                                                <span class="meta-label">Categories: </span>                                 
+                                                <span class="meta-label">Categories: </span>
                                                 <a href="#" rel="tag">@Model.VCategoryCategoryName</a>,
                                                 <a href="#" rel="tag">@Model.HCategoryCategoryName</a>
                                             </span>
@@ -76,7 +90,7 @@
                             <div class="woocommerce-tabs resp-vtabs" id="product-tab">
                                 <ul class="resp-tabs-list">
                                     <li aria-controls="tab_item-0" class="resp-tab-item resp-tab-active" role="tab">Description</li>
-                                    <li aria-controls="tab_item-1" class="resp-tab-item" role="tab">Additional Information</li>
+                                    @*<li aria-controls="tab_item-1" class="resp-tab-item" role="tab">Additional Information</li>*@
                                 </ul>
                                 <div class="resp-tabs-container">
                                     <h2 class="resp-accordion resp-tab-active" role="tab" aria-controls="tab_item-0"><span class="resp-arrow"></span>Description</h2>
@@ -84,11 +98,11 @@
                                         <h2>Product Description</h2>
                                         <p>@Model.Description</p>
                                     </div>
-                                    <h2 class="resp-accordion" role="tab" aria-controls="tab_item-1"><span class="resp-arrow"></span>Additional Information</h2>
-                                    <div id="tab-additional_information" class="resp-tab-content" aria-labelledby="tab_item-1">
-                                        <h2>Additional Information</h2>
-                                        <p>Integer semper quam turpis, id dapibus nunc ultrices at. Vestibulum eget orci lobortis, imperdiet diam a, ornare eros. Nam porttitor rutrum massa, eu varius velit facilisis at. Quisque porta elit et viverra suscipit. Proin laoreet, nisl et auctor mollis, felis sapien aliquet felis, nec facilisis tellus enim vitae enim. Nam rhoncus enim diam, a consequat nisi bibendum pulvinar. Donec aliquam lectus vitae ante pulvinar facilisis. Curabitur sed sem est.</p>
-                                    </div>
+                                    @*<h2 class="resp-accordion" role="tab" aria-controls="tab_item-1"><span class="resp-arrow"></span>Additional Information</h2>
+                                        <div id="tab-additional_information" class="resp-tab-content" aria-labelledby="tab_item-1">
+                                            <h2>Additional Information</h2>
+                                            <p>Integer semper quam turpis, id dapibus nunc ultrices at. Vestibulum eget orci lobortis, imperdiet diam a, ornare eros. Nam porttitor rutrum massa, eu varius velit facilisis at. Quisque porta elit et viverra suscipit. Proin laoreet, nisl et auctor mollis, felis sapien aliquet felis, nec facilisis tellus enim vitae enim. Nam rhoncus enim diam, a consequat nisi bibendum pulvinar. Donec aliquam lectus vitae ante pulvinar facilisis. Curabitur sed sem est.</p>
+                                        </div>*@
 
                                 </div>
                             </div>
@@ -98,7 +112,36 @@
 
                             <div class="archive-products">
                                 <div class="product-row">
-                                    <ul class="products row clearfix grid">                                      
+                                    <ul class="products row clearfix grid">
+                                        @foreach (var rp in Model.RelatedProducts)
+                                        {
+                                            <li class="col-md-3 col-sm-4 product">
+                                                <div class="inner clearfix">
+                                                    <a href="/product/view?id=@rp.ProductId">
+                                                        <span class="product-image">
+                                                            <img width="228" height="228" src="/product/picture?id=@rp.ProductId" alt="product_03">
+                                                            <div class="price-box bottom-right">
+                                                                <span class="price"><span class="amount"><span class="">&euro;</span>@rp.Price.ToString("0.##")</span></span>
+                                                            </div>
+                                                            <div class="figcaption">
+                                                                <span class="btn btn-arrow quickview-button top-right"><span class="fa fa-search"></span></span>
+                                                            </div>
+                                                        </span>
+                                                    </a>
+                                                    <div class="product-details">
+                                                        <a class="product-loop-title" href="/product/view?id=@rp.ProductId">
+                                                            <h3>@rp.Name</h3>
+                                                        </a>
+                                                        <div itemprop="description" class="description">
+                                                            <p>@rp.Description</p>
+                                                        </div>
+                                                        <div>
+                                                            <a class="add-to-cart-btn" style="cursor:pointer;" onclick="AddToCart(@rp.ProductId)">Add to cart</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
                                     </ul>
                                 </div>
                             </div>
@@ -109,4 +152,47 @@
         </div>
     </div>
 </div>
-  
+
+<script>
+    function AddToCart(productId) {
+        $.ajax({
+            url: "/home/addtocart?productId=" + productId,
+            method: "GET",
+            cache: false,
+            async: false,
+
+        }).done(function (res) {
+
+        }).fail(function (jqXHR, textStatus) {
+            alert(textStatus);
+        });
+        UpdateSmallCart();
+    }
+
+    function ChangeAmmount(step) {
+        var elem = $("#tbQuantity");
+        if (parseInt($(elem).val()) + step == 0)
+            return;
+        $(elem).val(parseInt($(elem).val()) + step);
+
+    }
+
+    function AddTimes() {
+        var times = parseInt($("#tbQuantity").val());
+        var productId = $("#ProductId").val(); 
+        $.ajax({
+            url: "/home/addtocart?productId=" + productId + "&times=" + times,
+            method: "GET",
+            cache: false,
+            async: false,
+
+        }).done(function (res) {
+
+        }).fail(function (jqXHR, textStatus) {
+            alert(textStatus);
+            });
+        UpdateSmallCart();
+    }
+
+    
+</script>

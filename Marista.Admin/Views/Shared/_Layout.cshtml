@@ -10,7 +10,8 @@
 </head>
 <body>
     <div class="container-fluid">
-        <nav class="navbar navbar-default">
+        <a href="@Url.Action("Index", "DashBoard")" class="btn btn-default">To start</a>
+        @*<nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -35,7 +36,7 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav>*@
         @RenderBody()
     </div>
     <script src="~/Scripts/jquery-3.2.1.js"></script>

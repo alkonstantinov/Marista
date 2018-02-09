@@ -275,6 +275,14 @@
     <Content Include="Views\Customer\GetSales.cshtml" />
     <Content Include="Views\Customer\GetSale.cshtml" />
     <Content Include="Views\Customer\Invoice.cshtml" />
+    <Content Include="Views\Home\AboutUs.cshtml" />
+    <Content Include="Views\Home\Opportunity.cshtml" />
+    <Content Include="Views\Home\MaristaCosmetics.cshtml" />
+    <Content Include="Views\Home\BusinessModel.cshtml" />
+    <Content Include="Views\Home\Benefits.cshtml" />
+    <Content Include="Views\Home\PaymentAndShipping.cshtml" />
+    <Content Include="Views\Home\TermsOfUse.cshtml" />
+    <Content Include="Views\Customer\Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

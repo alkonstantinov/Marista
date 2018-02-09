@@ -41,9 +41,16 @@ namespace Marista.DL
             var p = await db.Products
                 .Include(x => x.HCategory)
                 .Include(x => x.VCategory)
+                .Include(x=>x.RelatedFromProducts)
                 .SingleOrDefaultAsync(x => x.ProductId == id);
 
-            return _map.Map<ProductVM>(p);
+            var related = p.RelatedFromProducts;
+            List<ProductVM> lp = new List<ProductVM>();
+            foreach (var rel in related)
+                lp.Add(_map.Map<ProductVM>(rel));
+            var result = _map.Map<ProductVM>(p);
+            result.RelatedProducts = lp;
+            return result;
         }
 
         public async Task<ProductVM> Create(ProductVM pvm)

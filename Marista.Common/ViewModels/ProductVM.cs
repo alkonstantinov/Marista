@@ -58,5 +58,7 @@ namespace Marista.Common.ViewModels
         [Display(Name = "Weight")]
         public decimal Weight { get; set; }
 
+
+        public IList<ProductVM> RelatedProducts { get; set; }
     }
 }

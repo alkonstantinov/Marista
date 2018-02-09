@@ -9,19 +9,13 @@
     <div class="container">
         <ul>
             <li>
-                <a class="home" href="#">Home</a>
+                <a class="home" href="/home/index">Home</a>
             </li>
             <li>
                 <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
             </li>
             <li>
-                <a href="shop.html">E-shop</a>
-            </li>
-            <li>
-                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-            </li>
-            <li>
-                My Account
+                My account
             </li>
         </ul>
     </div>
@@ -39,25 +33,7 @@
                         </header>
                         <div class="entry-content">
                             <div class="woocommerce">
-                                <nav class="woocommerce-MyAccount-navigation">
-                                    <ul>
-                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard">
-                                            <a href="my_account.html">Dashboard</a>
-                                        </li>
-                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--orders">
-                                            <a href="my_account_orders.html">Orders</a>
-                                        </li>
-                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-address">
-                                            <a href="my_account_addresses.html">Addresses</a>
-                                        </li>
-                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account is-active">
-                                            <a href="my_account_details.html">Account Details</a>
-                                        </li>
-                                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
-                                            <a href="#">Logout</a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                @Html.Action("Menu")
                                 @using (Html.BeginForm("ChangePass", "Customer", FormMethod.Post))
                                 {
                                     @Html.HiddenFor(m=>m.CustomerId)
