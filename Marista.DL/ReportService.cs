@@ -27,14 +27,21 @@ namespace Marista.DL
 
 
             MyTeamReportVM rec = new MyTeamReportVM();
-            var myp = await db.vMyTeamReports.FirstAsync(p => p.SiteUserId == siteUserId);
-            rec.MyResult = new PyramidResultVM()
-            {
-                NB = myp.FromOthers,
-                PBV = myp.PBV,
-                Sales = myp.total.HasValue ? myp.total.Value : 0
-            };
-
+            var myp = await db.vMyTeamReports.FirstOrDefaultAsync(p => p.SiteUserId == siteUserId);
+            if (myp != null)
+                rec.MyResult = new PyramidResultVM()
+                {
+                    NB = myp.FromOthers,
+                    PBV = myp.PBV,
+                    Sales = myp.total.HasValue ? myp.total.Value : 0
+                };
+            else
+            { 
+                rec.MyResult = new PyramidResultVM();
+                rec.Team = new List<TeamReportVM>();
+                rec.Sales = new List<SaleVM>();
+                return rec;
+            }
             List<TeamReportVM> lMem = new List<TeamReportVM>();
             foreach (vMyTeamReport pir in db.vMyTeamReports.Where(p => p.PyramidParentId == myp.PyramidId))
             {
@@ -121,7 +128,7 @@ namespace Marista.DL
 
             List<BonusVM> lAllBonuses = new List<BonusVM>();
             List<BonusVM> lYearBonuses = new List<BonusVM>();
-            foreach (var fl in db.vBonuses.Where(v => v.SiteUserId == siteUserId).OrderBy(v=>v.Year).OrderBy(v=>v.Month))
+            foreach (var fl in db.vBonuses.Where(v => v.SiteUserId == siteUserId).OrderBy(v => v.Year).OrderBy(v => v.Month))
             {
                 var b = new BonusVM()
                 {

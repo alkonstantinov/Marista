@@ -34,6 +34,7 @@ namespace Marista.DL
         {
             //има ли такъв мейл
             var exists = await db.BPs.AnyAsync(bp => bp.EMail == rec.EMail);
+            exists = exists || await db.SiteUsers.AnyAsync(u => u.Username == rec.EMail);
             if (exists)
                 return 1;
             int? leaderId = null;
