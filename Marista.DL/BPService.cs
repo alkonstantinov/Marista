@@ -111,6 +111,11 @@ namespace Marista.DL
 
         }
 
+        public bool IsUpperBp(int siteUserId)
+        {
+            return db.Pyramids.First(p => p.SiteUserId == siteUserId).PyramidParentId.HasValue;
+        }
+
         public async Task<IList<BPRegVM>> GetNotApproved()
         {
             var b = await db.BPs.Where(bp => !bp.Active).OrderBy(bp => bp.BPName).ProjectToListAsync<BPRegVM>(_map.ConfigurationProvider);

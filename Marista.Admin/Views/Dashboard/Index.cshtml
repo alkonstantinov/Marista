@@ -44,7 +44,7 @@
 
             </ul>
         </div>
-        
+
     }
     <div class="col-md-3">
         <h3>Marketing Materials</h3>
@@ -60,11 +60,14 @@
         <div class="col-md-3">
             <h3>Chat</h3>
             <ul>
+                @if (ViewBag.HasParent)
+                {
+                    <li>
+                        <a href="@Url.Action("Index", "Chat", new { up = true })">Chat with head</a>
+                    </li>
+                }
                 <li>
-                    <a href="@Url.Action("Index", "BonusSize")">Chat with head</a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Index", "SOBonusSize")">Chat with children</a>
+                    <a href="@Url.Action("Index", "Chat")">Chat with children</a>
                 </li>
 
             </ul>
@@ -95,11 +98,11 @@
                 <li>
                     <a href="@Url.Action("MyProfileReport", "Reports")">My Profile Reports</a>
                 </li>
-            
-                <li>
-                    <a href="@Url.Action("MyTeamReport", "Reports")">My Team Reports</a>
-                </li>
             }
+            <li>
+                <a href="@Url.Action("MyTeamReport", "Reports")">My Team Reports</a>
+            </li>
+
         </ul>
     </div>
 

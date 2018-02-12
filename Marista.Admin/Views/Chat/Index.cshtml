@@ -8,16 +8,20 @@
     <script type="text/javascript">
         $(function () {
             var chatHub = $.connection.chatHub;
-
             // called from the server on each new message:
-            chatHub.client.SendMessage = function (fromUserId, fromUsername, date, message) {
+            chatHub.client.SendMessage = function (fromUserId, fromUsername, date, chatItem) {
                 var newMsg = $('<div class="message"></div>');
                 if (fromUserId == @ViewBag.UserId) {
                     newMsg.addClass('self');
                 }
                 var msgFrom = $('<div class="from"></div>').html(fromUsername + ': <span class="stamp">' + date + '</span>')
-                var msgText = $('<div class="text"></div>').html(message);
+                var msgText = $('<div class="text"></div>').html(chatItem.Said);
                 newMsg.append(msgFrom).append(msgText);
+                if (chatItem.FileName !== null)
+                {
+                    var msgAttachment = $('<div class="text"><a href="/Chat/GetAttachment?chatItemId=' + chatItem.ChatItemId + '">' + chatItem.FileName + '</a></div>');
+                    newMsg.append(msgAttachment);
+                }
                 $('#chat-window').append($('<div class="row"></div>').append(newMsg));
 
                 scrollBottom();
@@ -25,18 +29,23 @@
 
             // start the hub:
             $.connection.hub.start().done(function () {
+                chatHub.server.joinGroup($("#ChatId").val());
                 $('#chat-form').on('submit', function (e) {
                     e.preventDefault();
 
                     var text = $('#chat-msg').val();
-                    if (text.length < 2) {
+                    var guid = $('#hFileGuid').val();
+
+                    if (text.length < 2&&guid=="") {
                         $('#chat-msg').val('');
                         return;
                     }
 
-                    chatHub.server.sendMessage(text);
+                    chatHub.server.sendMessage(text, $("#ChatId").val(), guid);
 
                     $('#chat-msg').val('');
+                    $('#hFileGuid').val('');
+                    $('#fuFile').val('');
                     return false;
                 });
 
@@ -47,17 +56,69 @@
                 });
             });
 
+
             var scrollBottom = function () {
                 $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
             };
             scrollBottom();
         });
+
+        function GUID() {
+            var d = new Date().getTime();
+            if (window.performance && typeof window.performance.now === "function") {
+                d += performance.now(); //use high-precision timer if available
+            }
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = (d + Math.random() * 16) % 16 | 0;
+                d = Math.floor(d / 16);
+                return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            });
+        };
+
+
+        function AddAttachment () {
+            $("#hFileGuid").val(GUID());
+            var file = $("#fuFile")[0].files[0]; //Files[0] = 1st file
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (event) {
+
+                $.ajax({
+                    url: "/chat/StoreAttachmentInCache",
+                    method: "POST",
+                    cache: false,
+                    data: {
+                        guid: $("#hFileGuid").val(),
+                        content: reader.result,
+                        filename: $("#fuFile").val()
+                    },
+                    async: false,
+
+                }).done(function (res) {
+
+                }).fail(function (jqXHR, textStatus) {
+                    alert(jqXHR);
+                })
+
+            };
+            $('#chat-msg').val('');
+        };
+
     </script>
 }
 
 <h2>@ViewBag.Title #@Model.ChatId</h2>
-
+@Html.HiddenFor(m => m.ChatId)
 <div class="container chat-container">
+    <div class="row">
+        <div class="col-md-2">
+            <button type="button" class="btn btn-default" onclick="window.open('/chat/GetTxt?chatId='+$('#ChatId').val())"><i class="glyphicon glyphicon-floppy-save"></i> Save as text</button>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-default" onclick="window.open('/chat/GetPdf?chatId='+$('#ChatId').val())"><i class="glyphicon glyphicon-floppy-save"></i> Save as pdf</button>
+        </div>
+    </div>
+    <div class="clearfix"></div>
     <div id="chat-form-box" class="row">
         <form id="chat-form" method="post">
             <div class="col-sm-2 my-username">
@@ -69,18 +130,24 @@
             <div class="col-sm-4">
                 <button type="submit" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-send"></i> Send<small>press Enter</small></button>
             </div>
+
             <div class="col-sm-4 col-sm-offset-2">
-                <input type="file" name="Attachment"/>
+                <input type="hidden" id="hFileGuid" />
+                <input type="file" name="Attachment" id="fuFile" onchange="AddAttachment ()" />
             </div>
         </form>
     </div>
     <div id="chat-window" class="clearfix">
         @foreach (var ci in Model.Items)
-        {
+            {
             <div class="row">
                 <div class="message @(ci.SiteUserId == ViewBag.UserId ? "self" : "")">
                     <div class="from">@ci.SiteUserUsername: <span class="stamp">@ci.OnDate</span> </div>
                     <div class="text">@ci.Said</div>
+                    @if (ci.FileName != null)
+                    {
+                        <div class="text"><a href="/Chat/GetAttachment?chatItemId=@ci.ChatItemId">@ci.FileName</a></div>;
+                    }
                 </div>
             </div>
         }

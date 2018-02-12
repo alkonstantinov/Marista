@@ -46,6 +46,7 @@
           <Property Name="OnDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Said" Type="nvarchar(max)" />
           <Property Name="Attachment" Type="varbinary(max)" />
+          <Property Name="FileName" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Constant">
           <Key>
@@ -1214,6 +1215,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="Attachment" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Chat" Relationship="MaristaModel.fk_ChatItem_ChatId" FromRole="ChatItem" ToRole="Chat" />
           <NavigationProperty Name="SiteUser" Relationship="MaristaModel.fk_ChatItem_SiteUserId" FromRole="ChatItem" ToRole="SiteUser" />
+          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="fk_Chat_SiteUserId">
           <End Type="MaristaModel.SiteUser" Role="SiteUser" Multiplicity="1" />
@@ -1881,6 +1883,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="ChatItems">
             <EntityTypeMapping TypeName="MaristaModel.ChatItem">
               <MappingFragment StoreEntitySet="ChatItem">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="Attachment" ColumnName="Attachment" />
                 <ScalarProperty Name="Said" ColumnName="Said" />
                 <ScalarProperty Name="OnDate" ColumnName="OnDate" />

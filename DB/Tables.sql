@@ -240,8 +240,6 @@ end
 go
 
 
-insert into Chat(SiteUserId) values (1)
-go
 create table ChatItem 
 (
   ChatItemId int not null identity(1,1), -- Идентификатор на реплика
@@ -249,6 +247,7 @@ create table ChatItem
   SiteUserId int not null, -- Кой е казал репликата
   OnDate datetime2 not null, -- в колко часа
   Said nvarchar(max), -- реплика
+  FileName nvarchar(max), -- реплика
   Attachment varbinary(max), -- файл
   constraint pk_ChatItemId primary key (ChatItemId),  
   constraint fk_ChatItem_ChatId foreign key (ChatId) references Chat(ChatId),

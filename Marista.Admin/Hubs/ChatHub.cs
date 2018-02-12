@@ -17,41 +17,67 @@ namespace Marista.Admin.Hubs
         private readonly ChatService _cs = new ChatService();
         private readonly UserService _us = new UserService();
 
-        private readonly static ConcurrentDictionary<string, int> _connections = new ConcurrentDictionary<string, int>();
+        //private readonly static ConcurrentDictionary<string, int> _connections = new ConcurrentDictionary<string, int>();
 
         public async override Task OnConnected()
         {
-            
 
-            var userData = await GetUserData();
-            if (userData != null)
-            {
-                var chat = await _cs.Get(userData.UserId);
 
-                var chatGroup = $"group-{chat.ChatId}";
-                _connections.TryAdd(Context.ConnectionId, chat.ChatId);
-                await Groups.Add(Context.ConnectionId, chatGroup);
-            }
+            //var userData = await GetUserData();
+            //if (userData != null)
+            //{
+            //    var chat = await _cs.Get(userData.UserId, IsUp());
+
+            //    var chatGroup = $"group-{chat.ChatId}";
+            //    _connections.TryAdd(Context.ConnectionId, chat.ChatId);
+            //    await Groups.Add(Context.ConnectionId, chatGroup);
+            //}
 
             await base.OnConnected();
         }
 
-        public async Task SendMessage(string message)
+        public void JoinGroup(int chatId)
         {
-            var chatId = _connections[Context.ConnectionId];
+            this.Groups.Add(this.Context.ConnectionId, $"group-{chatId}");
+        }
+
+        public async Task SendMessage(string message, string chatId, string cacheId)
+        {
+            //var chatId = _connections[Context.ConnectionId];
             var userData = await GetUserData();
             if (userData != null)
             {
-                Clients.Group($"group-{chatId}").SendMessage(userData.UserId, userData.Username, DateTime.Now.ToString(), message);
-                var chatItem = new ChatItemVM()
+                ChatItemVM chatItem = null;
+                if (cacheId != null)
                 {
-                    ChatId = chatId,
-                    OnDate = DateTime.Now,
-                    SiteUserId = userData.UserId,
-                    Said = message,
-                    Attachment = null
-                };
-                await _cs.CreateChatItem(chatItem);
+                    AttachmentVM att = HttpContext.Current.Cache[cacheId] as AttachmentVM;
+                    chatItem = new ChatItemVM()
+                    {
+                        ChatId = int.Parse(chatId),
+                        OnDate = DateTime.Now,
+                        SiteUserId = userData.UserId,
+                        FileName = System.IO.Path.GetFileName(att.Filename),
+                        Said = message,
+                        Attachment = att.Content
+                    };
+                    
+                }
+                else
+                {
+                    chatItem = new ChatItemVM()
+                    {
+                        ChatId = int.Parse(chatId),
+                        OnDate = DateTime.Now,
+                        SiteUserId = userData.UserId,
+                        Said = message,
+                        Attachment = null,
+                        FileName = null
+                    };
+                    await _cs.CreateChatItem(chatItem);
+                }
+                Int32 id = await _cs.CreateChatItem(chatItem);
+                chatItem.ChatItemId = id;
+                Clients.Group($"group-{chatId}").SendMessage(userData.UserId, userData.Username, DateTime.Now.ToString(), chatItem);
             }
         }
 
@@ -59,8 +85,14 @@ namespace Marista.Admin.Hubs
         {
             var cookie = Context.RequestCookies["ASP.NET_SessionId"];
             if (cookie == null) return null;
-            
+
             return await _us.GetBySessionId(cookie.Value);
         }
+
+        //private bool IsUp()
+        //{
+        //    var s = Context.Request.QueryString["up"];
+        //    return !string.IsNullOrEmpty(s) && bool.Parse(s);
+        //}
     }
 }

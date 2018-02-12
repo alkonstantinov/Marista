@@ -1,0 +1,24 @@
+﻿@model ChatVM
+@{
+    ViewBag.Title = "Chat";
+}
+
+<h2>@ViewBag.Title #@Model.ChatId</h2>
+@Html.HiddenFor(m => m.ChatId)
+<div class="container chat-container">
+    <div id="chat-window" class="clearfix" style="overflow-y:auto; height:auto">
+        @foreach (var ci in Model.Items)
+            {
+            <div class="row">
+                <div class="message @(ci.SiteUserId == ViewBag.UserId ? "self" : "")">
+                    <div class="from">@ci.SiteUserUsername: <span class="stamp">@ci.OnDate</span> </div>
+                    <div class="text">@ci.Said</div>
+                    @if (ci.FileName != null)
+                    {
+                        <div class="text"><a href="/Chat/GetAttachment?chatItemId=@ci.ChatItemId">@ci.FileName</a></div>;
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

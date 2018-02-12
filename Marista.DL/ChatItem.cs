@@ -20,6 +20,7 @@ namespace Marista.DL
         public System.DateTime OnDate { get; set; }
         public string Said { get; set; }
         public byte[] Attachment { get; set; }
+        public string FileName { get; set; }
     
         public virtual Chat Chat { get; set; }
         public virtual SiteUser SiteUser { get; set; }

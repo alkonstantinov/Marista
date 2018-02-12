@@ -336,6 +336,7 @@
     <Content Include="Views\Reports\MyTeamReport.cshtml" />
     <Content Include="Views\Reports\MyProfileReport.cshtml" />
     <Content Include="Views\Reports\MonthlyReports.cshtml" />
+    <Content Include="Views\Chat\PlainChat.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Marista.DL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace Marista.Admin.Controllers
 {
     public class DashboardController : BaseController
     {
+        BPService bps = new BPService();
         public DashboardController()
         {
 
@@ -27,6 +29,7 @@ namespace Marista.Admin.Controllers
         {
             ViewBag.Username = this.UserData.Username;
             ViewBag.LevelId = this.UserData.LevelId;
+            ViewBag.HasParent = bps.IsUpperBp(this.UserData.UserId);
             return View();
         }
     }
