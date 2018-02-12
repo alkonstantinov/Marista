@@ -3,8 +3,6 @@
     ViewBag.Title = "Chat";
 }
 
-<h2>@ViewBag.Title #@Model.ChatId</h2>
-@Html.HiddenFor(m => m.ChatId)
 <div class="container chat-container">
     <div id="chat-window" class="clearfix" style="overflow-y:auto; height:auto">
         @foreach (var ci in Model.Items)

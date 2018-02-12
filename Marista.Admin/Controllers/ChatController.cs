@@ -20,7 +20,7 @@ namespace Marista.Admin.Controllers
     {
         private readonly ChatService _cs = new ChatService();
 
-        public async Task<ActionResult> Index(bool up=false)
+        public async Task<ActionResult> Index(bool up = false)
         {
             if (this.UserData == null || (this.UserData != null && this.UserData.LevelId != 2))
             {
@@ -89,21 +89,20 @@ namespace Marista.Admin.Controllers
             return fc;
         }
 
-        public async Task<ActionResult> PlainChat(int chatId)
+        public async Task<ActionResult> PlainChat(int chatId, int userId)
         {
-            ViewBag.UserId = this.UserData.UserId;
-            ViewBag.Username = this.UserData.Username;
 
             var c = await _cs.GetWholeChat(chatId);
+            ViewBag.UserId = userId;
             return View(c);
         }
 
 
-        string GetPdfHtml(int chatId)
+        string GetPdfHtml(int chatId, int userId)
         {
             string wkhtmlPath = ConfigurationManager.AppSettings["PATHTOWKHTMLTOPDF"];
             string url = ConfigurationManager.AppSettings["URLTOCHAT"];
-            string printUrl = url + "?chatid=" + chatId;
+            string printUrl = url + "?chatid=" + chatId + "&userId=" + userId;
             string pdf_path = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".pdf");
 
             ProcessStartInfo psi = new ProcessStartInfo();
@@ -136,7 +135,7 @@ namespace Marista.Admin.Controllers
 
         public async Task<ActionResult> GetPdf(int chatId)
         {
-            string fnm = GetPdfHtml(chatId);
+            string fnm = GetPdfHtml(chatId, this.UserData.UserId);
             var fc = new FileContentResult(System.IO.File.ReadAllBytes(fnm), "application/octet-stream");
             System.IO.File.Delete(fnm);
             fc.FileDownloadName = "chat.pdf";
