@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*** CONTENT ***/
 /*****************************************************************/
 /*
@@ -17858,10 +17858,10 @@ ul.woocommerce-error .fa,
   font-size: 27px;
 }
 .product-essential .price-box .price {
-  margin-top: 30px;
+  margin-top: 46px;
   line-height: 1.2;
   display: inline-block;
-  font-size: 60px;
+  font-size: 36px;
 }
 
 @media (max-width: 1199px) {
@@ -18071,8 +18071,8 @@ ul.woocommerce-error .fa,
 }
 .products .product-image .price-box .price {
   font-family: "cormorant_garamondbold", serif;
-  margin-top: 22px;
-  font-size: 36px;
+  margin-top: 31px;
+  font-size: 26px;
 }
 @media (max-width: 1199px) {
   .products .product-image .price-box .price {
@@ -18692,6 +18692,7 @@ h1.product_title {
 .minicart-actions .total .amount {
   font-size: 18px;
 }
+
 @media (max-width: 991px) {
   .sidebar .minicart-actions .total {
     width: auto;
@@ -27326,8 +27327,6 @@ body .flex-control-paging li a.flex-active {
 ul.woocommerce-thankyou-order-details {
 	font-size:20px !important;
 }
-
-
 
 
 

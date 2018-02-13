@@ -1,0 +1,63 @@
+﻿@model Marista.Common.ViewModels.SearchBPVM
+
+@{
+    ViewBag.Title = "FilterBPs";
+}
+
+<div class="container chat-container">
+    @using (Html.BeginForm("DoFilterBPs", "BPReg", FormMethod.Post))
+    {
+        <div id="chat-form-box" class="row">
+            <div class="col-sm-2">
+                Search:
+            </div>
+            <div class="col-sm-3">
+                @Html.TextBoxFor(m => m.SS, new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                Country:
+            </div>
+            <div class="col-sm-3">
+                @Html.DropDownListFor(m => m.CountryId, Model.Countries, "", new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-primary" onclick="Search()">Search</button>
+            </div>
+
+        </div>
+        <div id="chat-window" class="clearfix">
+            @if (Model.BPs != null)
+            {
+                foreach (var item in Model.BPs)
+                {
+                    <div class="row">
+                        <input type="checkbox" id="cbBP_@item.BPId" name="cbBP_@item.BPId" value="@item.BPId" />@item.BPName
+
+                    </div>
+                }
+            }
+
+            <div class="row">
+                @Html.TextAreaFor(m => m.MailText, new { @class = "form-control" })
+                <button class="btn btn-primary" onclick="Send()">Send</button>
+                @if (ViewBag.ok == true)
+                {
+                    <div class="alert-info">Message sent!</div>
+                }
+            </div>
+        </div>
+
+
+    }
+</div>
+<script>
+    function Send() {
+        var form = $("form");
+        $(form).attr('action', '/bpreg/MailFilterBPs').submit();
+    }
+
+    function Search() {
+        var form = $("form");
+        $(form).attr('action', '/bpreg/DoFilterBPs').submit();
+    }
+</script>

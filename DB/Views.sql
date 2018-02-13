@@ -12,7 +12,7 @@ create view vSalesTotal as
     c.SiteUserId,
     cu.CustomerName,
     (
-      select sum (sd.Price*cast(sd.Quantity as decimal(10,2))) 
+      select sum (sd.Price*cast(sd.Quantity as decimal(10,2))*(cast (100 as decimal(10,2))-sd.discount)/cast(100 as decimal)) 
       from SaleDetail sd
       where sd.SaleId = s.SaleId
     ) Total

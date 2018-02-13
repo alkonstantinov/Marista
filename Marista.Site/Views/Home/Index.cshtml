@@ -101,7 +101,7 @@
                                                             <span class="product-image">
                                                                 <img width="228" height="228" src="/Product/Picture?id=@p.ProductId" alt="@p.Name">
                                                                 <div class="price-box bottom-right">
-                                                                    <span class="price"><span class="amount"><span class="">&euro; </span>@p.Price.ToString("0.##")</span></span>
+                                                                    <span class="price"><span class="amount"><span class="">&euro; </span>@((p.Price * 1.2M).ToString("#.00"))</span></span>
                                                                 </div>
                                                                 <div class="figcaption">
                                                                     <span class="btn btn-arrow quickview-button top-right"><span class="fa fa-search"></span></span>

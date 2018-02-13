@@ -164,6 +164,10 @@
                                                                 <td><span class="amount">&euro;<span id="sSubTotal"></span></span></td>
                                                             </tr>
                                                             <tr class="shipping">
+                                                                <th>VAT</th>
+                                                                <td><span class="amount">&euro;<span id="sVat"></span></span></td>
+                                                            </tr>
+                                                            <tr class="shipping">
                                                                 <th>Shipping</th>
                                                                 <td><span class="amount">&euro;<span id="sShipping"></span></span></td>
                                                             </tr>
@@ -234,9 +238,11 @@
             }
         );
         var delivery = parseFloat($("#hDeliveryPrice").val());
+        var vat = subtotal * 0.2;
         $("#sSubTotal").text(subtotal.toFixed(2));
+        $("#sVat").text(vat.toFixed(2));
         $("#sShipping").text(delivery.toFixed(2));
-        $("#sTotal").text((delivery + subtotal).toFixed(2));
+        $("#sTotal").text((delivery + subtotal + vat).toFixed(2));
 
     }
 

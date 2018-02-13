@@ -41,7 +41,7 @@ namespace Marista.DL
             var p = await db.Products
                 .Include(x => x.HCategory)
                 .Include(x => x.VCategory)
-                .Include(x=>x.RelatedFromProducts)
+                .Include(x => x.RelatedFromProducts)
                 .SingleOrDefaultAsync(x => x.ProductId == id);
 
             var related = p.RelatedFromProducts;
@@ -273,5 +273,44 @@ namespace Marista.DL
                 Password = password
             };
         }
+
+        private void SavePyramidValues(Pyramid pyramid, CheckoutVM model)
+        {
+            pyramid.PBV += model.SubTotal;
+            decimal sales = 0;
+            foreach (var p in model.Details)
+                sales += (0.23M - p.Discount) * p.Price * p.Quantity / 100M;
+            pyramid.SaleBonus += sales;
+            db.SaveChanges();
+        }
+
+        public void AddPyramidValuesByCoupon(CheckoutVM model)
+        {
+
+            var coupon = db.Coupons.First(c => c.CouponId == model.CouponId);
+            var pyramid = db.Pyramids.First(p => p.SiteUserId == coupon.SiteUserId);
+
+            SavePyramidValues(pyramid, model);
+        }
+
+
+        public void AddPyramidValuesToBP(CheckoutVM model, int customerId)
+        {
+
+            var customer = db.Customers.First(c => c.CustomerId == customerId);
+            var bp = db.BPs.First(b => b.BPId == customer.BPId);
+            var pyramid = db.Pyramids.First(p => p.SiteUserId == bp.SiteUserId);
+            SavePyramidValues(pyramid, model);
+
+        }
+
+        public void AddPyramidValuesRandom(CheckoutVM model)
+        {
+
+            var pyramid = db.Pyramids.Where(p => p.PyramidParentId == null).OrderBy(p => Guid.NewGuid()).FirstOrDefault();
+            if (pyramid != null)
+                SavePyramidValues(pyramid, model);
+        }
+
     }
 }

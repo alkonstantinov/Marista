@@ -75,6 +75,7 @@
     <Compile Include="ViewModels\RelatedProductVM.cs" />
     <Compile Include="ViewModels\SaleDetailVM.cs" />
     <Compile Include="ViewModels\SaleVM.cs" />
+    <Compile Include="ViewModels\SearchBPVM.cs" />
     <Compile Include="ViewModels\ShopItemVM.cs" />
     <Compile Include="ViewModels\ShopVM.cs" />
     <Compile Include="ViewModels\SmallCartInfoVM.cs" />

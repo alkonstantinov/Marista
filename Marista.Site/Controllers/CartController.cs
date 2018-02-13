@@ -128,9 +128,11 @@ namespace Marista.Site.Controllers
                 foreach (var p in cart.Products)
                 {
                     result.ItemsCount += p.Quantity;
-                    result.Price += p.Price * p.Quantity * (100 - p.Discount) / 100;
+                    result.Price += p.Price * p.Quantity * (100 - p.Discount) / 100 * 1.2M;
                 }
             }
+
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -145,7 +147,7 @@ namespace Marista.Site.Controllers
             else
             {
                 ViewBag.login = true;
-                
+
             }
             var model = db.GetLastCheckoutData(customerId);
             model.Countries = db.GetCountries();
@@ -214,6 +216,20 @@ namespace Marista.Site.Controllers
 
             model.CustomerId = (int)Session["CustomerId"];
             db.SaveSale(model);
+
+            if (model.CouponId.HasValue)
+            {
+                db.AddPyramidValuesByCoupon(model);
+            }
+            else
+                if (Session["IsBP"] != null && (bool)Session["IsBP"])
+            {
+                db.AddPyramidValuesToBP(model, (int)Session["CustomerId"]);
+            }
+            else
+            {
+                db.AddPyramidValuesRandom(model);
+            }
             return RedirectToAction("Index", "Home");
         }
 

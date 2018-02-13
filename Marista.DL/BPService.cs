@@ -114,7 +114,8 @@ namespace Marista.DL
 
         public bool IsUpperBp(int siteUserId)
         {
-            return db.Pyramids.First(p => p.SiteUserId == siteUserId).PyramidParentId.HasValue;
+            var pyr = db.Pyramids.FirstOrDefault(p => p.SiteUserId == siteUserId);
+            return pyr != null && pyr.PyramidParentId.HasValue;
         }
 
         public async Task<IList<BPRegVM>> GetNotApproved()
@@ -129,13 +130,40 @@ namespace Marista.DL
             return _map.Map<BPRegVM>(b);
         }
 
-        
+
         public async Task<BPRegVM> Approve(int bpId)
         {
             var b = await db.BPs.FirstAsync(bp => bp.BPId == bpId);
             b.Active = true;
             await db.SaveChangesAsync();
             return _map.Map<BPRegVM>(b);
+        }
+
+        public IEnumerable<SelectListItem> GetCountries()
+        {
+
+            return db.Countries.OrderBy(o => o.CountryName).Select(c => new SelectListItem() { Text = c.CountryName, Value = c.CountryId.ToString() }).ToList(); ;
+        }
+
+        public async Task Search(SearchBPVM model)
+        {
+            var result = db.BPs.Where(b =>
+            (string.IsNullOrEmpty(model.SS) || b.BPName.Contains(model.SS) || b.EMail.Contains(model.SS))
+            &&
+            (model.CountryId == null || b.CountryId == model.CountryId)
+            ).Take(100);
+
+            model.BPs = await result.ProjectToListAsync<BPRegVM>(_map.ConfigurationProvider);
+            model.Countries = GetCountries();
+
+
+        }
+
+
+        public async Task<BPRegVM> GetBP(int id)
+        {
+            return _map.Map<BPRegVM>(await db.BPs.FirstAsync(item => item.BPId == id));
+
         }
 
     }

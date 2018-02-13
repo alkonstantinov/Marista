@@ -1,4 +1,5 @@
 ﻿using Marista.Admin.Filters;
+using Marista.Common.Tools;
 using Marista.Common.ViewModels;
 using Marista.DL;
 using PagedList;
@@ -93,6 +94,40 @@ namespace Marista.Admin.Controllers
             fc.FileDownloadName = docs.FileName;
             return fc;
         }
+
+        [HttpGet]
+        public async Task<ActionResult> FilterBPs(SearchBPVM model)
+        {
+            if (model == null)
+                model = new SearchBPVM();
+            model.Countries = db.GetCountries();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DoFilterBPs(SearchBPVM model)
+        {
+            await db.Search(model);
+            return View("FilterBPs", model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> MailFilterBPs(SearchBPVM model)
+        {
+            ViewBag.ok = true;
+            foreach (var item in Request.Form.AllKeys.Where(k => k.StartsWith("cbBP_")))
+            {
+                var bp = await db.GetBP(int.Parse(Request.Form[item]));
+                new Mailer().SendMailSpecific(
+                    model.MailText,
+                    bp.EMail,
+                    "Mail from Marista"
+                    );
+            }
+            model.Countries = db.GetCountries();
+            return View ("FilterBPs", model);
+        }
+
 
     }
 }

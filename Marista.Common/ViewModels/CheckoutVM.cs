@@ -61,6 +61,8 @@ namespace Marista.Common.ViewModels
         public decimal SubTotal {
             get {
                 decimal result = 0;
+                if (Details == null)
+                    return 0;
                 foreach (var sd in Details)
                 {
                     result += sd.Price * sd.Quantity * (100.0M - sd.Discount) / 100.0M;

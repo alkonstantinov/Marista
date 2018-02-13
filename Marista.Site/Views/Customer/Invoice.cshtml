@@ -191,9 +191,9 @@
                     @{rowNo++;}
                     <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" COLSPAN=2 ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;@Html.Raw("@")"><FONT FACE="Open Sans">@sd.ProductName</FONT></TD>
                     <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="1" SDNUM="1033;1033;0"><FONT FACE="Open Sans">@sd.Quantity</FONT></TD>
-                    <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="10" SDNUM="1033;1033;0.00"><FONT FACE="Open Sans">@Convert.ToDecimal(sd.Price / 1.2M).ToString("0.##")</FONT></TD>
+                    <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="10" SDNUM="1033;1033;0.00"><FONT FACE="Open Sans">@Convert.ToDecimal(sd.Price).ToString("#.00")</FONT></TD>
                     <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="0.1" SDNUM="1033;1033;0.00%"><FONT FACE="Open Sans">@sd.Discount%</FONT></TD>
-                    <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="9" SDNUM="1033;1033;0.00"><FONT FACE="Open Sans">@Convert.ToDecimal(sd.Total / 1.2M).ToString("0.##")</FONT></TD>
+                    <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="9" SDNUM="1033;1033;0.00"><FONT FACE="Open Sans">@Convert.ToDecimal(sd.Total).ToString("#.00")</FONT></TD>
                 </TR>
                         }
             <TR>
@@ -203,7 +203,7 @@
                 <TD ALIGN=RIGHT VALIGN=MIDDLE SDNUM="1033;1033;0.00"><FONT FACE="Open Sans"><BR></FONT></TD>
                 <TD ALIGN=RIGHT VALIGN=MIDDLE SDNUM="1033;1033;0.00"><FONT FACE="Open Sans"><BR></FONT></TD>
                 <TD ALIGN=RIGHT VALIGN=MIDDLE SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">SUBTOTAL:</FONT></B></TD>
-                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="9" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Convert.ToDecimal(Model.SubTotal / 1.2M).ToString("0.##")</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=MIDDLE SDVAL="9" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Convert.ToDecimal(Model.SubTotal).ToString("#.00")</FONT></B></TD>
             </TR>
             <TR>
                 <TD HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
@@ -212,7 +212,7 @@
                 <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
                 <TD ALIGN=RIGHT VALIGN=BOTTOM SDVAL="0.2" SDNUM="1033;1033;0%"><B><FONT FACE="Open Sans">20%</FONT></B></TD>
                 <TD ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">VAT:</FONT></B></TD>
-                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=BOTTOM SDVAL="1.8" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Convert.ToDecimal(Model.SubTotal / 6M).ToString("0.##")</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=BOTTOM SDVAL="1.8" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Convert.ToDecimal(Model.SubTotal * 0.2M).ToString("#.00")</FONT></B></TD>
             </TR>
             <TR>
                 <TD HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
@@ -221,7 +221,7 @@
                 <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
                 <TD ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;0%"><B><FONT FACE="Open Sans"><BR></FONT></B></TD>
                 <TD ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">SHIPPING &amp; HANDLING</FONT></B></TD>
-                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=BOTTOM SDVAL="7" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Model.DeliveryPrice.ToString("0.##")</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=BOTTOM SDVAL="7" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Model.DeliveryPrice.ToString("#.00")</FONT></B></TD>
             </TR>
             <TR>
                 <TD HEIGHT=19 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
@@ -229,7 +229,7 @@
                 <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
                 <TD ALIGN=LEFT VALIGN=MIDDLE SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>
                 <TD COLSPAN=2 ALIGN=RIGHT VALIGN=BOTTOM SDNUM="1033;1033;General"><B><FONT FACE="Open Sans">TOTAL:</FONT></B></TD>
-                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=BOTTOM SDVAL="17.8" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Convert.ToDecimal(Model.DeliveryPrice+Model.SubTotal).ToString("0.##")</FONT></B></TD>
+                <TD STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" ALIGN=RIGHT VALIGN=BOTTOM SDVAL="17.8" SDNUM="1033;1033;0.00"><B><FONT FACE="Open Sans">@Convert.ToDecimal(Model.DeliveryPrice + Model.SubTotal * 1.2M).ToString("#.00")</FONT></B></TD>
             </TR>
             <TR>
                 <TD HEIGHT=9 ALIGN=LEFT VALIGN=BOTTOM SDNUM="1033;1033;General"><FONT FACE="Open Sans"><BR></FONT></TD>

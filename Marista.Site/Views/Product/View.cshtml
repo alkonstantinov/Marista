@@ -1,5 +1,5 @@
 ﻿@model ProductVM
-@Html.HiddenFor(m=>m.ProductId)
+@Html.HiddenFor(m => m.ProductId)
 <div class="breadcrumbs">
     <!-- breadcrumbs -->
     <div class="container">
@@ -37,7 +37,7 @@
                                                 <div class="price-box bottom-right">
                                                     <div>
                                                         <div class="price">
-                                                            <span class="amount">&euro;@Model.Price.ToString("0.##")</span>
+                                                            <span class="amount">&euro;@((Model.Price * 1.2M).ToString("#.00"))</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -121,7 +121,7 @@
                                                         <span class="product-image">
                                                             <img width="228" height="228" src="/product/picture?id=@rp.ProductId" alt="product_03">
                                                             <div class="price-box bottom-right">
-                                                                <span class="price"><span class="amount"><span class="">&euro;</span>@rp.Price.ToString("0.##")</span></span>
+                                                                <span class="price"><span class="amount"><span class="">&euro;</span>@rp.Price.ToString("#.00")</span></span>
                                                             </div>
                                                             <div class="figcaption">
                                                                 <span class="btn btn-arrow quickview-button top-right"><span class="fa fa-search"></span></span>
@@ -179,7 +179,7 @@
 
     function AddTimes() {
         var times = parseInt($("#tbQuantity").val());
-        var productId = $("#ProductId").val(); 
+        var productId = $("#ProductId").val();
         $.ajax({
             url: "/home/addtocart?productId=" + productId + "&times=" + times,
             method: "GET",
@@ -190,9 +190,9 @@
 
         }).fail(function (jqXHR, textStatus) {
             alert(textStatus);
-            });
+        });
         UpdateSmallCart();
     }
 
-    
+
 </script>
