@@ -1,0 +1,26 @@
+﻿@model Marista.Common.ViewModels.CheckoutVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShippingLabel</title>
+</head>
+<body>
+    <div>
+        <img src="@Url.Action("GetSaleBarcode",new { saleId = Model.SaleId})" /><br />
+
+        <p><b>Customer name:</b>@Model.CustomerName</p>
+        <p><b>Phone:</b>@Model.CustomerPhone</p>
+        <p><b>Address:</b>@Model.DeliveryAddress</p>
+        <p><b>City:</b>@Model.DeliveryCity</p>
+        <p><b>Zip:</b>@Model.DeliveryZip</p>
+        <p><b>Country:</b>@Model.DeliveryCountry</p>
+    </div>
+</body>
+</html>

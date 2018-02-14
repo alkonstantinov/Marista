@@ -1,0 +1,34 @@
+﻿@model IList<Marista.Common.ViewModels.SaleVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Sales for dispatch</h2>
+
+<div class="table-responsive" id="dSales">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Date</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rec in Model)
+            {
+                <tr>
+                    <td>@rec.CustomerName</td>
+                    <td>@rec.OnDate.ToShortDateString()</td>
+                    <td>
+                        @Html.ActionLink("Packing list", "PackingList", new { saleId = rec.SaleId }, new { target = "_blank" })<br />
+                        @Html.ActionLink("Shipping label", "ShippingLabel", new { saleId = rec.SaleId }, new { target = "_blank" })<br />
+                        @Html.ActionLink("Set dispatched", "SetDispatched", new { saleId = rec.SaleId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

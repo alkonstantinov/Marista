@@ -45,8 +45,8 @@
           <Property Name="SiteUserId" Type="int" Nullable="false" />
           <Property Name="OnDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Said" Type="nvarchar(max)" />
-          <Property Name="Attachment" Type="varbinary(max)" />
           <Property Name="FileName" Type="nvarchar(max)" />
+          <Property Name="Attachment" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Constant">
           <Key>
@@ -106,8 +106,8 @@
           <Property Name="Password" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="CustomerName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="CountryId" Type="nvarchar" MaxLength="2" Nullable="false" />
           <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CountryId" Type="nvarchar" MaxLength="2" Nullable="false" />
           <Property Name="BPId" Type="int" />
         </EntityType>
         <EntityType Name="HCategory">
@@ -158,6 +158,7 @@
           <Property Name="PyramidParentId" Type="int" />
           <Property Name="PyramidSpinoffParentId" Type="int" />
           <Property Name="SiteUserId" Type="int" Nullable="false" />
+          <Property Name="SaleBonus" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="PBV" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Prcnt" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="ParentPrcnt" Type="decimal" Precision="10" Scale="2" Nullable="false" />
@@ -165,7 +166,6 @@
           <Property Name="SoPrcnt" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="FromOthers" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="ToReceive" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="SaleBonus" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="RelatedProduct">
           <Key>
@@ -193,6 +193,7 @@
             <PropertyRef Name="SaleId" />
           </Key>
           <Property Name="SaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SaleStatusId" Type="int" Nullable="false" />
           <Property Name="CustomerId" Type="int" Nullable="false" />
           <Property Name="OnDate" Type="datetime" Nullable="false" />
           <Property Name="CouponId" Type="int" />
@@ -200,14 +201,14 @@
           <Property Name="CustomerName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="CustomerEmail" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="CustomerPhone" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="BillingCountryId" Type="nvarchar" MaxLength="2" Nullable="false" />
           <Property Name="BillingAddress" Type="nvarchar(max)" Nullable="false" />
           <Property Name="BillingCity" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="BillingZip" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="DeliveryCountryId" Type="nvarchar" MaxLength="2" Nullable="false" />
           <Property Name="DeliveryAddress" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DeliveryCity" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="DeliveryZip" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="DeliveryCountryId" Type="nvarchar" MaxLength="2" Nullable="false" />
-          <Property Name="BillingCountryId" Type="nvarchar" MaxLength="2" Nullable="false" />
           <Property Name="Note" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SaleDetail">
@@ -220,6 +221,13 @@
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Discount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SaleStatus">
+          <Key>
+            <PropertyRef Name="SaleStatusId" />
+          </Key>
+          <Property Name="SaleStatusId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="SiteUser">
           <Key>
@@ -259,7 +267,7 @@ warning 6002: The table/view 'Marista.dbo.v3MonthSalesPerUser' does not have a p
           <Property Name="OnDate" Type="datetime" Nullable="false" />
           <Property Name="SiteUserId" Type="int" />
           <Property Name="CustomerName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Total" Type="decimal" Precision="38" Scale="4" />
+          <Property Name="Total" Type="decimal" Precision="38" Scale="11" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Marista.dbo.v3MonthsBonuses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -334,7 +342,7 @@ warning 6002: The table/view 'Marista.dbo.vMonthSalesPerUser' does not have a pr
             <PropertyRef Name="SiteUserId" />
           </Key>
           <Property Name="SiteUserId" Type="int" Nullable="false" />
-          <Property Name="total" Type="decimal" Precision="38" Scale="4" />
+          <Property Name="total" Type="decimal" Precision="38" Scale="11" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Marista.dbo.vMyTeamReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -351,7 +359,7 @@ warning 6002: The table/view 'Marista.dbo.vMyTeamReport' does not have a primary
           <Property Name="PyramidId" Type="int" Nullable="false" />
           <Property Name="PyramidParentId" Type="int" />
           <Property Name="SiteUserId" Type="int" Nullable="false" />
-          <Property Name="total" Type="decimal" Precision="38" Scale="4" />
+          <Property Name="total" Type="decimal" Precision="38" Scale="11" />
           <Property Name="ToReceive" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="FromOthers" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="PBV" Type="decimal" Precision="10" Scale="2" Nullable="false" />
@@ -370,7 +378,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="OnDate" Type="datetime" Nullable="false" />
           <Property Name="SiteUserId" Type="int" />
           <Property Name="CustomerName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Total" Type="decimal" Precision="38" Scale="4" />
+          <Property Name="Total" Type="decimal" Precision="38" Scale="11" />
         </EntityType>
         <Association Name="fk_BP_CountryId">
           <End Role="Country" Type="Self.Country" Multiplicity="1" />
@@ -672,6 +680,18 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Sale_SaleStatusId">
+          <End Role="SaleStatus" Type="Self.SaleStatus" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleStatus">
+              <PropertyRef Name="SaleStatusId" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="SaleStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_SaleDetail_ProductId">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="SaleDetail" Type="Self.SaleDetail" Multiplicity="*" />
@@ -728,6 +748,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySet Name="ResultHistory" EntityType="Self.ResultHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaleDetail" EntityType="Self.SaleDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaleStatus" EntityType="Self.SaleStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteUser" EntityType="Self.SiteUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SOBonusSize" EntityType="Self.SOBonusSize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VCategory" EntityType="Self.VCategory" Schema="dbo" store:Type="Tables" />
@@ -905,6 +926,10 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           </AssociationSet>
           <AssociationSet Name="fk_Sale_DeliveryCountryId" Association="Self.fk_Sale_DeliveryCountryId">
             <End Role="Country" EntitySet="Country" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Sale_SaleStatusId" Association="Self.fk_Sale_SaleStatusId">
+            <End Role="SaleStatus" EntitySet="SaleStatus" />
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
           <AssociationSet Name="fk_SaleDetail_ProductId" Association="Self.fk_SaleDetail_ProductId">
@@ -1097,6 +1122,11 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <AssociationSet Name="fk_Customer_BPId" Association="MaristaModel.fk_Customer_BPId">
             <End Role="BP" EntitySet="BPs" />
             <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <EntitySet Name="SaleStatus" EntityType="MaristaModel.SaleStatu" />
+          <AssociationSet Name="fk_Sale_SaleStatusId" Association="MaristaModel.fk_Sale_SaleStatusId">
+            <End Role="SaleStatu" EntitySet="SaleStatus" />
+            <End Role="Sale" EntitySet="Sales" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Constant">
@@ -1415,6 +1445,8 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Country" Relationship="MaristaModel.fk_Sale_BillingCountryId" FromRole="Sale" ToRole="Country" />
           <NavigationProperty Name="Country1" Relationship="MaristaModel.fk_Sale_DeliveryCountryId" FromRole="Sale" ToRole="Country" />
+          <Property Name="SaleStatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SaleStatu" Relationship="MaristaModel.fk_Sale_SaleStatusId" FromRole="Sale" ToRole="SaleStatu" />
         </EntityType>
         <EntityType Name="SaleDetail">
           <Key>
@@ -1475,14 +1507,14 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SiteUserId" Type="Int32" />
           <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Total" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="Total" Type="Decimal" Precision="38" Scale="11" />
         </EntityType>
         <EntityType Name="vMonthSalesPerUser">
           <Key>
             <PropertyRef Name="SiteUserId" />
           </Key>
           <Property Name="SiteUserId" Type="Int32" Nullable="false" />
-          <Property Name="total" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="total" Type="Decimal" Precision="38" Scale="11" />
         </EntityType>
         <EntityType Name="vMyTeamReport">
           <Key>
@@ -1497,7 +1529,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="PyramidId" Type="Int32" Nullable="false" />
           <Property Name="PyramidParentId" Type="Int32" />
           <Property Name="SiteUserId" Type="Int32" Nullable="false" />
-          <Property Name="total" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="total" Type="Decimal" Precision="38" Scale="11" />
           <Property Name="ToReceive" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="FromOthers" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="PBV" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
@@ -1514,7 +1546,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SiteUserId" Type="Int32" />
           <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Total" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="Total" Type="Decimal" Precision="38" Scale="11" />
         </EntityType>
         <EntityType Name="vBonus">
           <Key>
@@ -1776,6 +1808,26 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SaleStatu">
+          <Key>
+            <PropertyRef Name="SaleStatusId" />
+          </Key>
+          <Property Name="SaleStatusId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sales" Relationship="MaristaModel.fk_Sale_SaleStatusId" FromRole="SaleStatu" ToRole="Sale" />
+        </EntityType>
+        <Association Name="fk_Sale_SaleStatusId">
+          <End Type="MaristaModel.SaleStatu" Role="SaleStatu" Multiplicity="1" />
+          <End Type="MaristaModel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleStatu">
+              <PropertyRef Name="SaleStatusId" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="SaleStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1941,6 +1993,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="Sales">
             <EntityTypeMapping TypeName="MaristaModel.Sale">
               <MappingFragment StoreEntitySet="Sale">
+                <ScalarProperty Name="SaleStatusId" ColumnName="SaleStatusId" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="BillingCountryId" ColumnName="BillingCountryId" />
                 <ScalarProperty Name="DeliveryCountryId" ColumnName="DeliveryCountryId" />
@@ -2134,6 +2187,14 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
                 <ScalarProperty Name="CountryTypeId" ColumnName="CountryTypeId" />
                 <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleStatus">
+            <EntityTypeMapping TypeName="MaristaModel.SaleStatu">
+              <MappingFragment StoreEntitySet="SaleStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SaleStatusId" ColumnName="SaleStatusId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

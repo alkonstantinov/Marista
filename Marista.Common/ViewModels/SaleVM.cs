@@ -19,5 +19,9 @@ namespace Marista.Common.ViewModels
         public decimal Total { get; set; }
 
         public int ItemCount { get; set; }
+
+        public int SaleStatusId { get; set; }
+
+        public string SaleStatus { get; set; }
     }    
 }

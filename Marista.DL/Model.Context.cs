@@ -55,5 +55,6 @@ namespace Marista.DL
         public virtual DbSet<CountryDelivery> CountryDeliveries { get; set; }
         public virtual DbSet<CountryType> CountryTypes { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<SaleStatu> SaleStatus { get; set; }
     }
 }

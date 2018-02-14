@@ -1,0 +1,23 @@
+﻿@model Marista.Common.ViewModels.CheckoutVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Packing list</title>
+</head>
+<body>
+    <div> 
+        <img src="@Url.Action("GetSaleBarcode",new { saleId = Model.SaleId})" /><br/>
+        @foreach (var p in Model.Details)
+        {
+            <p>@p.ProductName &nbsp; @p.Quantity</p>
+        }
+    </div>
+</body>
+</html>

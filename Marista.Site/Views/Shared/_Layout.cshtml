@@ -13,6 +13,9 @@
 </head>
 <body>
     <div id="wrapper" class="wrapper-full">
+        <div id="dCookies">
+            This website uses cookies to ensure we give you the best experience on our website. Find out more about cookies <a href="~/Content/cookies/cookie-policy.html" target="_blank">here</a>. <button class="btn btn-info" onclick="HideCookies()">Accept</button>
+        </div>
         <div class="header-wrapper clearfix">
             <div class="header-top">
                 <div class="container">
@@ -306,6 +309,17 @@
             window.open("https://twitter.com/share?url=" + encodeURIComponent(window.location.href) + "&text=" + encodeURIComponent(document.title), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'); return false;
         }
 
+        $(document).ready(
+            function () {
+                if (localStorage.getItem("CookieNotice") === "1")
+                    $("#dCookies").hide();
+            }
+        )
+
+        function HideCookies() {
+            localStorage.setItem("CookieNotice", "1");
+            $("#dCookies").hide();
+        }
     </script>
 </body>
 </html>

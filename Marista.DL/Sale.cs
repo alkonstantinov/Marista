@@ -37,6 +37,7 @@ namespace Marista.DL
         public string DeliveryCountryId { get; set; }
         public string BillingCountryId { get; set; }
         public string Note { get; set; }
+        public int SaleStatusId { get; set; }
     
         public virtual Coupon Coupon { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -44,5 +45,6 @@ namespace Marista.DL
         public virtual Customer Customer { get; set; }
         public virtual Country Country { get; set; }
         public virtual Country Country1 { get; set; }
+        public virtual SaleStatu SaleStatu { get; set; }
     }
 }

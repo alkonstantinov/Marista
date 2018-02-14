@@ -198,6 +198,7 @@ namespace Marista.DL
         {
             Sale s = _map.Map<Sale>(model);
             s.OnDate = DateTime.Now;
+            s.SaleStatusId = 1;
             db.Sales.Add(s);
             db.SaveChanges();
             int saleId = s.SaleId;

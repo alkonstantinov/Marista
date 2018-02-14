@@ -116,5 +116,16 @@ namespace Marista.DL
 
         }
 
+        //za izprashtane
+
+        public IList<SaleVM> GetSalesForDispatch()
+        {
+            return db.Sales.Where(s => s.SaleStatusId == 1).ProjectToList<SaleVM>(_map.ConfigurationProvider);
+        }
+        //smeni statusa
+        public void SetDispatched(int saleId) {
+            db.Sales.First(s => s.SaleId == saleId).SaleStatusId = 2;
+            db.SaveChanges();
+        }
     }
 }

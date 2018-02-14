@@ -441,6 +441,27 @@ go
 exec p_ak_create_fk_indeces 'Customer'
 go
 
+if OBJECT_ID('SaleStatus') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'SaleStatus'
+  drop table SaleStatus
+end
+go
+
+create table SaleStatus
+(
+  SaleStatusId int not null,
+  Name nvarchar(50) not null,
+  constraint pk_SaleStatusId primary key (SaleStatusId)
+)
+go
+
+exec p_ak_create_fk_indeces 'SaleStatus'
+go
+
+insert into SaleStatus values (1,'Waiting for dispatch'), (2,'Dispatched')
+go
+
 
 if OBJECT_ID('Sale') is not null
 begin
@@ -452,6 +473,7 @@ go
 create table Sale
 (
   SaleId int not null identity(1,1),
+  SaleStatusId int not null default 1,
   CustomerId int not null,
   OnDate datetime not null default getdate(),
   CouponId int null,
@@ -473,6 +495,7 @@ create table Sale
   constraint fk_Sale_CouponId foreign key (CouponId) references Coupon(CouponId),
   constraint fk_Sale_BillingCountryId foreign key (BillingCountryId) references Country(CountryId),
   constraint fk_Sale_DeliveryCountryId foreign key (DeliveryCountryId) references Country(CountryId),
+  constraint fk_Sale_SaleStatusId foreign key (SaleStatusId) references SaleStatus(SaleStatusId)
 )
 go
 

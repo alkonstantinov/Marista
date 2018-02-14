@@ -167,6 +167,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\cookies\cookie-policy.html" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\Product.css">
       <DependentUpon>Product.scss</DependentUpon>

@@ -39,7 +39,7 @@
                             <header class="entry-header">
                                 <h1 class="page-title">Checkout</h1>
                             </header>
-                            @if (ViewBag.login)
+                            @if (ViewBag.login == true)
                             {
                                 <div class="login-links pos2">
                                     <a class="home" href="/customer/login?backToCheckout=true">Login</a>
@@ -66,7 +66,7 @@
                                                             @if (ViewBag.EmailUsed != null && ViewBag.EmailUsed)
                                                             {
                                                             <p class="text-danger">Email already used for new account</p>
-                                                            }
+                                                        }
                                                             </p>
                                                             <div class="clear"></div>
                                                             <p class="form-row form-row form-row-wide input-field" id="billing_company_field">
@@ -191,7 +191,7 @@
                 </div>
             </div>
         </div>
-}
+    }
 
 <script>
     function ChangeShipping() {

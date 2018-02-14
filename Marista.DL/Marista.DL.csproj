@@ -115,6 +115,9 @@
     <Compile Include="SaleDetail.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="SaleStatu.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="SOBonusSIzeService.cs" />
     <Compile Include="BonusSizeService.cs" />
     <Compile Include="Constant.cs">
