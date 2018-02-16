@@ -1,4 +1,5 @@
-﻿using Marista.DL;
+﻿using Marista.Common.Tools;
+using Marista.DL;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,23 +44,8 @@ namespace Marista.Admin.Controllers
 
         public ActionResult GetSaleBarcode(int saleId)
         {
-            var barcodeWriter = new BarcodeWriter
-            {
-                Format = BarcodeFormat.EAN_8,
-                Options = new EncodingOptions
-                {
-                    Height = 200,
-                    Width = 800
-                }
-            };
-            var bmp = barcodeWriter.Write("12345670");
-            byte[] ba = null;
-            using (var stream = new MemoryStream())
-            {
-                bmp.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                ba = stream.ToArray();
-            }
-            var fc = new FileContentResult(ba, "application/octet-stream");
+            
+            var fc = new FileContentResult(Barcode.GenerateBarcode(saleId), "application/octet-stream");
             fc.FileDownloadName = "barcode.png";
             return fc;
         }

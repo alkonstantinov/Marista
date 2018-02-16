@@ -122,8 +122,20 @@ namespace Marista.DL
         {
             return db.Sales.Where(s => s.SaleStatusId == 1).ProjectToList<SaleVM>(_map.ConfigurationProvider);
         }
+        public IList<CheckoutVM> GetSalesForPost()
+        {
+            List<CheckoutVM> l = new List<CheckoutVM>();
+            foreach (var s in db.Sales.Where(s => s.SaleStatusId == 1))
+            {
+                l.Add(GetSale(s.SaleId));
+            }
+            return l;
+        }
+
+
         //smeni statusa
-        public void SetDispatched(int saleId) {
+        public void SetDispatched(int saleId)
+        {
             db.Sales.First(s => s.SaleId == saleId).SaleStatusId = 2;
             db.SaveChanges();
         }

@@ -31,7 +31,11 @@ namespace Marista.Admin.Controllers
             return View();
         }
 
-        
+        public ActionResult TestMail()
+        {
+            new Mailer().SendMailSpecific("kor", "alkonstantinov@outlook.com", "123");
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
