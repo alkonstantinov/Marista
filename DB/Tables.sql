@@ -384,7 +384,7 @@ go
 exec p_ak_create_fk_indeces 'Country'
 go
   
-insert into Country(CountryId, CountryName, CountryTypeId) values ('bg', 'Bulgaria', 1), ('de', 'Germany', 3)
+insert into Country(CountryId, CountryName, CountryTypeId) values ('bg', 'Bulgaria', 1)
 go
 
 if OBJECT_ID('BP') is not null

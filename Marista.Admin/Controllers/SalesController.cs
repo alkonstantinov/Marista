@@ -44,10 +44,28 @@ namespace Marista.Admin.Controllers
 
         public ActionResult GetSaleBarcode(int saleId)
         {
-            
+
             var fc = new FileContentResult(Barcode.GenerateBarcode(saleId), "application/octet-stream");
             fc.FileDownloadName = "barcode.png";
             return fc;
+        }
+
+        public ActionResult GetAddressByBarcode(string barcode)
+        {
+            barcode = barcode.Remove(barcode.Length - 1);
+            int saleId = int.Parse(barcode);
+            var data = dl.GetSale(saleId);
+            var result = new
+            {
+                Name = data.CustomerName,
+                Phone = data.CustomerPhone,
+                Email = data.CustomerEmail,
+                Address = data.DeliveryAddress,
+                City = data.DeliveryCity,
+                Zip = data.DeliveryZip,
+                Country = data.DeliveryCountry
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
