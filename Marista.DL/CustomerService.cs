@@ -139,5 +139,10 @@ namespace Marista.DL
             db.Sales.First(s => s.SaleId == saleId).SaleStatusId = 2;
             db.SaveChanges();
         }
+
+        public void CalcAllProfits()
+        {
+            db.pCalcAllProfits();
+        }
     }
 }

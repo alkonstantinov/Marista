@@ -728,6 +728,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="pCalcAllProfits" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="MaristaModelStoreContainer">
           <EntitySet Name="BonusSize" EntityType="Self.BonusSize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BP" EntityType="Self.BP" Schema="dbo" store:Type="Tables" />
@@ -1128,6 +1129,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             <End Role="SaleStatu" EntitySet="SaleStatus" />
             <End Role="Sale" EntitySet="Sales" />
           </AssociationSet>
+          <FunctionImport Name="pCalcAllProfits" />
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -2198,6 +2200,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="pCalcAllProfits" FunctionName="MaristaModel.Store.pCalcAllProfits" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,4 +1,6 @@
-﻿--пълнене
+﻿use marista
+go
+--пълнене
 set nocount on
 
 truncate table pyramid

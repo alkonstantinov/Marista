@@ -11,6 +11,7 @@ namespace Marista.Admin.Controllers
     public class DashboardController : BaseController
     {
         BPService bps = new BPService();
+        CustomerService cs = new CustomerService();
         public DashboardController()
         {
 
@@ -30,7 +31,14 @@ namespace Marista.Admin.Controllers
             ViewBag.Username = this.UserData.Username;
             ViewBag.LevelId = this.UserData.LevelId;
             ViewBag.HasParent = bps.IsUpperBp(this.UserData.UserId);
+
             return View();
+        }
+
+        public ActionResult CalcAllProfits()
+        {
+            cs.CalcAllProfits();
+            return RedirectToAction("Index");
         }
     }
 }

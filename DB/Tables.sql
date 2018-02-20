@@ -212,6 +212,14 @@ go
 exec p_ak_create_fk_indeces 'Constant'
 go
 
+delete from constant
+insert into constant 
+(ConstantId, Name, Value)
+values
+(1, 'Percent from Sales', 23),
+(2, 'Minimum Active PBV', 100),
+(3, 'Minimum Active Children', 4)
+go
 
 if OBJECT_ID('Chat') is not null
 begin

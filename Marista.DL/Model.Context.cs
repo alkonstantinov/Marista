@@ -12,6 +12,8 @@ namespace Marista.DL
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class MaristaEntities : DbContext
     {
@@ -56,5 +58,10 @@ namespace Marista.DL
         public virtual DbSet<CountryType> CountryTypes { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<SaleStatu> SaleStatus { get; set; }
+    
+        public virtual int pCalcAllProfits()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("pCalcAllProfits");
+        }
     }
 }
