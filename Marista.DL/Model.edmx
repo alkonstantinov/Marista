@@ -150,6 +150,14 @@
           <Property Name="MinQuantity" Type="int" Nullable="false" />
           <Property Name="Weight" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="ProductPicture">
+          <Key>
+            <PropertyRef Name="ProductPictureId" />
+          </Key>
+          <Property Name="ProductPictureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Picture" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Pyramid">
           <Key>
             <PropertyRef Name="PyramidId" />
@@ -584,6 +592,18 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_ProductPicture_ProductId">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductPicture" Type="Self.ProductPicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductPicture">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Pyramid_PyramidParentId">
           <End Role="Pyramid" Type="Self.Pyramid" Multiplicity="0..1" />
           <End Role="Pyramid1" Type="Self.Pyramid" Multiplicity="*" />
@@ -744,6 +764,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MarketingMaterial" EntityType="Self.MarketingMaterial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductPicture" EntityType="Self.ProductPicture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pyramid" EntityType="Self.Pyramid" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RelatedProduct" EntityType="Self.RelatedProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ResultHistory" EntityType="Self.ResultHistory" Schema="dbo" store:Type="Tables" />
@@ -896,6 +917,10 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <AssociationSet Name="fk_Product_VCategoryId" Association="Self.fk_Product_VCategoryId">
             <End Role="VCategory" EntitySet="VCategory" />
             <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductPicture_ProductId" Association="Self.fk_ProductPicture_ProductId">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductPicture" EntitySet="ProductPicture" />
           </AssociationSet>
           <AssociationSet Name="fk_Pyramid_PyramidParentId" Association="Self.fk_Pyramid_PyramidParentId">
             <End Role="Pyramid" EntitySet="Pyramid" />
@@ -1130,6 +1155,11 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             <End Role="Sale" EntitySet="Sales" />
           </AssociationSet>
           <FunctionImport Name="pCalcAllProfits" />
+          <EntitySet Name="ProductPictures" EntityType="MaristaModel.ProductPicture" />
+          <AssociationSet Name="fk_ProductPicture_ProductId" Association="MaristaModel.fk_ProductPicture_ProductId">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductPicture" EntitySet="ProductPictures" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -1170,6 +1200,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="Available" Type="Int32" Nullable="false" />
           <Property Name="MinQuantity" Type="Int32" Nullable="false" />
           <Property Name="Weight" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="ProductPictures" Relationship="MaristaModel.fk_ProductPicture_ProductId" FromRole="Product" ToRole="ProductPicture" />
         </EntityType>
         <EntityType Name="SOBonusSize">
           <Key>
@@ -1830,6 +1861,27 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProductPicture">
+          <Key>
+            <PropertyRef Name="ProductPictureId" />
+          </Key>
+          <Property Name="ProductPictureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Picture" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Product" Relationship="MaristaModel.fk_ProductPicture_ProductId" FromRole="ProductPicture" ToRole="Product" />
+        </EntityType>
+        <Association Name="fk_ProductPicture_ProductId">
+          <End Type="MaristaModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="MaristaModel.ProductPicture" Role="ProductPicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductPicture">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2201,6 +2253,15 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="pCalcAllProfits" FunctionName="MaristaModel.Store.pCalcAllProfits" />
+          <EntitySetMapping Name="ProductPictures">
+            <EntityTypeMapping TypeName="MaristaModel.ProductPicture">
+              <MappingFragment StoreEntitySet="ProductPicture">
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductPictureId" ColumnName="ProductPictureId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

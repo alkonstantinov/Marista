@@ -1,0 +1,41 @@
+﻿@model IList<Marista.Common.ViewModels.ProductPictureVM>
+
+@{
+    ViewBag.Title = "ProductPictures";
+}
+
+<div class="row filters-panel">
+    <div class="search-bar col-sm-4 col-sm-offset-5">
+        <form action="@Url.Action("AddProductPicture")" method="post" class="form-inline" id="fPicture" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="hidden" id="ProductId" name="ProductId" value='@ViewBag.ProductId' />
+                <input type="file" class="form-control" onchange="$('#fPicture').submit()" id="fuPicture" name="fuPicture"/>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Picture</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="/Product/GetProductPicture?productPictureId=@p.ProductPictureId" alt="" />
+                    </td>
+                    <td>
+                        <a href="/Product/DelProductPicture?productPictureId=@p.ProductPictureId" class="btn btn-default" title="View"><i class="glyphicon glyphicon-remove"></i></a>    
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

@@ -292,3 +292,15 @@ values
 (351, 500, 9.71, 4),
 (501, 1000, 14.32, 4),
 (1001, 2000, 19.68, 4)
+
+
+delete from HCategory
+delete from VCategory
+insert into HCategory( CategoryName)
+values('ROSA DAMASCENA & Q10'),
+('WHITE ROSE & OLIVE'),
+('ROSA DAMASCENA & ARGAN')
+
+insert into VCategory(CategoryName)
+values('FACE SKIN CARE'),
+('BODY CARE')

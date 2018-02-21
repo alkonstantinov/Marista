@@ -20,7 +20,7 @@ namespace Marista.Common.ViewModels
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "Price")]
+        [Display(Name = "Price without VAT")]
         public decimal Price { get; set; }
 
         [Display(Name = "Promotional price")]
@@ -55,7 +55,7 @@ namespace Marista.Common.ViewModels
         public int MinQuantity { get; set; }
 
         [Required]
-        [Display(Name = "Weight")]
+        [Display(Name = "Weight[grams]")]
         public decimal Weight { get; set; }
 
 

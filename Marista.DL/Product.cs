@@ -21,6 +21,7 @@ namespace Marista.DL
             this.RelatedToProducts = new HashSet<Product>();
             this.Coupons = new HashSet<Coupon>();
             this.SaleDetails = new HashSet<SaleDetail>();
+            this.ProductPictures = new HashSet<ProductPicture>();
         }
     
         public int ProductId { get; set; }
@@ -46,5 +47,7 @@ namespace Marista.DL
         public virtual ICollection<Coupon> Coupons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SaleDetail> SaleDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductPicture> ProductPictures { get; set; }
     }
 }

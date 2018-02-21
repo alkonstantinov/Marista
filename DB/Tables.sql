@@ -580,7 +580,28 @@ create table CountryDelivery
   constraint fk_CountryDelivery_CountryTypeId foreign key (CountryTypeId) references CountryType(CountryTypeId)
 )
 go
+exec p_ak_create_fk_indeces 'CountryDelivery'
+go
 
 insert into CountryDelivery(CountryTypeId,FromWeight, ToWeight,Price)
 values (1,0,10000,2), (3,0,10000,7)
+go
+
+
+if OBJECT_ID('ProductPicture') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'ProductPicture'
+  drop table ProductPicture
+end
+go
+create table ProductPicture
+(
+  ProductPictureId int identity(1,1) not null,
+  ProductId int not null,
+  Picture varbinary(max) not null,
+  constraint pk_ProductPictureId primary key (ProductPictureId),
+  constraint fk_ProductPicture_ProductId foreign key (ProductId) references Product(ProductId)
+)
+go
+exec p_ak_create_fk_indeces 'ProductPicture'
 go

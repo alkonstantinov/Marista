@@ -55,6 +55,7 @@
     <Compile Include="PayPalModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\Barcode.cs" />
+    <Compile Include="Tools\BitmapProcess.cs" />
     <Compile Include="Tools\Mailer.cs" />
     <Compile Include="Tools\MD5.cs" />
     <Compile Include="ViewModels\AttachmentVM.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="ViewModels\MyTeamReportVM.cs" />
     <Compile Include="ViewModels\NewCustomerVM.cs" />
     <Compile Include="ViewModels\ProductDiscountVM.cs" />
+    <Compile Include="ViewModels\ProductPictureVM.cs" />
     <Compile Include="ViewModels\ProductVM.cs" />
     <Compile Include="ViewModels\PyramidResultVM.cs" />
     <Compile Include="ViewModels\RelatedProductVM.cs" />

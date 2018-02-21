@@ -52,7 +52,7 @@ namespace Marista.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ProductVM p)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 p.Picture = await GetUploadedFile("filePicture");
                 if (p.Picture == null)
@@ -81,11 +81,11 @@ namespace Marista.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(ProductVM p)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 // update the picture only if a new one is provided
                 var picture = await GetUploadedFile("filePicture");
-                if(picture != null)
+                if (picture != null)
                 {
                     p.Picture = picture;
                 }
@@ -100,7 +100,7 @@ namespace Marista.Admin.Controllers
         public async Task<ActionResult> Details(int id)
         {
             var p = await _ps.Get(id);
-            if(p == null)
+            if (p == null)
             {
                 return RedirectToAction("Index");
             }
@@ -115,9 +115,9 @@ namespace Marista.Admin.Controllers
             {
                 await _ps.Delete(productId);
             }
-            catch(Exception)
+            catch (Exception)
             {
-                return RedirectToAction("Index", new {  });
+                return RedirectToAction("Index", new { });
             }
             return RedirectToAction("Index");
         }
@@ -131,12 +131,12 @@ namespace Marista.Admin.Controllers
         private async Task<byte[]> GetUploadedFile(string name)
         {
             var files = Request.Files;
-            if(files.Count > 0)
+            if (files.Count > 0)
             {
                 var file = files[name];
-                if(file != null && file.ContentLength > 0)
+                if (file != null && file.ContentLength > 0)
                 {
-                    using(var m = new MemoryStream())
+                    using (var m = new MemoryStream())
                     {
                         await file.InputStream.CopyToAsync(m);
                         m.Position = 0;
@@ -146,5 +146,37 @@ namespace Marista.Admin.Controllers
             }
             return null;
         }
+
+
+        public async Task<ActionResult> ProductPictures(int productId)
+        {
+            ViewBag.ProductId = productId;
+            return View(_ps.GetProductPictures(productId));
+        }
+
+        public async Task<ActionResult> AddProductPicture(ProductPictureVM model)
+        {
+
+            MemoryStream target = new MemoryStream();
+
+            Request.Files[0].InputStream.CopyTo(target);
+            model.Picture = target.ToArray();
+            _ps.AddProductPicrtue(model);
+
+            return RedirectToAction("ProductPictures", new { productId = model.ProductId });
+        }
+
+        public async Task<ActionResult> DelProductPicture(int productPictureId)
+        {
+            int id = _ps.DelProductPicture(productPictureId);
+            return RedirectToAction("ProductPictures", new { productId = id });
+        }
+
+        public async Task<ActionResult> GetProductPicture(int productPictureId)
+        {
+            return File(_ps.GetProductPicture(productPictureId), "application/octet-stream");
+        }
+
+
     }
 }

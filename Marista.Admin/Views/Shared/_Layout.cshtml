@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        @if (ViewBag.Username != null)
+        @if (Session["UserData"] != null)
         {
             <a href="@Url.Action("Index", "DashBoard")" class="btn btn-default">To start</a>
         }

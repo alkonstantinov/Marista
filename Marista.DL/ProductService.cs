@@ -313,5 +313,30 @@ namespace Marista.DL
                 SavePyramidValues(pyramid, model);
         }
 
+        public IList<ProductPictureVM> GetProductPictures(int productId)
+        {
+            return db.ProductPictures.Where(p => p.ProductId == productId).ProjectToList<ProductPictureVM>(_map.ConfigurationProvider);
+        }
+
+        public void AddProductPicrtue(ProductPictureVM model)
+        {
+            db.ProductPictures.Add(_map.Map<ProductPicture>(model));
+            db.SaveChanges();
+        }
+
+        public byte[] GetProductPicture(int productPictureId)
+        {
+            return db.ProductPictures.First(p => p.ProductPictureId == productPictureId).Picture;
+        }
+
+        public int DelProductPicture(int productPictureId)
+        {
+            var rec = db.ProductPictures.First(p => p.ProductPictureId == productPictureId);
+            int result = rec.ProductId;
+            db.ProductPictures.Remove(rec);
+            db.SaveChanges();
+            return result;
+        }
+
     }
 }

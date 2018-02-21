@@ -51,7 +51,7 @@
                                     <div class="col-lg-6 col-md-5 col-sm-12 summary entry-summary">
                                         <h1 itemprop="name" class="product_title">@Model.Name</h1>
                                         <div itemprop="description" class="description">
-                                            <p>@Model.Description</p>
+                                            <p>@Html.Raw(Model.Description.Replace("\r\n", "<br/>"))</p>
                                         </div>
                                         <form class="cart" method="post" enctype="multipart/form-data">
                                             <div class="quantity buttons_added">
@@ -96,7 +96,7 @@
                                     <h2 class="resp-accordion resp-tab-active" role="tab" aria-controls="tab_item-0"><span class="resp-arrow"></span>Description</h2>
                                     <div id="tab-description" class="resp-tab-content resp-tab-content-active" aria-labelledby="tab_item-0" style="display:block">
                                         <h2>Product Description</h2>
-                                        <p>@Model.Description</p>
+                                        <p>@Html.Raw(Model.Description.Replace("\r\n", "<br/>"))</p>
                                     </div>
                                     @*<h2 class="resp-accordion" role="tab" aria-controls="tab_item-1"><span class="resp-arrow"></span>Additional Information</h2>
                                         <div id="tab-additional_information" class="resp-tab-content" aria-labelledby="tab_item-1">

@@ -1,4 +1,5 @@
-﻿using Marista.Common.ViewModels;
+﻿using Marista.Common.Tools;
+using Marista.Common.ViewModels;
 using Marista.DL;
 using PagedList;
 using System;
@@ -38,6 +39,13 @@ namespace Marista.Site.Controllers
         {
             var picture = await _ps.Get(id);
             return File(picture.Picture, "image/jpeg");
+        }
+
+        public async Task<ActionResult> PictureSized(int id, int width, int height)
+        {
+            var picture = await _ps.Get(id);
+            
+            return File(BitmapProcess.Resize(picture.Picture, width, height), "image/jpeg");
         }
 
 

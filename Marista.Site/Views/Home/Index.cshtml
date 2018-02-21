@@ -10,7 +10,7 @@
                     <div class="category-details">
                         <h1 class="title">MARISTA CLUB</h1>
                         <div class="term-shortdesc">When you imagine the future, what do you see? The same old daily grind or personal freedom to choose how to spend your time every day, relying on financial independence? Marista Club provides you with opportunity to create and live the life you have always dreamed of.</div>
-                        <a class="btn btn-lg more-links" href="#">Join us</a>
+                        <a class="btn btn-lg more-links" href="http://admin.maristaclub.com/bpreg/index">Join us</a>
                     </div>
                 </div>
             </div>
@@ -58,8 +58,8 @@
                                             <a id="grid" title="Grid View" class="active" onclick="ChangeResultView(1)" style="cursor:pointer"></a>
                                             <a id="list" title="List View" onclick="ChangeResultView(2)" style="cursor:pointer"></a>
                                         </div>
-                                        @Html.DropDownListFor(model => model.HCategoryId, new SelectList(Model.HCategory, "Value", "Text"), "HCategory", new { @class = "cat-filter", @onchange = "$('#SearchForm').submit();" })
-                                        @Html.DropDownListFor(model => model.VCategoryId, new SelectList(Model.VCategory, "Value", "Text"), "VCategory", new { @class = "cat-filter", @onchange = "$('#SearchForm').submit();" })
+                                        @Html.DropDownListFor(model => model.HCategoryId, new SelectList(Model.HCategory, "Value", "Text"), "--", new { @class = "cat-filter", @onchange = "$('#SearchForm').submit();" })
+                                        @Html.DropDownListFor(model => model.VCategoryId, new SelectList(Model.VCategory, "Value", "Text"), "--", new { @class = "cat-filter", @onchange = "$('#SearchForm').submit();" })
                                     </div>
                                     <div class="pager">
                                         <nav class="woocommerce-pagination">
@@ -99,7 +99,7 @@
                                                     <div class="inner clearfix">
                                                         <a href="/Product/View?id=@p.ProductId">
                                                             <span class="product-image">
-                                                                <img width="228" height="228" src="/Product/Picture?id=@p.ProductId" alt="@p.Name">
+                                                                <img src="/Product/PictureSized?id=@p.ProductId&width=228&height=228" alt="@p.Name">
                                                                 <div class="price-box bottom-right">
                                                                     <span class="price"><span class="amount"><span class="">&euro; </span>@((p.Price * 1.2M).ToString("#.00"))</span></span>
                                                                 </div>
