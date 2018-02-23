@@ -9,7 +9,7 @@
         <form action="@Url.Action("AddProductPicture")" method="post" class="form-inline" id="fPicture" enctype="multipart/form-data">
             <div class="form-group">
                 <input type="hidden" id="ProductId" name="ProductId" value='@ViewBag.ProductId' />
-                <input type="file" class="form-control" onchange="$('#fPicture').submit()" id="fuPicture" name="fuPicture"/>
+                <input type="file" class="form-control" onchange="$('#fPicture').submit()" id="fuPicture" name="fuPicture" />
             </div>
         </form>
     </div>
@@ -27,10 +27,18 @@
             {
                 <tr>
                     <td>
-                        <img src="/Product/GetProductPicture?productPictureId=@p.ProductPictureId" alt="" />
+                        @if (p.IsVideo)
+                        {
+                            <video controls src="/Product/GetProductPicture?productPictureId=@p.ProductPictureId" alt="" />
+                        }
+                        else
+                        {
+                            <img src="/Product/GetProductPicture?productPictureId=@p.ProductPictureId" alt="" />
+                        }
+
                     </td>
                     <td>
-                        <a href="/Product/DelProductPicture?productPictureId=@p.ProductPictureId" class="btn btn-default" title="View"><i class="glyphicon glyphicon-remove"></i></a>    
+                        <a href="/Product/DelProductPicture?productPictureId=@p.ProductPictureId" class="btn btn-default" title="View"><i class="glyphicon glyphicon-remove"></i></a>
                     </td>
                 </tr>
             }

@@ -158,7 +158,8 @@ namespace Marista.Admin.Controllers
         {
 
             MemoryStream target = new MemoryStream();
-
+            string ext = Path.GetExtension(Request.Files[0].FileName).ToLower();
+            model.IsVideo = ext == ".mp4" || ext == ".webm" || ext == ".ogg";
             Request.Files[0].InputStream.CopyTo(target);
             model.Picture = target.ToArray();
             _ps.AddProductPicrtue(model);

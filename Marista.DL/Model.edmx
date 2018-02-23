@@ -157,6 +157,7 @@
           <Property Name="ProductPictureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Picture" Type="varbinary(max)" Nullable="false" />
+          <Property Name="IsVideo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Pyramid">
           <Key>
@@ -1869,6 +1870,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="Picture" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Product" Relationship="MaristaModel.fk_ProductPicture_ProductId" FromRole="ProductPicture" ToRole="Product" />
+          <Property Name="IsVideo" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="fk_ProductPicture_ProductId">
           <End Type="MaristaModel.Product" Role="Product" Multiplicity="1" />
@@ -2256,6 +2258,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="ProductPictures">
             <EntityTypeMapping TypeName="MaristaModel.ProductPicture">
               <MappingFragment StoreEntitySet="ProductPicture">
+                <ScalarProperty Name="IsVideo" ColumnName="IsVideo" />
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="ProductPictureId" ColumnName="ProductPictureId" />

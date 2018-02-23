@@ -41,6 +41,12 @@ namespace Marista.Site.Controllers
             return File(picture.Picture, "image/jpeg");
         }
 
+        public async Task<ActionResult> ProductPicture(int productPictureId)
+        {
+            var picture = _ps.GetProductPicture(productPictureId);
+            return File(picture, "application/octet-stream");
+        }
+
         public async Task<ActionResult> PictureSized(int id, int width, int height)
         {
             var picture = await _ps.Get(id);

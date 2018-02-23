@@ -50,6 +50,13 @@ namespace Marista.DL
                 lp.Add(_map.Map<ProductVM>(rel));
             var result = _map.Map<ProductVM>(p);
             result.RelatedProducts = lp;
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("['/product/Picture?id=" + id + "'");
+            foreach (var pp in db.ProductPictures.Where(item => item.ProductId == id))
+                sb.Append(",'/product/ProductPicture?productPictureId=" + pp.ProductPictureId + (pp.IsVideo ? "&video=1" : "") + "'");
+            sb.Append("]");
+            result.PictureUrls = sb.ToString();
             return result;
         }
 

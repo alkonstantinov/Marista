@@ -32,7 +32,8 @@
                                         <div class="images product-images clearfix">
                                             <div class="product-image">
                                                 <div class="img-wrapper">
-                                                    <img src="@Url.Action("Picture","Product" ,new { id=Model.ProductId})" alt="@Model.Name" title="@Model.Name">
+                                                    <img src="@Url.Action("Picture","Product" ,new { id=Model.ProductId})" alt="@Model.Name" title="@Model.Name" id="imgProduct" />
+                                                    <video src="@Url.Action("Picture","Product" ,new { id=Model.ProductId})" alt="@Model.Name" title="@Model.Name" id="videoProduct" controls />
                                                 </div>
                                                 <div class="price-box bottom-right">
                                                     <div>
@@ -154,6 +155,9 @@
 </div>
 
 <script>
+    var arrPics = null;
+    var picId = 0;
+
     function AddToCart(productId) {
         $.ajax({
             url: "/home/addtocart?productId=" + productId,
@@ -194,5 +198,34 @@
         UpdateSmallCart();
     }
 
+    function ChangeImage() {
+        $("#videoProduct")[0].pause();
+        if (picId === arrPics.length - 1)
+            picId = 0;
+        else
+            picId++;
+        var src = arrPics[picId];
+        if (src.indexOf("video=1")>-1) {
+            $("#videoProduct").show();
+            $("#imgProduct").hide();
 
+            $("#videoProduct").attr('src', src);
+        }
+        else {
+            $("#videoProduct").hide();
+            $("#imgProduct").show();
+            $("#imgProduct").attr('src', src);
+        }
+    }
+    $("#imgProduct").click(function () {
+        ChangeImage();
+    });
+    $("#videoProduct").click(function () {
+        ChangeImage();
+    });
+    $(document).ready(
+        function () {
+            arrPics = @Html.Raw(Model.PictureUrls);
+        }
+    );
 </script>

@@ -17,6 +17,7 @@ namespace Marista.DL
         public int ProductPictureId { get; set; }
         public int ProductId { get; set; }
         public byte[] Picture { get; set; }
+        public bool IsVideo { get; set; }
     
         public virtual Product Product { get; set; }
     }

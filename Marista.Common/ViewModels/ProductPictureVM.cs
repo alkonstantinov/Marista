@@ -13,5 +13,6 @@ namespace Marista.Common.ViewModels
         public int ProductId { get; set; }
         [Display(Name = "Picture")]
         public byte[] Picture { get; set; }
+        public bool IsVideo { get; set; }
     }
 }
