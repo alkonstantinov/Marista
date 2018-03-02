@@ -64,5 +64,15 @@ namespace Marista.DL
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("pCalcAllProfits");
         }
+    
+        public virtual int pFinishMonth()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("pFinishMonth");
+        }
+    
+        public virtual int pNewSpinoffs()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("pNewSpinoffs");
+        }
     }
 }

@@ -144,5 +144,12 @@ namespace Marista.DL
         {
             db.pCalcAllProfits();
         }
+
+        public void EndMonth()
+        {
+            db.pFinishMonth();
+            db.pNewSpinoffs();
+
+        }
     }
 }

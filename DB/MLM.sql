@@ -115,6 +115,15 @@ go
 create procedure pCalcMyProfit @pu int as
 begin
 
+  declare @minPBV decimal (10,2)
+  select @minPBV = value from Constant
+  where constantid=2
+
+  declare @minChildren decimal (10,2)
+  select @minChildren = value from Constant
+  where constantid=3
+
+
   declare @mp table
   (
     PyramidId int not null primary key,
@@ -198,7 +207,7 @@ begin
         select
         sum( 
           case
-            when children.PBV>=100 then children.PBV+children.FromOthers
+            when children.PBV>=@minPBV then children.PBV+children.FromOthers
             else 0
           end
           ) 
@@ -299,14 +308,14 @@ begin
     Salebonus +
     ISNULL(
       case 
-        when PBV>=100 then PBV*Prcnt
+        when PBV>=@minPBV   then PBV*Prcnt
         else 0
       end
       ,0)+
       isnull((
         select sum ( 
           case
-            when children.PBV>=100 then children.FromOthers*(children.ParentPrcnt - children.Prcnt)/100.0
+            when children.PBV>=@minPBV  then children.FromOthers*(children.ParentPrcnt - children.Prcnt)/100.0
             else 0.0
           end 
           )
@@ -315,7 +324,7 @@ begin
       ),0)*
       (
         case 
-          when (select count(1) from @mp mp where mp.PyramidParentId=PyramidId)>=4 then 1
+          when (select count(1) from @mp mp where mp.PyramidParentId=PyramidId)>=@minChildren then 1
           else 0
         end
       )+

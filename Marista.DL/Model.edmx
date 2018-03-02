@@ -750,6 +750,8 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           </ReferentialConstraint>
         </Association>
         <Function Name="pCalcAllProfits" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="pFinishMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="pNewSpinoffs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="MaristaModelStoreContainer">
           <EntitySet Name="BonusSize" EntityType="Self.BonusSize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BP" EntityType="Self.BP" Schema="dbo" store:Type="Tables" />
@@ -1161,6 +1163,8 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             <End Role="Product" EntitySet="Products" />
             <End Role="ProductPicture" EntitySet="ProductPictures" />
           </AssociationSet>
+          <FunctionImport Name="pFinishMonth" />
+          <FunctionImport Name="pNewSpinoffs" />
         </EntityContainer>
         <EntityType Name="Constant">
           <Key>
@@ -2265,6 +2269,8 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="pFinishMonth" FunctionName="MaristaModel.Store.pFinishMonth" />
+          <FunctionImportMapping FunctionImportName="pNewSpinoffs" FunctionName="MaristaModel.Store.pNewSpinoffs" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

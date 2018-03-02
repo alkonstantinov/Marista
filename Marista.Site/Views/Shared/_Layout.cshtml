@@ -12,6 +12,15 @@
     @Scripts.Render("~/bundles/bootstrap")
 </head>
 <body>
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/bg_BG/sdk.js#xfbml=1&version=v2.12&appId=1520610341390396&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
     <div id="wrapper" class="wrapper-full">
         <div id="dCookies">
             This website uses cookies to ensure we give you the best experience on our website. Find out more about cookies <a href="~/Content/cookies/cookie-policy.html" target="_blank">here</a>. <button class="btn btn-info" onclick="HideCookies()">Accept</button>
@@ -33,7 +42,7 @@
                     <div class="row">
                         <div class="col-sm-4 left">
                             <h1 class="logo">
-                                <a href="#" title="Marista Club" rel="home">
+                                <a href="/" title="Marista Club" rel="home">
                                     <img src="~/Content/images/marista_club_logo.jpg">
                                 </a>
                             </h1>
@@ -45,7 +54,7 @@
                 <div class="menu-wrapper">
                     <div class="container">
                         <h1 class="logo left">
-                            <a href="#" title="Marista Club" rel="home">
+                            <a href="/" title="Marista Club" rel="home">
                                 <img src="~/Content/images/marista_club_logo.jpg">
                             </a>
                         </h1>
@@ -53,16 +62,16 @@
                         <div id="main-menu" class="mega-menu menu-right">
                             <ul id="menu-main-menu">
                                 <li class="">
-                                    <a href="http://www.maristacosmetics.com/" class="">Home</a>
+                                    <a href="http://www.maristaclub.com/" class="" target="_blank">Home</a>
                                 </li>
                                 <li class="">
-                                    <a href="http://maristaclub.com/about-us/" class="">About Us</a>
+                                    <a href="http://maristaclub.com/about-us/" class="" target="_blank">About Us</a>
                                 </li>
                                 <li class="active">
                                     <a href="/home/index" class="">E-shop</a>
                                 </li>
                                 <li class="">
-                                    <a href="http://maristaclub.com/opportunity/" class="">Opportunity</a>
+                                    <a href="http://maristaclub.com/opportunity/" class="" target="_blank">Opportunity</a>
                                 </li>
                             </ul>
                         </div>
@@ -113,16 +122,16 @@
                                 <div class="menu-footer-links-container">
                                     <ul id="menu-footer-links" class="menu">
                                         <li class="">
-                                            <a href="http://www.maristacosmetics.com/">Marista Cosmetics</a>
+                                            <a href="http://www.maristaclub.com/" target="_blank">Marista Cosmetics</a>
                                         </li>
                                         <li class="">
                                             <a href="/home/index">Products</a>
                                         </li>
                                         <li class="">
-                                            <a href="http://maristaclub.com/payments-policy">Payments & Shipping Policy</a>
+                                            <a href="http://maristaclub.com/payments-policy" target="_blank">Payments & Shipping Policy</a>
                                         </li>
                                         <li class="">
-                                            <a href="http://maristaclub.com/terms-policy">Terms of Use Policy</a>
+                                            <a href="http://maristaclub.com/terms-policy" target="_blank">Terms of Use Policy</a>
                                         </li>
                                         <li class="">
                                             <a href="/customer">My Account</a>
@@ -137,16 +146,16 @@
                                 <div class="menu-footer-information-container">
                                     <ul id="menu-footer-information" class="menu">
                                         <li class="">
-                                            <a href="http://maristaclub.com/about-us/">About us</a>
+                                            <a href="http://maristaclub.com/about-us/" target="_blank">About us</a>
                                         </li>
                                         <li class="">
-                                            <a href="http://maristaclub.com/opportunity/">Opportunity</a>
+                                            <a href="http://maristaclub.com/opportunity/" target="_blank">Opportunity</a>
                                         </li>
                                         <li class="">
-                                            <a href="http://maristaclub.com/business-model/">Business Model</a>
+                                            <a href="http://maristaclub.com/business-model/" target="_blank">Business Model</a>
                                         </li>
                                         <li class="">
-                                            <a href="http://maristaclub.com/members-benefits/">Members Benefits</a>
+                                            <a href="http://maristaclub.com/members-benefits/" target="_blank">Members Benefits</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -185,47 +194,8 @@
                         </div>
                         <div class="col-md-3 col-last col-sm-12">
                             <aside id="facebook-like-widget-2" class="widget facebook-like">
-                                <h3 class="widget-title">Facebook</h3>
-                                <div style="margin-bottom:15px;">
-                                    <div style="display:inline-block">
-                                        <div class="_1drq" style="max-width: 220px;">3,271 likes</div>
-                                    </div>
-                                    <a class="btn like-btn" href="#" style="float:none; margin:0 15px;" target="_blank">like</a>
-                                </div>
-                                <div class="fb-likebox">
-                                    <div class="clearfix fb-persons">
-                                        <div class="fb-person">
-                                            <a href="#" title="Facebook 1" target="_blank">
-                                                <img src="images/17191408_1875410102748410_3063596210899889092_n.jpg" alt="">
-                                            </a>Facebook 1
-                                        </div>
-                                        <div class="fb-person">
-                                            <a href="#" title="Facebook 2" target="_blank">
-                                                <img src="images/25591993_1887536521286781_56687060939138774_n.jpg" alt="">
-                                            </a>Facebook 2
-                                        </div>
-                                        <div class="fb-person">
-                                            <a href="#" title="Facebook 3" target="_blank">
-                                                <img src="images/14906835_1110522302335424_1407757429617989437_n.jpg" alt="">
-                                            </a>Facebook 3
-                                        </div>
-                                        <div class="fb-person">
-                                            <a href="#" title="Facebook 4" target="_blank">
-                                                <img src="images/22405750_105662286861749_7976775388650107712_n.jpg" alt="">
-                                            </a>Facebook 4
-                                        </div>
-                                        <div class="fb-person">
-                                            <a href="#" title="Facebook 5" target="_blank">
-                                                <img src="images/20139753_1904325206451444_2398158477359516977_n.jpg" alt="">
-                                            </a>Facebook 5
-                                        </div>
-                                        <div class="fb-person">
-                                            <a href="#" title="Facebook 6" target="_blank">
-                                                <img src="images/10354686_10150004552801856_220367501106153455_n.jpg" alt="">
-                                            </a>Facebook 6
-                                        </div>
-                                    </div>
-                                </div>
+                                <div class="fb-page" data-href="https://www.facebook.com/maristaclub/" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/maristaclub/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/maristaclub/">Marista Club</a></blockquote></div>
+
                             </aside>
                         </div>
                     </div>
