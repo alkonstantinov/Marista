@@ -21,7 +21,6 @@ namespace Marista.Common.ViewModels
         public string EMail { get; set; }
 
         [Display(Name = "Paypal account"), Required]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string PayPal { get; set; }
 
         [Display(Name = "Password"), Required]

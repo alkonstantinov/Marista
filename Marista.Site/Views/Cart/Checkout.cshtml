@@ -135,52 +135,64 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-5 col-sm-6">
-                                                <h3 id="order_review_heading">Your order</h3>
-                                                <div id="order_review" class="order-review woocommerce-checkout-review-order">
-                                                    <input type="hidden" id="hDeliveryPrice" value='@Model.DeliveryPrice.ToString("#.00")' />
-                                                    <table class="shop_table woocommerce-checkout-review-order-table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="product-name">Product</th>
-                                                                <th class="product-total">Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var p in Model.Details)
-                                                            {
-                                                                <tr class="cart_item">
-                                                                    <td class="product-name">@p.ProductName <strong class="product-quantity">× @p.Quantity</strong></td>
-                                                                    <td class="product-total">
-                                                                        <span class="amount">&euro; @p.Total.ToString("#.00")</span>
-                                                                        <input type="hidden" id="hTotalRow_@p.ProductId" value="@p.Total.ToString("#.00")" />
-                                                                    </td>
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                        <tfoot>
-                                                            <tr class="cart-subtotal">
-                                                                <th>Subtotal</th>
-                                                                <td><span class="amount">&euro;<span id="sSubTotal"></span></span></td>
-                                                            </tr>
-                                                            <tr class="shipping">
-                                                                <th>VAT</th>
-                                                                <td><span class="amount">&euro;<span id="sVat"></span></span></td>
-                                                            </tr>
-                                                            <tr class="shipping">
-                                                                <th>Shipping</th>
-                                                                <td><span class="amount">&euro;<span id="sShipping"></span></span></td>
-                                                            </tr>
-                                                            <tr class="order-total">
-                                                                <th>Total</th>
-                                                                <td><strong><span class="amount">&euro;<span id="sTotal"></span></span></strong></td>
-                                                            </tr>
-                                                        </tfoot>
-                                                    </table>
-                                                    <br />
-                                                    <input type="submit" class="button alt btn-lg" name="woocommerce_checkout_place_order" id="place_order" value="Place order" data-value="Place order">
+                                        <div class="col-md-5 col-sm-6">
+                                            <h3 id="order_review_heading">Your order</h3>
+                                            <div id="order_review" class="order-review woocommerce-checkout-review-order">
+                                                <input type="hidden" id="hDeliveryPrice" value='@Model.DeliveryPrice.ToString("#.00")' />
+                                                <table class="shop_table woocommerce-checkout-review-order-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="product-name">Product</th>
+                                                            <th class="product-total">Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var p in Model.Details)
+                {
+                                        <tr class="cart_item">
+                                            <td class="product-name">@p.ProductName <strong class="product-quantity">× @p.Quantity</strong></td>
+                                            <td class="product-total">
+                                                <span class="amount">&euro; @p.Total.ToString("#.00")</span>
+                                                <input type="hidden" id="hTotalRow_@p.ProductId" value="@p.Total.ToString("#.00")" />
+                                            </td>
+                                        </tr>
+}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr class="cart-subtotal">
+                                                            <th>Subtotal</th>
+                                                            <td><span class="amount">&euro;<span id="sSubTotal"></span></span></td>
+                                                        </tr>
+                                                        <tr class="shipping">
+                                                            <th>VAT</th>
+                                                            <td><span class="amount">&euro;<span id="sVat"></span></span></td>
+                                                        </tr>
+                                                        <tr class="shipping">
+                                                            <th>Shipping</th>
+                                                            <td><span class="amount">&euro;<span id="sShipping"></span></span></td>
+                                                        </tr>
+                                                        <tr class="order-total">
+                                                            <th>Total</th>
+                                                            <td><strong><span class="amount">&euro;<span id="sTotal"></span></span></strong></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                                <br />
+                                                <input type="submit" class="button alt btn-lg" name="woocommerce_checkout_place_order" id="place_order" value="Place order" data-value="Place order">
+
+                                            </div>
+                                            <div class="cart-baner baner-checkout">
+                                                <div class="cart-baner-msg">
+                                                    <div class="col-md-8">
+                                                        <h2>MARISTA CLUB</h2>
+                                                        <p>When you imagine the future, what do you see?</p>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <a href="https://admin.maristaclub.com/bpreg/index" target="_blank" class="button btn-lg join-us-btn">Join us</a>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
 
                                         </div>
                                     </div>

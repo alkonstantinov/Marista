@@ -152,6 +152,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\coupon-template.jpg" />
+    <Content Include="Content\Images\marista_club_logo.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\site.css">
       <DependentUpon>site.scss</DependentUpon>

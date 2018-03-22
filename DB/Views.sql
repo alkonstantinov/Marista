@@ -90,6 +90,26 @@ create view v3MonthsBonuses as
   where DATEFROMPARTS(rh.Year, rh.Month, 1)> DATEADD(month,-3,getdate())
 go
 
+if OBJECT_ID('vBonuses') is not null
+  drop view vBonuses
+go
+--select * from v3MonthsBonuses
+create view vBonuses as
+  select 
+    rh.ResultHistoryId, 
+    bp.BPName,
+    rh.Bonus,
+    p.SiteUserId,
+    p2.SiteUserId ParentSiteId,
+    rh.Month,
+    rh.Year
+  from ResultHistory rh
+  join bp on bp.BPId = rh.BpId
+  join Pyramid p on p.SiteUserId = bp.SiteUserId
+  join Pyramid p2 on p2.PyramidId = p.PyramidParentId
+  --where DATEFROMPARTS(rh.Year, rh.Month, 1)> DATEADD(month,-3,getdate())
+go
+
   
 if OBJECT_ID('vBoiko') is not null
   drop view vBoiko

@@ -24,6 +24,9 @@ namespace Marista.DL
             var user = await db.SiteUsers.SingleOrDefaultAsync(u => u.Username == login.Username && u.Password == hashedPassword);
             if (user != null)
             {
+                if (user.LevelId == 2)
+                    if (!db.BPs.First(bp => bp.SiteUserId == user.SiteUserId).Active)
+                        return null;
                 return new UserData()
                 {
                     UserId = user.SiteUserId,

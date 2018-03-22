@@ -37,7 +37,6 @@
 .product-picture {
   width: 64px;
   height: 64px; }
-
 .product-picture-lg {
   width: 100%; }
 
@@ -91,3 +90,10 @@ td.accent {
       color: #000;
       margin-top: 4px; }
 
+.member-login-register-header {
+    padding: 20px 0;
+}
+
+.panel-title h2 {
+    margin-top: 20px;
+}

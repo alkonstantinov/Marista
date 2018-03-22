@@ -33,7 +33,7 @@
                                             <div class="product-image">
                                                 <div class="img-wrapper">
                                                     <img src="@Url.Action("Picture","Product" ,new { id=Model.ProductId})" alt="@Model.Name" title="@Model.Name" id="imgProduct" />
-                                                    <video src="@Url.Action("Picture","Product" ,new { id=Model.ProductId})" alt="@Model.Name" title="@Model.Name" id="videoProduct" controls />
+                                                    <video src="@Url.Action("Picture","Product" ,new { id=Model.ProductId})" alt="@Model.Name" title="@Model.Name" id="videoProduct" controls style="display:none"/>
                                                 </div>
                                                 <div class="price-box bottom-right">
                                                     <div>
@@ -88,25 +88,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="woocommerce-tabs resp-vtabs" id="product-tab">
+                            <div class="woocommerce-tabs resp-vtabs" id="product-tab" style="display: block; width: 100%;">
                                 <ul class="resp-tabs-list">
                                     <li aria-controls="tab_item-0" class="resp-tab-item resp-tab-active" role="tab">Description</li>
-                                    @*<li aria-controls="tab_item-1" class="resp-tab-item" role="tab">Additional Information</li>*@
+                                    <li aria-controls="tab_item-1" class="resp-tab-item" role="tab">Additional Information</li>
                                 </ul>
-                                <div class="resp-tabs-container">
-                                    <h2 class="resp-accordion resp-tab-active" role="tab" aria-controls="tab_item-0"><span class="resp-arrow"></span>Description</h2>
-                                    <div id="tab-description" class="resp-tab-content resp-tab-content-active" aria-labelledby="tab_item-0" style="display:block">
+                                <div class="resp-tabs-container" style="min-height: 162px;">
+                                    <h2 class="resp-accordion resp-tab-active" role="tab" aria-controls="tab_item-0"><span class="resp-arrow"></span>DescriptionDescription</h2>
+                                    <h2 class="resp-accordion" role="tab" aria-controls="tab_item-1"><span class="resp-arrow"></span>Additional Information</h2><div id="tab-description" class="resp-tab-content resp-tab-content-active" aria-labelledby="tab_item-0" style="display:block">
                                         <h2>Product Description</h2>
-                                        <p>@Html.Raw(Model.Description.Replace("\r\n", "<br/>"))</p>
+                                        <p>@Html.Raw(Model.LongDescription.Replace("\r\n", "<br/>"))</p>
                                     </div>
-                                    @*<h2 class="resp-accordion" role="tab" aria-controls="tab_item-1"><span class="resp-arrow"></span>Additional Information</h2>
-                                        <div id="tab-additional_information" class="resp-tab-content" aria-labelledby="tab_item-1">
-                                            <h2>Additional Information</h2>
-                                            <p>Integer semper quam turpis, id dapibus nunc ultrices at. Vestibulum eget orci lobortis, imperdiet diam a, ornare eros. Nam porttitor rutrum massa, eu varius velit facilisis at. Quisque porta elit et viverra suscipit. Proin laoreet, nisl et auctor mollis, felis sapien aliquet felis, nec facilisis tellus enim vitae enim. Nam rhoncus enim diam, a consequat nisi bibendum pulvinar. Donec aliquam lectus vitae ante pulvinar facilisis. Curabitur sed sem est.</p>
-                                        </div>*@
+                                    <h2 class="resp-accordion" role="tab" aria-controls="tab_item-2"><span class="resp-arrow"></span>Additional Information</h2>
+                                    <h2 class="resp-accordion" role="tab" aria-controls="tab_item-3"><span class="resp-arrow"></span></h2><div id="tab-additional_information" class="resp-tab-content" aria-labelledby="tab_item-1">
+                                        <h2>Additional Information</h2>
+                                        <p>@Html.Raw(Model.Benefits.Replace("\r\n", "<br/>"))</p>
+                                    </div>
 
                                 </div>
                             </div>
+                            
                         </div>
                         <div class="related products product-slider">
                             <h2 class="entry-title line-heading"><span class="inline-title">Related Products</span><span class="line line-related"></span></h2>
@@ -153,7 +154,6 @@
         </div>
     </div>
 </div>
-
 <script>
     var arrPics = null;
     var picId = 0;

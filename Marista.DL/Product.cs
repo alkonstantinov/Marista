@@ -36,6 +36,8 @@ namespace Marista.DL
         public int Available { get; set; }
         public int MinQuantity { get; set; }
         public decimal Weight { get; set; }
+        public string LongDescription { get; set; }
+        public string Benefits { get; set; }
     
         public virtual HCategory HCategory { get; set; }
         public virtual VCategory VCategory { get; set; }

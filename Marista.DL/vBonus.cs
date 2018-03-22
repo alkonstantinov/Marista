@@ -20,5 +20,6 @@ namespace Marista.DL
         public int SiteUserId { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
+        public int ParentSiteId { get; set; }
     }
 }

@@ -149,6 +149,8 @@
           <Property Name="Available" Type="int" Nullable="false" />
           <Property Name="MinQuantity" Type="int" Nullable="false" />
           <Property Name="Weight" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="LongDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Benefits" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductPicture">
           <Key>
@@ -315,6 +317,7 @@ warning 6002: The table/view 'Marista.dbo.vBonuses' does not have a primary key 
             <PropertyRef Name="ResultHistoryId" />
             <PropertyRef Name="BPName" />
             <PropertyRef Name="SiteUserId" />
+            <PropertyRef Name="ParentSiteId" />
             <PropertyRef Name="Month" />
             <PropertyRef Name="Year" />
           </Key>
@@ -322,6 +325,7 @@ warning 6002: The table/view 'Marista.dbo.vBonuses' does not have a primary key 
           <Property Name="BPName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Bonus" Type="decimal" Precision="10" Scale="2" />
           <Property Name="SiteUserId" Type="int" Nullable="false" />
+          <Property Name="ParentSiteId" Type="int" Nullable="false" />
           <Property Name="Month" Type="int" Nullable="false" />
           <Property Name="Year" Type="int" Nullable="false" />
         </EntityType>
@@ -810,6 +814,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
     [vBonuses].[BPName] AS [BPName], 
     [vBonuses].[Bonus] AS [Bonus], 
     [vBonuses].[SiteUserId] AS [SiteUserId], 
+    [vBonuses].[ParentSiteId] AS [ParentSiteId], 
     [vBonuses].[Month] AS [Month], 
     [vBonuses].[Year] AS [Year]
     FROM [dbo].[vBonuses] AS [vBonuses]</DefiningQuery>
@@ -1206,6 +1211,8 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="MinQuantity" Type="Int32" Nullable="false" />
           <Property Name="Weight" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <NavigationProperty Name="ProductPictures" Relationship="MaristaModel.fk_ProductPicture_ProductId" FromRole="Product" ToRole="ProductPicture" />
+          <Property Name="LongDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Benefits" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SOBonusSize">
           <Key>
@@ -1593,6 +1600,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
             <PropertyRef Name="SiteUserId" />
             <PropertyRef Name="Month" />
             <PropertyRef Name="Year" />
+            <PropertyRef Name="ParentSiteId" />
           </Key>
           <Property Name="ResultHistoryId" Type="Int32" Nullable="false" />
           <Property Name="BPName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -1600,6 +1608,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <Property Name="SiteUserId" Type="Int32" Nullable="false" />
           <Property Name="Month" Type="Int32" Nullable="false" />
           <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="ParentSiteId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="v3MonthsBonuses">
           <Key>
@@ -1933,6 +1942,8 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="MaristaModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Benefits" ColumnName="Benefits" />
+                <ScalarProperty Name="LongDescription" ColumnName="LongDescription" />
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
                 <ScalarProperty Name="MinQuantity" ColumnName="MinQuantity" />
                 <ScalarProperty Name="Available" ColumnName="Available" />
@@ -2134,6 +2145,7 @@ warning 6002: The table/view 'Marista.dbo.vSalesTotal' does not have a primary k
           <EntitySetMapping Name="vBonuses">
             <EntityTypeMapping TypeName="MaristaModel.vBonus">
               <MappingFragment StoreEntitySet="vBonuses">
+                <ScalarProperty Name="ParentSiteId" ColumnName="ParentSiteId" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Month" ColumnName="Month" />
                 <ScalarProperty Name="SiteUserId" ColumnName="SiteUserId" />

@@ -5,6 +5,7 @@
 }
 
 <h2>My Profile Report</h2>
+<p>Click on title of report to open it</p>
 
 @if (Model.LeaderName != null)
 {
@@ -23,14 +24,18 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var rec in Model.Sales)
-            {
-                <tr>
-                    <td>@rec.CustomerName</td>
-                    <td>@rec.OnDate.ToShortDateString()</td>
-                    <td>@rec.Total</td>
 
-                </tr>
+            @if (Model.Sales != null)
+            {
+                foreach (var rec in Model.Sales)
+                {
+                    <tr>
+                        <td>@rec.CustomerName</td>
+                        <td>@rec.OnDate.ToShortDateString()</td>
+                        <td>@rec.Total</td>
+
+                    </tr>
+                }
             }
         </tbody>
     </table>
@@ -46,14 +51,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var rec in Model.FirstLevel)
+            @if (Model.FirstLevel != null)
             {
-                <tr>
-                    <td>@rec.BPName</td>
-                    <td>@rec.Month/@rec.Year</td>
-                    <td>@rec.Bonus</td>
+                foreach (var rec in Model.FirstLevel)
+                {
+                    <tr>
+                        <td>@rec.BPName</td>
+                        <td>@rec.Month/@rec.Year</td>
+                        <td>@rec.Bonus</td>
 
-                </tr>
+                    </tr>
+                }
             }
         </tbody>
     </table>
@@ -68,13 +76,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var rec in Model.Bonuses)
+            @if (Model.Bonuses != null)
             {
-                <tr>
-                    <td>@rec.Month/@rec.Year</td>
-                    <td>@rec.Bonus</td>
+                foreach (var rec in Model.Bonuses)
+                {
+                    <tr>
+                        <td>@rec.Month/@rec.Year</td>
+                        <td>@rec.Bonus</td>
 
-                </tr>
+                    </tr>
+                }
             }
         </tbody>
     </table>
@@ -90,13 +101,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var rec in Model.Bonuses)
-            {
-                <tr>
-                    <td>@rec.Month/@rec.Year</td>
-                    <td>@rec.Bonus</td>
+            @if (Model.BonusesPerYear != null)
 
-                </tr>
+            {
+                foreach (var rec in Model.BonusesPerYear)
+                {
+                    <tr>
+                        <td>@rec.Month/@rec.Year</td>
+                        <td>@rec.Bonus</td>
+
+                    </tr>
+                }
             }
         </tbody>
     </table>

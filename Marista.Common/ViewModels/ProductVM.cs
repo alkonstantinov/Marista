@@ -16,7 +16,7 @@ namespace Marista.Common.ViewModels
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Description")]
+        [Display(Name = "Short Description")]
         public string Description { get; set; }
 
         [Required]
@@ -61,5 +61,15 @@ namespace Marista.Common.ViewModels
         public string PictureUrls { get; set; }
 
         public IList<ProductVM> RelatedProducts { get; set; }
+
+
+        [Required]
+        [Display(Name = "Long Description")]
+        public string LongDescription { get; set; }
+
+        [Required]
+        [Display(Name = "Benefits")]
+        public string Benefits { get; set; }
+
     }
 }

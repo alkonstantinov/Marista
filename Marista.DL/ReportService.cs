@@ -91,7 +91,9 @@ namespace Marista.DL
         public async Task<MyProfileReportVM> GetMyProfileReport(int siteUserId)
         {
             MyProfileReportVM result = new MyProfileReportVM();
-            var myPyramid = await db.Pyramids.FirstAsync(b => b.SiteUserId == siteUserId);
+            var myPyramid = await db.Pyramids.FirstOrDefaultAsync(b => b.SiteUserId == siteUserId);
+            if (myPyramid == null)
+                return result;
             var MyLeader = await db.Pyramids.FirstOrDefaultAsync(b => b.PyramidId == myPyramid.PyramidParentId);
             if (MyLeader != null)
             {

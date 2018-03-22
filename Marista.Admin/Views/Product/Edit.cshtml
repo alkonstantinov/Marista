@@ -14,7 +14,7 @@
 
     <div class="form-horizontal">
         <h4>Edit product #@Model.ProductId</h4>
-
+        <img src="@Url.Action("Picture", new { id = Model.ProductId })" alt="@Model.Name" class="product-picture" />
         @Html.HiddenFor(x => x.ProductId)
 
         @Html.Partial("_Edit")
