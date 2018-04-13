@@ -165,7 +165,7 @@
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
 
     function SetCoupon() {
 
@@ -201,9 +201,9 @@
             $("#dInvalidCoupon").hide();
 
 
+        for (var i = 0; i < result.length; i++)
+            $("#hDiscount_" + item.ProductId).val(result[i].Discount);
 
-        for (var item of result)
-            $("#hDiscount_" + item.ProductId).val(item.Discount);
         DisplayTotals();
     }
 

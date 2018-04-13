@@ -22,43 +22,17 @@ namespace Marista.Common.Tools
                     original = new Bitmap(ms);
                 }
 
-                int rectHeight = height;
-                int rectWidth = width;
-                //if the image is squared set it's height and width to the smallest of the desired dimensions (our box). In the current example rectHeight<rectWidth
-                if (original.Height == original.Width)
-                {
-                    resizedImage = new Bitmap(original, rectHeight, rectHeight);
-                }
-                else
-                {
-                    //calculate aspect ratio
-                    float aspect = original.Width / (float)original.Height;
-                    int newWidth, newHeight;
-                    //calculate new dimensions based on aspect ratio
-                    newWidth = (int)(rectWidth * aspect);
-                    newHeight = (int)(newWidth / aspect);
-                    //if one of the two dimensions exceed the box dimensions
-                    if (newWidth > rectWidth || newHeight > rectHeight)
-                    {
-                        //depending on which of the two exceeds the box dimensions set it as the box dimension and calculate the other one based on the aspect ratio
-                        if (newWidth > newHeight)
-                        {
-                            newWidth = rectWidth;
-                            newHeight = (int)(newWidth / aspect);
-
-                        }
-                        else
-                        {
-                            newHeight = rectHeight;
-                            newWidth = (int)(newHeight * aspect);
-
-                        }
-                    }
-                    resizedImage = new Bitmap(original, newWidth, newHeight);
 
 
-                    
-                }
+
+                double ratio = Math.Min(
+                    height / (double)original.Height,
+                    width / (double)original.Width
+                    );
+                //resizedImage = new Bitmap(original, (int)(ratio * original.Width), (int)(ratio * original.Height));
+                resizedImage = new Bitmap(width, height);
+                Graphics gr = Graphics.FromImage(resizedImage);
+                gr.DrawImage(original, new Rectangle(0, 0, (int)(ratio * original.Width), (int)(ratio * original.Height)));
                 using (var stream = new MemoryStream())
                 {
                     resizedImage.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
@@ -67,10 +41,10 @@ namespace Marista.Common.Tools
             }
             catch (Exception ex)
             {
-                
+
             }
             return null;
         }
-    
+
     }
 }
