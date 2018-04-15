@@ -1,0 +1,118 @@
+﻿<h3>Hello, @ViewBag.Username</h3>
+<a href="@Url.Action("Logout", "User")">Logout</a>
+<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+@if (ViewBag.LevelId == 1)
+{
+    <div class="col-md-12">
+        <h3>Sales</h3>
+        <ul>
+            <li>
+                <a href="@Url.Action("Index", "Sales")">Sales For Dispatch</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-12">
+        <h3>Constants</h3>
+        <ul>
+            <li>
+                <a href="@Url.Action("Index", "BonusSize")">Bonus Sizes</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "SOBonusSize")">Spinoff Bonus Sizes</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Constant")">Constants</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-12">
+        <h3>Products</h3>
+        <ul>
+            <li>
+                <a href="@Url.Action("Index", "Product")">Products</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "RelatedProduct")">Related Products</a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="col-md-12">
+        <h3>Brand Promoters</h3>
+        <ul>
+            <li>
+                <a href="@Url.Action("NotApproved", "BPReg")">Brand promoters</a>
+            </li>
+            <li>
+                <a href="@Url.Action("FilterBPs", "BPReg")">Send mail</a>
+            </li>
+        </ul>
+    </div>
+
+}
+<div class="col-md-12">
+    <h3>Marketing Materials</h3>
+    <ul>
+        <li>
+            <a href="@Url.Action("Index", "MarketingMaterial")">Marketing Materials</a>
+        </li>
+
+    </ul>
+</div>
+@if (ViewBag.LevelId == 2)
+{
+    <div class="col-md-12">
+        <h3>Chat</h3>
+        <ul>
+            @if (ViewBag.HasParent)
+            {
+                <li>
+                    <a href="@Url.Action("Index", "Chat", new { up = true })">Chat with head</a>
+                </li>
+            }
+            <li>
+                <a href="@Url.Action("Index", "Chat")">Chat with children</a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="col-md-12">
+        <h3>Coupons</h3>
+        <ul>
+            <li>
+                <a href="@Url.Action("Index", "Coupon")">Coupons</a>
+            </li>
+
+        </ul>
+    </div>
+
+}
+
+<div class="col-md-12">
+    <h3>Reports</h3>
+    <ul>
+        @if (ViewBag.LevelId == 1)
+        {
+            <li>
+                <a href="@Url.Action("CalcAllProfits", "Dashboard")">Recalc all profits</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MonthlyReports", "Reports")">Month Reports</a>
+            </li>
+        }
+        @if (ViewBag.LevelId == 2)
+        {
+            <li>
+                <a href="@Url.Action("MyProfileReport", "Reports")">My Profile Reports</a>
+            </li>
+        }
+        <li>
+            <a href="@Url.Action("MyTeamReport", "Reports")">My Team Reports</a>
+        </li>
+
+    </ul>
+</div>
+
+
+

@@ -160,6 +160,7 @@
     <Content Include="Content\site.min.css">
       <DependentUpon>site.css</DependentUpon>
     </Content>
+    <Content Include="Content\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -291,6 +292,7 @@
     <Compile Include="Controllers\ConstantController.cs" />
     <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\SOBonusSizeController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\BonusSizeController.cs" />
@@ -350,6 +352,7 @@
     <Content Include="Views\Sales\ShippingLabel.cshtml" />
     <Content Include="Views\Sales\PackingList.cshtml" />
     <Content Include="Views\Product\ProductPictures.cshtml" />
+    <Content Include="Views\Shared\Menu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

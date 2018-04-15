@@ -6,13 +6,24 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
     <link href="~/Content/site.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
     @RenderSection("styles", false)
 </head>
 <body>
     <div class="container-fluid">
+        <div id="mySidenav" class="sidenav">
+
+            @Html.Action("Menu", "Shared")
+        </div>
+
         @if (Session["UserData"] != null)
         {
-            <a href="@Url.Action("Index", "DashBoard")" class="btn btn-default">To start</a>
+
+
+            <img src="~/Content/Images/marista_club_logo.jpg" /><br />
+            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+
+
         }
         @*<nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -46,5 +57,14 @@
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/site.js"></script>
     @RenderSection("scripts", false)
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
 </body>
 </html>

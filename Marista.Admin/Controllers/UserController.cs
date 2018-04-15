@@ -17,6 +17,7 @@ namespace Marista.Admin.Controllers
 {
     public class UserController : BaseController
     {
+
         public UserController()
         {
         }
@@ -24,9 +25,13 @@ namespace Marista.Admin.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            if(this.UserData != null)
+            if (this.UserData != null)
             {
-                return RedirectToAction("Index", "Dashboard");
+                if (this.UserData.LevelId == 1)
+                    return RedirectToAction("Index", "Sales");
+                else
+                    return RedirectToAction("MyTeamReport", "Reports");
+
             }
             return View();
         }
@@ -47,7 +52,7 @@ namespace Marista.Admin.Controllers
             }
 
             var user = await this.UserService.Login(login);
-            if(user == null)
+            if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "Incorrect username and/or password");
                 return View();
@@ -56,7 +61,11 @@ namespace Marista.Admin.Controllers
             this.UserData = user;
             await this.UserService.StoreSessionId(user.UserId, Session.SessionID);
 
-            return RedirectToAction("Index", "Dashboard");
+            if (this.UserData.LevelId == 1)
+                return RedirectToAction("Index", "Sales");
+            else
+                return RedirectToAction("MyTeamReport", "Reports");
+
         }
 
         [HttpGet]
