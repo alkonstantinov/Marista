@@ -172,6 +172,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Mails\approve.txt" />
+    <Content Include="Mails\resetpass.txt" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -353,6 +354,7 @@
     <Content Include="Views\Sales\PackingList.cshtml" />
     <Content Include="Views\Product\ProductPictures.cshtml" />
     <Content Include="Views\Shared\Menu.cshtml" />
+    <Content Include="Views\User\LostPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

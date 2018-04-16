@@ -36,6 +36,38 @@ namespace Marista.Admin.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult LostPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> LostPassword(LoginVM model)
+        {
+
+            Random r = new Random(DateTime.Now.Millisecond);
+            string password = r.Next(10000).ToString().PadRight(5, '0');
+            model.Password = Common.Tools.MD5.ConvertToMD5(password);
+            bool result = await this.UserService.ChangePass(model);
+            if (result)
+            {
+                string content = System.IO.File.ReadAllText(Server.MapPath("/Mails/resetpass.txt"));
+                content = content.Replace("{username}", model.Username);
+                content = content.Replace("{password}", password);
+
+                new Common.Tools.Mailer().SendMailSpecific(
+                content,
+                model.Username,
+                "Your password is changed");
+            }
+
+            ViewBag.ok = true;
+
+
+            return View();
+        }
+
         public ActionResult TestMail()
         {
             new Mailer().SendMailSpecific("kor", "alkonstantinov@outlook.com", "123");

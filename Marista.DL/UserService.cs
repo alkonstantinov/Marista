@@ -58,5 +58,18 @@ namespace Marista.DL
             }
             else return null;
         }
+
+        public async Task<bool> ChangePass(LoginVM model)
+        {
+            var user = await db.SiteUsers.FirstOrDefaultAsync(u => u.Username == model.Username);
+            if (user == null)
+                return false;
+            else
+            {
+                user.Password = model.Password;
+                await db.SaveChangesAsync();
+                return true;
+            }
+        }
     }
 }
