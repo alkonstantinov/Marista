@@ -29,9 +29,18 @@
             <div class="header-top">
                 <div class="container">
                     <div class="right">
-                        <div class="login-links pos2">
-                            <a href="http://admin.maristaclub.com/user/login" class="nav-top-link">For Members</a> or <a href="http://admin.maristaclub.com/bpreg/index" class="nav-top-link">Become a Member</a>
-                        </div>
+                        @if (Session["CustomerId"] == null)
+                        {
+                            <div class="login-links pos2">
+                                <a href="http://admin.maristaclub.com/user/login" class="nav-top-link">For Members</a> or <a href="http://admin.maristaclub.com/bpreg/index" class="nav-top-link">Become a Member</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="login-links pos2">
+                                Hello, @Session["CustomerName"].ToString()
+                            </div>
+                        }
                         @Html.Action("Embed", "Cart")
                     </div>
                 </div>
@@ -121,9 +130,6 @@
                                 <h3 class="widget-title">E-Shop</h3>
                                 <div class="menu-footer-links-container">
                                     <ul id="menu-footer-links" class="menu">
-                                        <li class="">
-                                            <a href="http://www.maristaclub.com/" target="_blank">Marista Cosmetics</a>
-                                        </li>
                                         <li class="">
                                             <a href="/home/index">Products</a>
                                         </li>
@@ -292,6 +298,7 @@
             $("#dCookies").hide();
         }
     </script>
+    
     <script src="~/Scripts/scripts.min.js"></script>
 
 </body>

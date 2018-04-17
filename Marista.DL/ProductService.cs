@@ -22,6 +22,15 @@ namespace Marista.DL
             _map = VMMapper.Instance.Mapper;
         }
 
+        public CustomerVM Login(PersonalInfoVM model)
+        {
+            var md5 = Common.Tools.MD5.ConvertToMD5(model.Password);
+            var cmr = db.Customers.FirstOrDefault(c => c.Username == model.CustomerEmail && c.Password == md5);
+            if (cmr == null)
+                return null;
+            else return _map.Map<CustomerVM>(cmr);
+        }
+
         public async Task<IList<ProductVM>> Get(string search = null)
         {
             var query = db.Products
@@ -59,6 +68,13 @@ namespace Marista.DL
             result.PictureUrls = sb.ToString();
             return result;
         }
+
+        public async Task<CustomerVM> GetCustomer(int id)
+        {
+            var c = await db.Customers.FirstAsync(cmr => cmr.CustomerId == id);
+            return _map.Map<CustomerVM>(c);
+        }
+
 
         public async Task<ProductVM> Create(ProductVM pvm)
         {
@@ -280,6 +296,24 @@ namespace Marista.DL
                 CustomerId = c.CustomerId,
                 Password = password
             };
+        }
+
+
+        public int CreateCustomerWithPassword(PersonalInfoVM model)
+        {
+            Customer c = new Customer()
+            {
+                Address = "",
+                City = "",
+                CountryId = model.BillingCountryId,
+                CustomerName = model.CustomerName,
+                Password = MD5.ConvertToMD5(model.Password),
+                Username = model.CustomerEmail
+            };
+
+            db.Customers.Add(c);
+            db.SaveChanges();
+            return c.CustomerId;
         }
 
         private void SavePyramidValues(Pyramid pyramid, CheckoutVM model)

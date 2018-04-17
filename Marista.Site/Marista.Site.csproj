@@ -285,6 +285,8 @@
     <Content Include="Views\Home\PaymentAndShipping.cshtml" />
     <Content Include="Views\Home\TermsOfUse.cshtml" />
     <Content Include="Views\Customer\Menu.cshtml" />
+    <Content Include="Views\Cart\PersonalInfo.cshtml" />
+    <Content Include="Views\Cart\Confirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

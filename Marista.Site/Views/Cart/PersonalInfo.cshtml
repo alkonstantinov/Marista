@@ -1,0 +1,138 @@
+﻿@model Marista.Common.ViewModels.PersonalInfoVM
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<div class="breadcrumbs">
+    <!-- breadcrumbs -->
+    <div class="container">
+        <ul>
+            <li>
+                <a class="home" href="#">Home</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                <a href="shop.html">E-shop</a>
+            </li>
+            <li>
+                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            </li>
+            <li>
+                Checkout
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div id="main" class="column1">
+    <!-- main -->
+    <div class="container">
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col-md-12">
+                <div class="checkout-steps clearfix col-md-12 col-sm-12 col-xs-12">
+                    <div class="step-client step clearfix active">
+                        <p class="step-text">Personal Info</p>
+                        <i class="fa fa-chevron-right divider"></i>
+                    </div>
+                    <div class="step-shipping step clearfix">
+                        <p class="step-text">Checkout</p>
+                        <i class="fa fa-chevron-right divider"></i>
+                    </div>
+                    <div class="step-payment step clearfix ">
+                        <p class="step-text">Payment</p>
+                        <i class="fa fa-chevron-right divider"></i>
+                    </div>
+                    <div class="step-confirmation step clearfix ">
+                        <p class="step-text">Order Confirmation</p>
+                        <i class="fa fa-chevron-right divider"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="main-content col-sm-12 col-md-12">
+                <!-- main content -->
+                <div id="content" class="site-content" role="main">
+                    <article class="page type-page status-publish hentry">
+                        <header class="entry-header">
+                            <h1 class="page-title">Personal info</h1>
+                        </header>
+                        <div class="entry-content">
+                            <div class="woocommerce">
+                                <div class="u-columns row" id="customer_login">
+                                    <div class="u-column1 col-sm-6">
+                                        <h2>New Customer</h2>
+                                        @using (Html.BeginForm("RegisterNewCustomer", "Cart", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <p class="form-row form-row form-row-first input-field" id="billing_first_name_field">
+                                                <label for="billing_first_name" class=""><span class="fa fa-user"></span>Name<abbr class="required" title="required">*</abbr></label>
+                                                @Html.EditorFor(m => m.CustomerName, new { @class = "input-text " })
+                                                @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger" })
+                                            </p>
+                                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-first input-field">
+                                                <label for="username"><span class="fa fa-user"></span>Email <span class="required">*</span></label>
+                                                @Html.EditorFor(m => m.CustomerEmail, new { @class = "input-text " })
+                                                @Html.ValidationMessageFor(m => m.CustomerEmail, "", new { @class = "text-danger" })
+                                                @if (ViewBag.EmailUsed != null && ViewBag.EmailUsed)
+                                                {
+                                                <p class="text-danger">Email already used for new account</p>
+                                            }
+                                                </p>
+                                                <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-last input-field">
+                                                    <label for="password"><span class="fa fa-lock"></span>Password <span class="required">*</span></label>
+                                                    @Html.PasswordFor(m => m.Password, new { @class = "input-text " })
+                                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                                </p>
+                                                <p class="form-row form-row-wide input-field">
+                                                    <label for="calc_billing_country"><span class="fa fa-globe"></span>Country</label>
+                                                    @Html.DropDownListFor(m => m.BillingCountryId, Model.Countries, new { @class = "input-text " })
+                                                    @Html.ValidationMessageFor(m => m.BillingCountryId, "", new { @class = "text-danger" })
+                                                </p>
+                                                <div class="clear"></div>
+                                                <p class="woocommerce-FormRow form-row button-row">
+                                                    <input type="submit" class="woocommerce-Button button btn-lg btn-register" name="register" value="Register" data-value="Register">
+                                                </p>
+                                            }
+                                    </div>
+                                    <div class="u-column1 col-sm-6">
+                                        <h2>Registered Customer</h2>
+                                        @using (Html.BeginForm("LoginExisting", "Cart", FormMethod.Post))
+                                        {
+                                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-last input-field">
+                                                <label for="reg_email"><span class="fa fa-envelope"></span>Email <span class="required">*</span></label>
+                                                @Html.EditorFor(m => m.CustomerEmail, new { @class = "woocommerce-Input woocommerce-Input--text input-text" })
+                                                @Html.ValidationMessageFor(m => m.CustomerEmail, "", new { @class = "text-danger" })
+
+                                            </p>
+                                            <div class="clear"></div>
+                                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-first input-field">
+                                                <label for="reg_password"><span class="fa fa-lock"></span>Password <span class="required">*</span></label>
+                                                @Html.PasswordFor(m => m.Password, new { @class = "woocommerce-Input woocommerce-Input--text input-text" })
+                                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                            </p>
+                                            <div class="clear"></div>
+                                            <p class="form-row button-row">
+                                                <input type="submit" class="button btn-lg btn-login" name="login" value="Login">
+                                                @if (ViewBag.LoginError == true)
+                                                {
+                                                    <div class="alert alert-danger">Invalid username or password</div>
+                                                }
+                                            </p>
+                                            <p class="lost_password">
+                                                <a href="/customer/resetpassword">Lost your password?</a>
+                                            </p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,7 +11,7 @@ namespace Marista.Common.Tools
 {
     public class Mailer
     {
-        public Task<bool> SendMail(string fnm, string email, string subject)
+        public Action SendMail(string fnm, string email, string subject)
         {
             MailMessage mm = new MailMessage(ConfigurationManager.AppSettings["FromEmail"], email);
             mm.Subject = subject;
@@ -27,10 +27,10 @@ namespace Marista.Common.Tools
             SmtpClient cl = new SmtpClient();
 
             cl.Send(mm);
-            return new Task<bool>(() => false);
+            return null;
         }
 
-        public Task<bool> SendMailSpecific(string content, string email, string subject)
+        public Action SendMailSpecific(string content, string email, string subject)
         {
             MailMessage mm = new MailMessage(ConfigurationManager.AppSettings["FromEmail"], email);
             mm.Subject = subject;
@@ -44,9 +44,14 @@ namespace Marista.Common.Tools
             mm.BodyEncoding = System.Text.Encoding.UTF8;
 
             SmtpClient cl = new SmtpClient();
-
-            cl.Send(mm);
-            return new Task<bool>(() => false);
+            try
+            {
+                cl.Send(mm);
+            }
+            catch 
+            {
+            }
+            return null;
         }
     }
 }

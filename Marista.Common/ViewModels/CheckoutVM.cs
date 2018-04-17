@@ -25,6 +25,7 @@ namespace Marista.Common.ViewModels
         [Display(Name = "eMail"), Required, EmailAddress]
         public string CustomerEmail { get; set; }
 
+        
         [Display(Name = "Phone"), Required]
         public string CustomerPhone { get; set; }
 

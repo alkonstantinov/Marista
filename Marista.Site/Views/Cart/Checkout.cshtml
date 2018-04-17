@@ -25,11 +25,38 @@
         </ul>
     </div>
 </div>
+
 @using (Html.BeginForm("Checkout", "Cart", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div id="main" class="column1">
         <!-- main -->
+
+        <div class="container">
+            <div class="row" style="margin-bottom:20px;">
+                <div class="col-md-12">
+                    <div class="checkout-steps clearfix col-md-12 col-sm-12 col-xs-12">
+                        <div class="step-client step clearfix">
+                            
+                            <p class="step-text">@Html.ActionLink("Personal Info","PersonalInfo")</p>
+                            <i class="fa fa-chevron-right divider"></i>
+                        </div>
+                        <div class="step-shipping step clearfix active">
+                            <p class="step-text">Checkout</p>
+                            <i class="fa fa-chevron-right divider"></i>
+                        </div>
+                        <div class="step-payment step clearfix ">
+                            <p class="step-text">Payment</p>
+                            <i class="fa fa-chevron-right divider"></i>
+                        </div>
+                        <div class="step-confirmation step clearfix ">
+                            <p class="step-text">Order Confirmation</p>
+                            <i class="fa fa-chevron-right divider"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row">
                 <div class="main-content col-sm-12 col-md-12">
@@ -39,12 +66,6 @@
                             <header class="entry-header">
                                 <h1 class="page-title">Checkout</h1>
                             </header>
-                            @if (ViewBag.login == true)
-                            {
-                                <div class="login-links pos2">
-                                    <a class="home" href="/customer/login?backToCheckout=true">Login</a>
-                                </div>
-                            }
 
                             <div class="entry-content">
                                 <div class="woocommerce">
@@ -135,64 +156,64 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        <div class="col-md-5 col-sm-6">
-                                            <h3 id="order_review_heading">Your order</h3>
-                                            <div id="order_review" class="order-review woocommerce-checkout-review-order">
-                                                <input type="hidden" id="hDeliveryPrice" value='@Model.DeliveryPrice.ToString("#.00")' />
-                                                <table class="shop_table woocommerce-checkout-review-order-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="product-name">Product</th>
-                                                            <th class="product-total">Total</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var p in Model.Details)
-                {
-                                        <tr class="cart_item">
-                                            <td class="product-name">@p.ProductName <strong class="product-quantity">× @p.Quantity</strong></td>
-                                            <td class="product-total">
-                                                <span class="amount">&euro; @p.Total.ToString("#.00")</span>
-                                                <input type="hidden" id="hTotalRow_@p.ProductId" value="@p.Total.ToString("#.00")" />
-                                            </td>
-                                        </tr>
-}
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr class="cart-subtotal">
-                                                            <th>Subtotal</th>
-                                                            <td><span class="amount">&euro;<span id="sSubTotal"></span></span></td>
-                                                        </tr>
-                                                        <tr class="shipping">
-                                                            <th>VAT</th>
-                                                            <td><span class="amount">&euro;<span id="sVat"></span></span></td>
-                                                        </tr>
-                                                        <tr class="shipping">
-                                                            <th>Shipping</th>
-                                                            <td><span class="amount">&euro;<span id="sShipping"></span></span></td>
-                                                        </tr>
-                                                        <tr class="order-total">
-                                                            <th>Total</th>
-                                                            <td><strong><span class="amount">&euro;<span id="sTotal"></span></span></strong></td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                                <br />
-                                                <input type="submit" class="button alt btn-lg" name="woocommerce_checkout_place_order" id="place_order" value="Place order" data-value="Place order">
-
-                                            </div>
-                                            <div class="cart-baner baner-checkout">
-                                                <div class="cart-baner-msg">
-                                                    <div class="col-md-8">
-                                                        <h2>MARISTA CLUB</h2>
-                                                        <p>When you imagine the future, what do you see?</p>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <a href="https://admin.maristaclub.com/bpreg/index" target="_blank" class="button btn-lg join-us-btn">Join us</a>
+                                            <div class="col-md-5 col-sm-6">
+                                                <div class="cart-baner baner-checkout">
+                                                    <div class="cart-baner-msg">
+                                                        <div class="col-md-8">
+                                                            <h2>MARISTA CLUB</h2>
+                                                            <p>When you imagine the future, what do you see?</p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <a href="https://admin.maristaclub.com/bpreg/index" target="_blank" class="button btn-lg join-us-btn">Join us</a>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <h3 id="order_review_heading">Your order</h3>
+                                                <div id="order_review" class="order-review woocommerce-checkout-review-order">
+                                                    <input type="hidden" id="hDeliveryPrice" value='@Model.DeliveryPrice.ToString("#.00")' />
+                                                    <table class="shop_table woocommerce-checkout-review-order-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="product-name">Product</th>
+                                                                <th class="product-total">Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var p in Model.Details)
+                                                            {
+                                                                <tr class="cart_item">
+                                                                    <td class="product-name">@p.ProductName <strong class="product-quantity">× @p.Quantity</strong></td>
+                                                                    <td class="product-total">
+                                                                        <span class="amount">&euro; @p.Total.ToString("#.00")</span>
+                                                                        <input type="hidden" id="hTotalRow_@p.ProductId" value="@p.Total.ToString("#.00")" />
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr class="cart-subtotal">
+                                                                <th>Subtotal</th>
+                                                                <td><span class="amount">&euro;<span id="sSubTotal"></span></span></td>
+                                                            </tr>
+                                                            <tr class="shipping">
+                                                                <th>VAT</th>
+                                                                <td><span class="amount">&euro;<span id="sVat"></span></span></td>
+                                                            </tr>
+                                                            <tr class="shipping">
+                                                                <th>Shipping</th>
+                                                                <td><span class="amount">&euro;<span id="sShipping"></span></span></td>
+                                                            </tr>
+                                                            <tr class="order-total">
+                                                                <th>Total</th>
+                                                                <td><strong><span class="amount">&euro;<span id="sTotal"></span></span></strong></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                    <br />
+                                                    <input type="submit" class="button alt btn-lg" name="woocommerce_checkout_place_order" id="place_order" value="Place order" data-value="Place order">
+
+                                                </div>
                                             </div>
-                                        </div>
 
                                         </div>
                                     </div>
@@ -207,6 +228,7 @@
 
 <script>
     function ChangeShipping() {
+        
         $("#dShipping").toggle();
 
     }

@@ -66,6 +66,7 @@
     <Compile Include="ViewModels\CartVM.cs" />
     <Compile Include="ViewModels\ChatItemVM.cs" />
     <Compile Include="ViewModels\ChatVM.cs" />
+    <Compile Include="ViewModels\PersonalInfoVM.cs" />
     <Compile Include="ViewModels\CheckoutVM.cs" />
     <Compile Include="ViewModels\ConstantVM.cs" />
     <Compile Include="ViewModels\CouponVM.cs" />

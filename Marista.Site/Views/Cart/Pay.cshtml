@@ -36,6 +36,31 @@
 {
     @Html.AntiForgeryToken()
     <div id="main" class="column1">
+        <div class="container">
+            <div class="row" style="margin-bottom:20px;">
+                <div class="col-md-12">
+                    <div class="checkout-steps clearfix col-md-12 col-sm-12 col-xs-12">
+                        <div class="step-client step clearfix">
+
+                            <p class="step-text">@Html.ActionLink("Personal Info", "PersonalInfo")</p>
+                            <i class="fa fa-chevron-right divider"></i>
+                        </div>
+                        <div class="step-shipping step clearfix ">
+                            <p class="step-text">@Html.ActionLink("Checkout", "Checkout")</p>                            
+                            <i class="fa fa-chevron-right divider"></i>
+                        </div>
+                        <div class="step-payment step clearfix active">
+                            <p class="step-text">Payment</p>
+                            <i class="fa fa-chevron-right divider"></i>
+                        </div>
+                        <div class="step-confirmation step clearfix ">
+                            <p class="step-text">Order Confirmation</p>
+                            <i class="fa fa-chevron-right divider"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- main -->
         <div class="container">
             <div class="row">

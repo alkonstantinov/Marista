@@ -77,11 +77,12 @@ namespace Marista.Admin.Controllers
         {
             var bp = await db.Approve(bpId);
             var rec = await db.GetNotApproved();
+            Parallel.Invoke(
             new Common.Tools.Mailer().SendMail(
                 Server.MapPath("/Mails/approve.txt"),
                 bp.EMail,
                 "You are approved"
-                );
+                ));
 
             return View("NotApproved", rec);
 
@@ -118,14 +119,14 @@ namespace Marista.Admin.Controllers
             foreach (var item in Request.Form.AllKeys.Where(k => k.StartsWith("cbBP_")))
             {
                 var bp = await db.GetBP(int.Parse(Request.Form[item]));
-                new Mailer().SendMailSpecific(
+                Parallel.Invoke(new Mailer().SendMailSpecific(
                     model.MailText,
                     bp.EMail,
                     "Mail from Marista"
-                    );
+                    ));
             }
             model.Countries = db.GetCountries();
-            return View ("FilterBPs", model);
+            return View("FilterBPs", model);
         }
 
 

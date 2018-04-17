@@ -13,6 +13,7 @@ namespace Marista.Site.Controllers
     public class CartController : Controller
     {
         ProductService db = new ProductService();
+
         public ActionResult Embed()
         {
             return PartialView();
@@ -31,6 +32,85 @@ namespace Marista.Site.Controllers
             return price <= 80 ? db.GetCountryDeliveryPrice(countryId, weight) : 0;
 
         }
+
+        public ActionResult PersonalInfo()
+        {
+            if (Session["CustomerId"] != null)
+                return RedirectToAction("checkout");
+            PersonalInfoVM model = new PersonalInfoVM();
+            model.Countries = db.GetCountries();
+
+            return View(model);
+        }
+
+        public ActionResult Confirm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RegisterNewCustomer(PersonalInfoVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Countries = db.GetCountries();
+                return View("PersonalInfo", model);
+            }
+
+            if (db.CustomerExists(model.CustomerEmail))
+            {
+                ViewBag.EmailUsed = true;
+                model.Countries = db.GetCountries();
+                return View("PersonalInfo", model);
+
+            }
+
+            var pass = model.Password;
+            var customerData = db.CreateCustomerWithPassword(model);
+            string content = System.IO.File.ReadAllText(Server.MapPath("/Mails/newuser.txt"));
+            content = content.Replace("{username}", model.CustomerEmail);
+            content = content.Replace("{password}", pass);
+
+            Parallel.Invoke(new Common.Tools.Mailer().SendMailSpecific(
+            content,
+            model.CustomerEmail,
+            "Your user is created"
+            ));
+
+            Session["CustomerId"] = customerData;
+            Session["CustomerName"] = model.CustomerName;
+
+
+            return RedirectToAction("checkout");
+        }
+
+        [HttpPost]
+        public ActionResult LoginExisting(PersonalInfoVM model)
+        {
+
+            var cmr = db.Login(model);
+            if (cmr == null)
+            {
+                ViewBag.LoginError = true;
+                model.Countries = db.GetCountries();
+                return View("PersonalInfo", model);
+            }
+            else
+            {
+                Session["CustomerId"] = cmr.CustomerId;
+                Session["CustomerName"] = cmr.CustomerName;
+                Session["IsBP"] = cmr.BPId.HasValue;
+                if (cmr.BPId.HasValue && Session["Cart"] != null)
+                {
+                    CartVM cart = (CartVM)Session["Cart"];
+                    foreach (var good in cart.Products)
+                        good.Price = good.Price * 0.77M;
+
+                }
+            }
+            return RedirectToAction("checkout");
+        }
+
 
         public ActionResult ChangeAmmount(int productId, int step)
         {
@@ -136,7 +216,7 @@ namespace Marista.Site.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Checkout()
+        public async Task<ActionResult> Checkout()
         {
             int customerId = -1;
             if (Session["CustomerId"] != null)
@@ -156,6 +236,15 @@ namespace Marista.Site.Controllers
             model.DeliveryCountryId = cart.CountryId;
             model.Details = cart.Products;
             model.DeliveryPrice = cart.CountryPrice;
+
+            if (model.CustomerName == null)
+            {
+                var cmr = await db.GetCustomer(customerId);
+                model.BillingCountryId = cmr.CountryId;
+                model.CustomerEmail = cmr.Username;
+                model.CustomerName = cmr.CustomerName;
+            }
+
             return View(model);
         }
 
@@ -187,6 +276,7 @@ namespace Marista.Site.Controllers
             model.DeliveryPrice = GetDeliveryPrice(model.DeliveryCountryId);
             return View(model);
         }
+
         [HttpPost]
         public ActionResult SaveOrder(CheckoutVM model)
         {
@@ -202,14 +292,15 @@ namespace Marista.Site.Controllers
                 string content = System.IO.File.ReadAllText(Server.MapPath("/Mails/newuser.txt"));
                 content = content.Replace("{username}", model.CustomerEmail);
                 content = content.Replace("{password}", customerData.Password);
-
+                Parallel.Invoke(
                 new Common.Tools.Mailer().SendMailSpecific(
                 content,
                 model.CustomerEmail,
                 "Your user is created"
-                );
+                ));
 
                 Session["CustomerId"] = customerData.CustomerId;
+                Session["CustomerName"] = model.CustomerName;
             }
 
 
@@ -230,7 +321,7 @@ namespace Marista.Site.Controllers
             {
                 db.AddPyramidValuesRandom(model);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Confirm", "Cart");
         }
 
     }

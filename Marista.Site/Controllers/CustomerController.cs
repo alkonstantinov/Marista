@@ -58,6 +58,7 @@ namespace Marista.Site.Controllers
             else
             {
                 Session["CustomerId"] = cmr.CustomerId;
+                Session["CustomerName"] = cmr.CustomerName;
                 Session["IsBP"] = cmr.BPId.HasValue;
                 if (cmr.BPId.HasValue && Session["Cart"] != null)
                 {
@@ -90,10 +91,10 @@ namespace Marista.Site.Controllers
                 content = content.Replace("{username}", model.Username);
                 content = content.Replace("{password}", model.NewPassword);
 
-                new Common.Tools.Mailer().SendMailSpecific(
+                Parallel.Invoke(new Common.Tools.Mailer().SendMailSpecific(
                 content,
                 model.Username,
-                "Your password is changed");
+                "Your password is changed"));
             }
             ViewBag.sent = true;
             return View(new CustomerVM());

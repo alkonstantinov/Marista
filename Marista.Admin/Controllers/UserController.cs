@@ -56,10 +56,10 @@ namespace Marista.Admin.Controllers
                 content = content.Replace("{username}", model.Username);
                 content = content.Replace("{password}", password);
 
-                new Common.Tools.Mailer().SendMailSpecific(
+                Parallel.Invoke(new Common.Tools.Mailer().SendMailSpecific(
                 content,
                 model.Username,
-                "Your password is changed");
+                "Your password is changed"));
             }
 
             ViewBag.ok = true;

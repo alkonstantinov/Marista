@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 /*** CONTENT ***/
 /*****************************************************************/
 /*
@@ -22827,6 +22827,76 @@ ul.woocommerce-thankyou-order-details {
 	}	
 }
 
+.checkout-steps {
+        overflow: hidden;
+        border: none;
+        background: #f7f7f7;
+        padding: 5px 0px;
+}
+
+.checkout-steps .step {
+        float: left;
+        margin-top:-12px;
+        margin-bottom:-17px;
+        position:relative;
+        padding-left: 26px;
+}
+
+.checkout-steps .step.active {
+        background-color: #bebebe;
+        z-index: 11;
+        color: white;
+}
+
+.checkout-steps .step .step-text {
+        margin: 0 0 0 10px;
+        line-height: 46px;
+        float: left;
+}
+
+.checkout-steps .divider {
+        color: white;
+        font-size: 50px;
+        position:relative;
+        right: -18px;
+}
+
+.step-client {
+        z-index: 10;
+}
+
+.step-shipping, .checkout-steps .step-shipping.active {
+        z-index: 9;
+}
+
+.step-payment, .checkout-steps .step-payment.active {
+        z-index: 7;
+}
+
+.step-confirmation, .checkout-steps .step-confirmation.active {
+        z-index: 6;
+}
+
+.checkout-steps .step > * {
+        display: inline-block;
+}
+
+@media(max-width:700px) {
+        .checkout-steps {
+                padding: 0;
+        }
+        .checkout-steps .divider {
+                display:none;
+        }
+        .checkout-steps .step {
+                margin-top: 0;
+                margin-bottom: 0;
+                float: none;
+        }
+        .checkout-steps .step .step-text {
+                line-height: 21px;
+        }
+}
 
 
 
