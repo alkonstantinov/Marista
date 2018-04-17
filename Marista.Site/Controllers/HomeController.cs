@@ -118,11 +118,14 @@ namespace Marista.Site.Controllers
         public ActionResult SendFeedback(FeedbackVM data)
         {
             string content = "From:" + data.Name + " " + data.Email + "<br/>" + data.Message;
-            Parallel.Invoke(new Common.Tools.Mailer().SendMailSpecific(
-                content,
-                ConfigurationManager.AppSettings["ToEmail"],
-                data.Subject));
 
+            Parallel.Invoke(() =>
+            {
+                Common.Tools.Mailer.SendMailSpecific(content, 
+            
+                ConfigurationManager.AppSettings["ToEmail"],
+                data.Subject);
+            });
             return Json("ok", JsonRequestBehavior.AllowGet);
         }
 

@@ -30,7 +30,7 @@ namespace Marista.Common.Tools
             return null;
         }
 
-        public Action SendMailSpecific(string content, string email, string subject)
+        public static void SendMailSpecific(string content, string email, string subject)
         {
             MailMessage mm = new MailMessage(ConfigurationManager.AppSettings["FromEmail"], email);
             mm.Subject = subject;
@@ -51,7 +51,7 @@ namespace Marista.Common.Tools
             catch 
             {
             }
-            return null;
+            
         }
     }
 }

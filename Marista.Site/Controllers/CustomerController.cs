@@ -90,11 +90,11 @@ namespace Marista.Site.Controllers
                 string content = System.IO.File.ReadAllText(Server.MapPath("/Mails/resetpass.txt"));
                 content = content.Replace("{username}", model.Username);
                 content = content.Replace("{password}", model.NewPassword);
-
-                Parallel.Invoke(new Common.Tools.Mailer().SendMailSpecific(
-                content,
-                model.Username,
-                "Your password is changed"));
+                Parallel.Invoke(() =>
+                {
+                    Common.Tools.Mailer.SendMailSpecific(content, model.Username,"Your password is changed");
+                });
+                
             }
             ViewBag.sent = true;
             return View(new CustomerVM());

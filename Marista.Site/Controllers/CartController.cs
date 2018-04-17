@@ -71,11 +71,10 @@ namespace Marista.Site.Controllers
             content = content.Replace("{username}", model.CustomerEmail);
             content = content.Replace("{password}", pass);
 
-            Parallel.Invoke(new Common.Tools.Mailer().SendMailSpecific(
-            content,
-            model.CustomerEmail,
-            "Your user is created"
-            ));
+            Parallel.Invoke(() =>
+            {
+                Common.Tools.Mailer.SendMailSpecific(content, model.CustomerEmail, "Your user is created");
+            });
 
             Session["CustomerId"] = customerData;
             Session["CustomerName"] = model.CustomerName;
@@ -292,13 +291,12 @@ namespace Marista.Site.Controllers
                 string content = System.IO.File.ReadAllText(Server.MapPath("/Mails/newuser.txt"));
                 content = content.Replace("{username}", model.CustomerEmail);
                 content = content.Replace("{password}", customerData.Password);
-                Parallel.Invoke(
-                new Common.Tools.Mailer().SendMailSpecific(
-                content,
-                model.CustomerEmail,
-                "Your user is created"
-                ));
-
+                Parallel.Invoke(() =>
+                {
+                    Common.Tools.Mailer.SendMailSpecific(content,
+                        model.CustomerEmail,
+                "Your user is created");
+                });
                 Session["CustomerId"] = customerData.CustomerId;
                 Session["CustomerName"] = model.CustomerName;
             }

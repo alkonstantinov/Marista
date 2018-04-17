@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*** CONTENT ***/
 /*****************************************************************/
 /*
@@ -8543,7 +8543,7 @@ label {
   height: 15px;
 }
 
-a,
+/*a,
 img,
 .btn,
 .button,
@@ -8568,7 +8568,7 @@ h3 .toggle,
 body .flex-direction-nav a {
   -webkit-transition: background 0.3s ease 0s, border-color 0.2s ease 0s, color 0.3s ease 0s;
   transition: background 0.3s ease 0s, border-color 0.2s ease 0s, color 0.3s ease 0s;
-}
+}*/
 
 .btn,
 .button,

@@ -119,11 +119,12 @@ namespace Marista.Admin.Controllers
             foreach (var item in Request.Form.AllKeys.Where(k => k.StartsWith("cbBP_")))
             {
                 var bp = await db.GetBP(int.Parse(Request.Form[item]));
-                Parallel.Invoke(new Mailer().SendMailSpecific(
-                    model.MailText,
-                    bp.EMail,
-                    "Mail from Marista"
-                    ));
+                Parallel.Invoke(() =>
+                {
+                    Common.Tools.Mailer.SendMailSpecific(model.MailText, bp.EMail,
+                    "Mail from Marista");
+                });
+
             }
             model.Countries = db.GetCountries();
             return View("FilterBPs", model);
