@@ -29,18 +29,17 @@
             <div class="header-top">
                 <div class="container">
                     <div class="right">
-                        @if (Session["CustomerId"] == null)
-                        {
-                            <div class="login-links pos2">
-                                <a href="http://admin.maristaclub.com/user/login" class="nav-top-link">For Members</a> or <a href="http://admin.maristaclub.com/bpreg/index" class="nav-top-link">Become a Member</a>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="login-links pos2">
-                                Hello, @Session["CustomerName"].ToString()
-                            </div>
-                        }
+                        <div class="login-links " style="margin-top:5px;margin-bottom:5px">
+                            @if (Session["CustomerName"] != null)
+                            {
+                                <span>Hello, @Session["CustomerName"].ToString() &nbsp;</span>
+                            }
+                            @if (Session["IsBP"] == null || Session["IsBP"].ToString() == false.ToString())
+                            {
+                                <span>                                <a href="http://admin.maristaclub.com/user/login" class="nav-top-link">For Members</a> or <a href="http://admin.maristaclub.com/bpreg/index" class="nav-top-link">Become a Member</a></span>
+                            }
+                        </div>
+
                         @Html.Action("Embed", "Cart")
                     </div>
                 </div>
@@ -298,7 +297,7 @@
             $("#dCookies").hide();
         }
     </script>
-    
+
     <script src="~/Scripts/scripts.min.js"></script>
 
 </body>
