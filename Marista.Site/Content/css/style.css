@@ -8543,33 +8543,6 @@ label {
   height: 15px;
 }
 
-/*a,
-img,
-.btn,
-.button,
-.dropdown .dropdown-toggle .arrow,
-.products .product > .inner,
-.elastislide-wrapper nav span,
-.accordion-menu .arrow,
-.widget .arrow,
-.owl-theme .owl-controls .owl-buttons div,
-.timeline-layout .post-item > .inner,
-.feature-box,
-.feature-box .feature-image,
-.line-heading .line,
-input[type="submit"][name="subscribe"],
-input[type="submit"][name="unsubscribe"],
-.wpcf7-submit,
-h3 .toggle,
-.social-links .social-link,
-#mini-cart .dropdown-toggle .cart-icon,
-#mini-cart .dropdown-toggle .cart-details,
-.yith-wcwl-share li a,
-body .flex-direction-nav a {
-  -webkit-transition: background 0.3s ease 0s, border-color 0.2s ease 0s, color 0.3s ease 0s;
-  transition: background 0.3s ease 0s, border-color 0.2s ease 0s, color 0.3s ease 0s;
-}*/
-
 .btn,
 .button,
 .btn-arrow,
@@ -22900,12 +22873,74 @@ ul.woocommerce-thankyou-order-details {
 
 
 
+.sticky-header .menu-wrapper .middle {
+  display: block;
+}
 
+}
+/* Sticky Header */
+.sticky-header {
+  position: fixed;
+  overflow: hidden;
+  visibility: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  -webkit-box-shadow: 0 5px 3px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 3px -3px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 991px) {
+  .sticky-header {
+    display: none !important;
+  }
+}
+.sticky-header .header {
+  padding-top: 50px;
+  background-color: transparent;
+}
+.sticky-header .header .logo {
+  margin-top: 0;
+  margin-right: 15px;
+}
+.sticky-header .menu-wrapper {
+  background-color: transparent;
+  margin: 0;
+}
+.sticky-header .logo img {
+  margin-top: 0;
+  margin-right: 10px;
+  /*height: 40px;*/
+  width: auto;
+}
+.sticky-header .quick-access {
+  margin-top: 9px;
+  margin-bottom: 3px;
+}
+.sticky-header #mini-cart .dropdown-menu {
+  top: 42px;
+}
+.sticky-header #mini-cart .cart-head.sticky-only-icon .cart-details {
+  display: none;
+}
 
+.sticky {
+    position: fixed !important;
+    top: 0;
+    width: 100%;
+    z-index: 9999 !important;
+}
 
+.layout-content {
+    padding-top: 162px;
+}
 
+@media only screen and (max-width: 990px) {
+    .sticky {
+        position: relative !important;
+    }
 
-
-
-
-                                    
+    .layout-content {
+        padding-top: 0 !important;
+    }
+}

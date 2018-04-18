@@ -36,7 +36,7 @@ namespace Marista.DL
                     Sales = myp.total.HasValue ? myp.total.Value : 0
                 };
             else
-            { 
+            {
                 rec.MyResult = new PyramidResultVM();
                 rec.Team = new List<TeamReportVM>();
                 rec.Sales = new List<SaleVM>();
@@ -97,7 +97,8 @@ namespace Marista.DL
             var MyLeader = await db.Pyramids.FirstOrDefaultAsync(b => b.PyramidId == myPyramid.PyramidParentId);
             if (MyLeader != null)
             {
-                var myBP = MyLeader.SiteUser.BPs.FirstOrDefault();
+                var myBP = await db.BPs.FirstOrDefaultAsync(x => x.SiteUserId == MyLeader.SiteUserId);
+                    //MyLeader.SiteUser.BPs.FirstOrDefault();
                 result.LeaderEmail = myBP.EMail;
                 result.LeaderName = myBP.BPName;
             }

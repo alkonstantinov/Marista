@@ -25,101 +25,103 @@
         <div id="dCookies">
             This website uses cookies to ensure we give you the best experience on our website. Find out more about cookies <a href="~/Content/cookies/cookie-policy.html" target="_blank">here</a>. <button class="btn btn-info" onclick="HideCookies()">Accept</button>
         </div>
-        <div class="header-wrapper clearfix">
-            <div class="header-top">
-                <div class="container">
-                    <div class="right">
-                        <div class="login-links " style="margin-top:5px;margin-bottom:5px">
-                            @if (Session["CustomerName"] != null)
-                            {
-                                <span>Hello, @Session["CustomerName"].ToString() &nbsp;</span>
-                            }
-                            @if (Session["IsBP"] == null || Session["IsBP"].ToString() == false.ToString())
-                            {
-                                <span>                                <a href="http://admin.maristaclub.com/user/login" class="nav-top-link">For Members</a> or <a href="http://admin.maristaclub.com/bpreg/index" class="nav-top-link">Become a Member</a></span>
-                            }
-                        </div>
+        <div class="sticky">
+            <div class="header-wrapper clearfix">
+                <div class="header-top">
+                    <div class="container">
+                        <div class="right">
+                            <div class="login-links " style="margin-top:5px;margin-bottom:5px">
+                                @if (Session["CustomerName"] != null)
+                                {
+                                    <span>Hello, @Session["CustomerName"].ToString() &nbsp;</span>
+                                }
+                                @if (Session["IsBP"] == null || Session["IsBP"].ToString() == false.ToString())
+                                {
+                                    <span>                                <a href="http://admin.maristaclub.com/user/login" class="nav-top-link">For Members</a> or <a href="http://admin.maristaclub.com/bpreg/index" class="nav-top-link">Become a Member</a></span>
+                                }
+                            </div>
 
-                        @Html.Action("Embed", "Cart")
+                            @Html.Action("Embed", "Cart")
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="header header-menu-right">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-4 left">
-                            <h1 class="logo">
+                <div class="header header-menu-right">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 left">
+                                <h1 class="logo">
+                                    <a href="/" title="Marista Club" rel="home">
+                                        <img src="~/Content/images/marista_club_logo.jpg">
+                                    </a>
+                                </h1>
+                            </div>
+                            <div class="col-sm-8 right"></div>
+                        </div>
+                    </div>
+
+                    <div class="menu-wrapper">
+                        <div class="container">
+                            <h1 class="logo left">
                                 <a href="/" title="Marista Club" rel="home">
                                     <img src="~/Content/images/marista_club_logo.jpg">
                                 </a>
                             </h1>
-                        </div>
-                        <div class="col-sm-8 right"></div>
-                    </div>
-                </div>
 
-                <div class="menu-wrapper">
-                    <div class="container">
-                        <h1 class="logo left">
-                            <a href="/" title="Marista Club" rel="home">
-                                <img src="~/Content/images/marista_club_logo.jpg">
-                            </a>
-                        </h1>
-
-                        <div id="main-menu" class="mega-menu menu-right">
-                            <ul id="menu-main-menu">
-                                <li class="">
-                                    <a href="http://maristaclub.com/" class="" target="_blank">Home</a>
-                                </li>
-                                <li class="">
-                                    <a href="http://maristaclub.com/about-us/" class="" target="_blank">About Us</a>
-                                </li>
-                                <li class="active">
-                                    <a href="/home/index" class="">E-shop</a>
-                                </li>
-                                <li class="">
-                                    <a href="http://maristaclub.com/opportunity/" class="" target="_blank">Opportunity</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div id="main-mobile-menu">
-                            <div id="main-mobile-toggle" class="mobile-menu-toggle">
-                                <span>Menu</span>
-                                <span class="btn btn-inverse">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </span>
-                            </div>
-                            <div class="accordion-menu">
-                                <ul id="menu-main-menu-1" class="">
+                            <div id="main-menu" class="mega-menu menu-right">
+                                <ul id="menu-main-menu">
                                     <li class="">
                                         <a href="http://maristaclub.com/" class="" target="_blank">Home</a>
                                     </li>
                                     <li class="">
                                         <a href="http://maristaclub.com/about-us/" class="" target="_blank">About Us</a>
                                     </li>
-                                    <li class="open">
-                                        <a href="/home/index" class="current">E-shop</a>
+                                    <li class="active">
+                                        <a href="/home/index" class="">E-shop</a>
                                     </li>
                                     <li class="">
                                         <a href="http://maristaclub.com/opportunity/" class="" target="_blank">Opportunity</a>
                                     </li>
                                 </ul>
                             </div>
+
+                            <div id="main-mobile-menu">
+                                <div id="main-mobile-toggle" class="mobile-menu-toggle">
+                                    <span>Menu</span>
+                                    <span class="btn btn-inverse">
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </span>
+                                </div>
+                                <div class="accordion-menu">
+                                    <ul id="menu-main-menu-1" class="">
+                                        <li class="">
+                                            <a href="http://maristaclub.com/" class="" target="_blank">Home</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="http://maristaclub.com/about-us/" class="" target="_blank">About Us</a>
+                                        </li>
+                                        <li class="open">
+                                            <a href="/home/index" class="current">E-shop</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="http://maristaclub.com/opportunity/" class="" target="_blank">Opportunity</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
+                        <div class="container-shadow"></div>
                     </div>
-                    <div class="container-shadow"></div>
                 </div>
             </div>
+
         </div>
-
-
-        @RenderBody()
-
+        <div class="layout-content">
+            @RenderBody()
+        </div>
         <div class="footer-wrapper">
             <div class="footer">
                 <div class="container">

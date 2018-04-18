@@ -4,12 +4,12 @@ go
 if OBJECT_ID('vSalesTotal') is not null
   drop view vSalesTotal
 go
-
+--select * from vSalesTotal
 create view vSalesTotal as
   select 
     s.SaleId,
     s.OnDate,
-    c.SiteUserId,
+    isnull(c.SiteUserId, bp.SiteUserId) SiteUserId,
     cu.CustomerName,
     (
       select sum (sd.Price*cast(sd.Quantity as decimal(10,2))*(cast (100 as decimal(10,2))-sd.discount)/cast(100 as decimal)) 
@@ -18,6 +18,7 @@ create view vSalesTotal as
     ) Total
   from Sale s
   join Customer cu on cu.CustomerId = s.CustomerId
+  left join BP on bp.BPId = cu.BPId
   left join Coupon c on c.CouponId = s.CouponId
 go
 

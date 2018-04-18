@@ -92,6 +92,10 @@ namespace Marista.Site.Controllers
             {
                 ViewBag.LoginError = true;
                 model.Countries = db.GetCountries();
+                foreach (var modelValue in ModelState.Values)
+                {
+                    modelValue.Errors.Clear();
+                }
                 return View("PersonalInfo", model);
             }
             else
