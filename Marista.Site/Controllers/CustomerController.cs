@@ -174,6 +174,7 @@ namespace Marista.Site.Controllers
         {
 
             Session.Remove("CustomerId");
+            Session.Remove("CustomerName");
             Session.Remove("IsBP");
             return RedirectToAction("Index", "Home");
         }

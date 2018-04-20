@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 /*** CONTENT ***/
 /*****************************************************************/
 /*
@@ -10135,6 +10135,20 @@ body.archive.woocommerce .left-sidebar, body.archive.woocommerce
   background:#c70f36;
   color:#fff !important;
   border-radius:5px;
+}
+
+.login-links a:nth-child(1){
+  background:none !important;
+  color:#c70f36 !important;
+  position: relative;
+}
+
+@media (max-width: 450px) {
+  .login-links a:nth-child(1) {
+    position: absolute;
+    top: -39px;
+	left: 12px;
+  }
 }
 
 #lang_sel {
@@ -20898,13 +20912,13 @@ body .wpb_content_element .wpb_tabs_nav li:hover a,
     font-size: 20px;
     font-family: "cormorant_garamondregular", serif;
     background: #ffffff;
-    padding: 53px 0px 0px 0px;
+    padding: 20px 0px 0px 0px;
 }
 .sticky-header {
     background-color: #ffffff;
 }
 .header .logo {
-    margin: -13px 1px 0px 0px;
+    margin: -5px 1px 0px 0px;
 }
 .topnav a {
     color: #888888;
@@ -22924,23 +22938,33 @@ ul.woocommerce-thankyou-order-details {
   display: none;
 }
 
+
+
+/* The sticky class is added to the header with JS when it reaches its scroll position */
 .sticky {
-    position: fixed !important;
-    top: 0;
-    width: 100%;
-    z-index: 9999 !important;
+  position: fixed !important;
+  top: 0;
+  width: 100%;
+  z-index:9999 !important;
 }
 
 .layout-content {
-    padding-top: 162px;
+	padding-top: 129px;
 }
 
 @media only screen and (max-width: 990px) {
-    .sticky {
-        position: relative !important;
-    }
-
-    .layout-content {
-        padding-top: 0 !important;
-    }
+	.sticky {
+	  position: relative !important;
+	}
+	.layout-content {
+		padding-top: 0 !important;
+	}
 }
+
+
+
+
+
+
+
+                                    

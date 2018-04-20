@@ -31,13 +31,23 @@
                     <div class="container">
                         <div class="right">
                             <div class="login-links " style="margin-top:5px;margin-bottom:5px">
+
+
                                 @if (Session["CustomerName"] != null)
                                 {
+
+
+
                                     <span>Hello, @Session["CustomerName"].ToString() &nbsp;</span>
+                                }
+                                else
+                                {
+
+                                    <a href="/customer"> E-shop Profile</a>
                                 }
                                 @if (Session["IsBP"] == null || Session["IsBP"].ToString() == false.ToString())
                                 {
-                                    <span>                                <a href="http://admin.maristaclub.com/user/login" class="nav-top-link">For Members</a> or <a href="http://admin.maristaclub.com/bpreg/index" class="nav-top-link">Become a Member</a></span>
+                                    @Html.Raw("<a href=\"http://admin.maristaclub.com/user/login\" class=\"nav-top-link\">For Members</a> or <a href=\"http://admin.maristaclub.com/bpreg/index\" class=\"nav-top-link\">Become a Member</a></span>")
                                 }
                             </div>
 

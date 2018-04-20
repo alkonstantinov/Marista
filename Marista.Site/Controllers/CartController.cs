@@ -26,7 +26,7 @@ namespace Marista.Site.Controllers
             decimal price = 0;
             foreach (var d in cart.Products)
             {
-                weight += d.TotalWeight;
+                weight += d.TotalWeight * d.Quantity;
                 price += d.Total;
             }
             return price <= 80 ? db.GetCountryDeliveryPrice(countryId, weight) : 0;

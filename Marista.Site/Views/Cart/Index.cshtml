@@ -241,11 +241,18 @@
         );
         $("#sSubTotal").text("EUR " + subTotal.toFixed(2));
         var shipping = parseFloat($("#hCountryPrice").val());
+        if (subTotal == 0) {
+            shipping = 0;
+            $("a[class~='checkout-button']").hide();
+        }
+        else {
+            $("a[class~='checkout-button']").show();
+        }
         var vat = subTotal * 0.2;
-        $("#sShipping").text("EUR " + shipping.toFixed(2));
+        $("#sShipping").text(shipping > 0 ? "EUR " + shipping.toFixed(2) : "Free shipping");
         $("#sVat").text("EUR " + vat.toFixed(2));
         $("#sTotal").text("EUR " + (shipping + subTotal + vat).toFixed(2));
-
+        UpdateSmallCart();
 
 
     }
